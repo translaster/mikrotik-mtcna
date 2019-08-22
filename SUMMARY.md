@@ -6,5 +6,5 @@
 * [M3 Bridging](m3-bridging.md)
 * [M4 Wireless](m4-wireless.md)
 * [M5 Network Management](m5-network-management.md)
-* [Untitled](untitled.md)
+* [M6 Firewall](untitled.md)
 

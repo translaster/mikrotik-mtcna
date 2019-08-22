@@ -66,7 +66,7 @@ Creating bridges
 
 Creating bridges, example
 
-![](.gitbook/assets/3%20%282%29.png)
+![](.gitbook/assets/3%20%283%29.png)
 
 Adding ports to bridges
 

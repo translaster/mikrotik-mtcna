@@ -440,7 +440,7 @@ Supout.rif Viewer
 |  | aspects of your |  |  |  |
 |  | configuration |  | 3 |  |
 
-![](.gitbook/assets/3.png)
+![](.gitbook/assets/3%20%281%29.png)
 
 – The default view is “resource”
 
@@ -452,7 +452,7 @@ Autosupout.rif
 System logging and debug logs
 
 * Logging is important to insure a history \(permanent or not\) of router events
-* ![](.gitbook/assets/4%20%283%29.jpeg)The easiest way to view logs is through the “log” \(Menu\) window
+* ![](.gitbook/assets/4%20%284%29.jpeg)The easiest way to view logs is through the “log” \(Menu\) window
 * The CLI equivalent is
 
 – /log print

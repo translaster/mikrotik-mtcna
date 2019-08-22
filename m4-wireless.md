@@ -22,7 +22,7 @@ Frequencies
 
 Frequencies
 
-![](.gitbook/assets/0%20%282%29.jpeg)
+![](.gitbook/assets/0%20%283%29.jpeg)
 
 Diagram by Michael Gauthier
 
@@ -31,7 +31,7 @@ Diagram by Michael Gauthier
 
 Frequencies
 
-![](.gitbook/assets/1%20%281%29.jpeg)
+![](.gitbook/assets/1%20%282%29.jpeg)
 
 * 802.11a frequency range
 * 12 20MHz wide channels and 5 40MHz channels
@@ -124,7 +124,7 @@ Setting-up a simple wireless link
 
 – Ciphers : Encryption methods
 
-Setting-up a simple w![](.gitbook/assets/5%20%282%29.jpeg)ireless link
+Setting-up a simple w![](.gitbook/assets/5%20%283%29.jpeg)ireless link
 
 * Now you can use your new security profile and feel better about your wireless network’s security
 
