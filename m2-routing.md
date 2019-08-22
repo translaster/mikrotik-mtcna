@@ -1,55 +1,48 @@
+---
+description: М2 Маршрутизация
+---
+
 # M2 Routing
 
-**Module 2**
+## **Обзор маршрутизации**
 
-## **Routing Overview**
+Концепции маршрутизации
 
-Routing concepts
+* Маршрутизация-это процесс уровня 3 в модели OSI ISO.
+* Маршрутизация определяет, куда перенаправляется \(отправляется\) трафик.
+* Она необходима чтобы разрешить различные подсети для обмена данными.
+  * Даже если они должны быть на одном “проводе”
 
-* Routing is a layer 3 process on the ISO’s OSI model.
-* Routing defines where traffic is forwarded \(sent\).
-* It’s required to permit different subnets to communicate.
+### Концепции маршрутизации, пример 1
 
-– Even if they should be on the same “wire”
-
-Routing concepts, example 1
-
-* Computers wont communicate.
+* Компьютеры не будут взаимодействовать
 
 ![](.gitbook/assets/0%20%281%29.jpeg)
 
-Routing concepts , example 2
+### Концепции маршршутизации, пример 2
 
-* Computers can now communicate.
+* Компьютеры теперь могут взаимодействовать
 
 ![](.gitbook/assets/1.jpeg)
 
-Route flags
+Флаги маршрута
 
-* Routes have statuses. In this course, we will familiarize ourselves the following:
-
-– X : Disabled
-
-– A : Active
-
-– D : Dynamic
-
-– C : Connected
-
-– S : Static
+* Маршруты имеют статусы. В этом курсе мы ознакомимся со следующим:
+  * X: Disabled \(отключен\)
+  * A : Active \(активен\)
+  * D : Dynamic \(динамический\)
+  * C : Connected \(подключен\)
+  * S : Static \(статичен\)
 
 ![](.gitbook/assets/2%20%282%29.jpeg)
 
-Route flags
+Флаги маршрута
 
-* **Disabled** : Route is disabled. Has no influence in the routing process.
-* **Active** : Route is active and used in the routing process.
-* **Dynamic** : Route has been created by routing process, not through the management interface.
-
-Route flags
-
-* **Connected** : Routes are created for each IP subnet that has an active interface on router.
-* **Static** : Route created to force forwarding of packets through a certain .
+* **Disabled** : маршрут отключен. Не имеет никакого влияния на процесс маршрутизации.
+* **Active** : маршрут активен и используется в процессе маршрутизации.
+* **Dynamic** : маршрут был создан процессом маршрутизации, а не через интерфейс управления.
+* **Connected** : маршруты создаются для каждой IP-подсети, которая имеет активный интерфейс на маршрутизаторе.
+* **Static** : маршрут, созданный для принудительной пересылки пакетов через определенный .
 
 ## **Static Routing**
 
