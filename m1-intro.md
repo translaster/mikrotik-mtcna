@@ -33,7 +33,7 @@
 * Семейство оборудования, созданное MikroTik. Оно покрывает нужды пользователей по всему миру.
 * Все RouterBOARDы работают на RouterOS.
 
-![](.gitbook/assets/1%20%283%29.jpeg)
+![](.gitbook/assets/1%20%284%29.jpeg)
 
 routerboard.com
 

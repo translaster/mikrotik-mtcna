@@ -7,7 +7,7 @@ Bridging concepts
 * Bridges are OSI layer 2 devices.
 * Traditionally, they were used to join two segments of different \(or similar\) technology.
 
-![](.gitbook/assets/0.png)
+![](.gitbook/assets/0%20%281%29.png)
 
 Bridging concepts
 
@@ -24,7 +24,7 @@ Example 1
 * All computers can communicate with each other.
 * All have to wait for everybody to be quiet before one can begin transmitting!
 
-![](.gitbook/assets/1%20%282%29.png)
+![](.gitbook/assets/1%20%283%29.png)
 
 Example 2
 
@@ -95,7 +95,7 @@ Add \(**+**\)
 
 Adding ports to bridges, example
 
-![](.gitbook/assets/4.png)
+![](.gitbook/assets/4%20%281%29.png)
 
 Bridging wireless networks
 

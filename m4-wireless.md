@@ -31,7 +31,7 @@ Diagram by Michael Gauthier
 
 Frequencies
 
-![](.gitbook/assets/1%20%282%29.jpeg)
+![](.gitbook/assets/1%20%283%29.jpeg)
 
 * 802.11a frequency range
 * 12 20MHz wide channels and 5 40MHz channels

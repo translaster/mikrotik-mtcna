@@ -106,7 +106,7 @@ DHCP server setup
 
 * The results of the automated setup
 
-![](.gitbook/assets/0%20%282%29.png)
+![](.gitbook/assets/0%20%284%29.png)
 
 DHCP server setup
 

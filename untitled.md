@@ -50,11 +50,11 @@ Packet flows
 
 Packet flows
 
-![](.gitbook/assets/1%20%281%29.jpeg)
+![](.gitbook/assets/1%20%282%29.jpeg)
 
 Packet flows
 
-![](.gitbook/assets/2%20%283%29.jpeg)
+![](.gitbook/assets/2%20%284%29.jpeg)
 
 Packet flows, example
 

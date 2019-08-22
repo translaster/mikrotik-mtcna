@@ -34,7 +34,7 @@ description: М2 Маршрутизация
   * C : Connected \(подключен\)
   * S : Static \(статичен\)
 
-![](.gitbook/assets/2%20%284%29.jpeg)
+![](.gitbook/assets/2%20%285%29.jpeg)
 
 Флаги маршрута
 
@@ -162,5 +162,5 @@ Laboratory : Setup
 * Create the default route using the trainer’s router as the gateway
 * Open a Web browser and try accessing Mikrotik’s Web page. Note results
 
-![](.gitbook/assets/6%20%282%29.jpeg)
+![](.gitbook/assets/6%20%283%29.jpeg)
 
