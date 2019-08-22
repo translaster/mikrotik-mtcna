@@ -452,7 +452,7 @@ Autosupout.rif
 System logging and debug logs
 
 * Logging is important to insure a history \(permanent or not\) of router events
-* ![](.gitbook/assets/4%20%282%29.jpeg)The easiest way to view logs is through the “log” \(Menu\) window
+* ![](.gitbook/assets/4%20%283%29.jpeg)The easiest way to view logs is through the “log” \(Menu\) window
 * The CLI equivalent is
 
 – /log print
@@ -637,7 +637,7 @@ Time for a practical exercise
 
 Laboratory : Setup
 
-![](.gitbook/assets/7.jpeg)
+![](.gitbook/assets/7%20%281%29.jpeg)
 
 ### Laboratory : step 1
 

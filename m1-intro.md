@@ -33,7 +33,7 @@
 * Семейство оборудования, созданное MikroTik. Оно покрывает нужды пользователей по всему миру.
 * Все RouterBOARDы работают на RouterOS.
 
-![](.gitbook/assets/1%20%281%29.jpeg)
+![](.gitbook/assets/1%20%282%29.jpeg)
 
 routerboard.com
 
@@ -81,7 +81,7 @@ routerboard.com
 
 **RB951G-2HnD**
 
-\*\*\*\*![](.gitbook/assets/2%20%281%29.jpeg)\*\*\*\*
+\*\*\*\*![](.gitbook/assets/2%20%282%29.jpeg)\*\*\*\*
 
 * Подходит для дома и малого офиса
 * 5 Gig ports
@@ -90,7 +90,7 @@ routerboard.com
 
 **SXT Sixpack**
 
-![](.gitbook/assets/3%20%281%29.jpeg)
+![](.gitbook/assets/3%20%282%29.jpeg)
 
 \(1 OmniTIK U-5HnD with 5 SXT-5HPnD\)
 
@@ -135,7 +135,7 @@ _**Флагманская модель**_
 
 #### **Гибкое CPE**
 
-![](.gitbook/assets/4%20%281%29.jpeg)
+![](.gitbook/assets/4%20%282%29.jpeg)
 
 * **RB411UAHR**
   * – 1 порт 100Mbps
@@ -187,7 +187,7 @@ WinBox и MAC-Winbox
 
 * Находясь в веб-интерфейсе, нажмите “logout”
 * Нажмите на “Winbox”
-* Сохраните “winbox.exe”![](.gitbook/assets/7%20%282%29.jpeg)
+* Сохраните “winbox.exe”![](.gitbook/assets/7%20%283%29.jpeg)
 
 WinBox и MAC-![](.gitbook/assets/8%20%281%29.jpeg)WinBox
 
@@ -256,7 +256,7 @@ Basic или blank конфигурация?
 * Подключаясь впервые по Winbox'у, нажмите “OK”
 * Роутер применит конфигурацию по умолчанию.
 
-![](.gitbook/assets/10.jpeg)
+![](.gitbook/assets/10%20%281%29.jpeg)
 
 Blank-конфигурация
 
@@ -324,7 +324,7 @@ How to upgrade
 
 – Downloads page
 
-![](.gitbook/assets/11.jpeg)
+![](.gitbook/assets/11%20%281%29.jpeg)
 
 How to upgrade
 
@@ -434,7 +434,7 @@ IP Services
 * To control services, go to “IP -&gt; Services”
 * Disable or enable required services.
 
-![](.gitbook/assets/15.jpeg)
+![](.gitbook/assets/15%20%281%29.jpeg)
 
 Access to IP Services
 

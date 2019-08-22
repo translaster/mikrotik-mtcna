@@ -34,7 +34,7 @@ description: М2 Маршрутизация
   * C : Connected \(подключен\)
   * S : Static \(статичен\)
 
-![](.gitbook/assets/2%20%282%29.jpeg)
+![](.gitbook/assets/2%20%283%29.jpeg)
 
 Флаги маршрута
 
@@ -51,7 +51,7 @@ description: М2 Маршрутизация
 * Маршруты к подсетям, которые существуют на маршрутизаторе, автоматически создаются и известны **этим** маршрутизаторам. Но что произойдет, если вам нужно добраться до подсети, которая существует на другом маршрутизаторе? Вы создаете статический маршрут!
 * Статический маршрут-это ручной способ пересылки трафика в неизвестные подсети.
 
-![](.gitbook/assets/3.jpeg)
+![](.gitbook/assets/3%20%281%29.jpeg)
 
 Статический маршрут
 
@@ -66,7 +66,7 @@ description: М2 Маршрутизация
 * Makes configuration simpler on very small network which will most likely not grow.
 * Limits the use of router resources \(memory, CPU\)
 
-![](.gitbook/assets/4.jpeg)
+![](.gitbook/assets/4%20%281%29.jpeg)
 
 ### Ограничения статической маршрутизации
 
@@ -112,13 +112,13 @@ How many static routes to add on router-1?
 
 #### Managing dynamic routes, example
 
-![](.gitbook/assets/7%20%281%29.jpeg)
+![](.gitbook/assets/7%20%282%29.jpeg)
 
 Implementing static routing on simple networks
 
 Consider the following example.
 
-![](.gitbook/assets/8%20%282%29.jpeg)
+![](.gitbook/assets/8%20%283%29.jpeg)
 
 #### Implementing static routing on simple networks
 
@@ -147,7 +147,7 @@ Assuming ip addresses have been properly entered, what commands would you use to
 
 Laboratory : Setup
 
-![](.gitbook/assets/9%20%281%29.jpeg)
+![](.gitbook/assets/9%20%282%29.jpeg)
 
 ### Laboratory : step 1
 
@@ -162,5 +162,5 @@ Laboratory : Setup
 * Create the default route using the trainer’s router as the gateway
 * Open a Web browser and try accessing Mikrotik’s Web page. Note results
 
-![](.gitbook/assets/6%20%281%29.jpeg)
+![](.gitbook/assets/6%20%282%29.jpeg)
 
