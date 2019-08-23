@@ -87,7 +87,7 @@ How many static routes to add on router-1?
 
 **Total of 15 static routes to add manually!!**
 
-![](.gitbook/assets/image%20%282%29.png)
+![](.gitbook/assets/image%20%286%29.png)
 
 ### Creating routes
 
