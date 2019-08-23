@@ -383,91 +383,78 @@ Reboot, yes? [y/N]:
 
 ## **Управление службами RouterOS**
 
-### IP Services
+### Службы IP
 
-* Manage IP services to
-  * Limit resource usage \(CPU, memory\)
-  * Limit security threats \(Open ports\)
-  * Change TCP ports
-  * Limit accepted IP addresses / IP subnets
-* To control services, go to “IP -&gt; Services”
-* Disable or enable required services.
+* Управление службами IP:
+  * Ограничение использования ресурсов \(ЦП, память\)
+  * Ограничение угроз безопасности \(открытые порты\)
+  * Изменение TCP-портов
+  * Ограничение одобренных IP-адресов/IP-подсетей
+* Для управления службами перейдите в раздел “IP -&gt; Services”
+* Отключите или включите необходимые службы.
 
 ![](.gitbook/assets/15%20%281%29.jpeg)
 
-### Access to IP Services
+### Доступ к службам IP
 
-* Double-click on a service
-* If needed, specify which hosts or subnets can access the service
-
-– Good practice to limit certain services to network administrators
+* Дважды щелкните на службе
+* При необходимости укажите, какие узлы или подсети могут получить доступ к службе
+  * Хорошая практика, чтобы ограничить определенные сервисы для сетевых администраторов
 
 ![](.gitbook/assets/16.jpeg)
 
-## **Managing configuration backups**
+## Управление резервными копиями конфигурации
 
-### Types of backups
+### Типы резервных копий
 
-* Binary backup
-* Configuration export
+* двоичное резервное копирования
+* экспорт конфигурации
 
-### Binary backups
+### Двоичное резервное копирование
 
-* Complete system backup
-* Includes passwords
-* Assumes that restores will be on same router
+* Полное резервное копирование системы
+* Включает пароли
+* Предполагается, что восстановление будет на том же маршрутизаторе
 
 ![](.gitbook/assets/17.jpeg)
 
-![](.gitbook/assets/18.jpeg)Export files
+### Export files
 
-* Complete or partial configuration
-* Generates a script file or sends to screen
-* Use “compact” to show only non-default configurations \(default on ROS6\)
-* Use “verbose” to show default configurations
+![](.gitbook/assets/m1-export.png)
 
-### Archiving backup files
+* Полная или частичная конфигурация
+* Создает файл скрипта или отправляет на экран
+* Используйте " compact” для отображения только нестандартных конфигураций \(по умолчанию на ROS 6\)
+* Используйте "verbose", чтобы показать конфигурации по умолчанию
+
+### Архивирование файлов резервных копий
 
 * Once generated, copy them to a server
-
-– With SFTP \(secured approach\)
-
-– With FTP, if enabled in IP Services
-
-– Using drag and drop from “Files” window
-
+  * With SFTP \(secured approach\)
+  * With FTP, if enabled in IP Services
+  * Using drag and drop from “Files” window
 * Leaving backup files on the router IS NOT a good archival strategy
-
-– No tape or CD backups are made of routers
+  * No tape or CD backups are made of routers
 
 ## **RouterOS licenses**
 
 ### License levels
 
 * 6 levels of licenses
-
-– 0 : Demo \(24 hours\)
-
-– 1 : Free \(very limited\)
-
-– 3 : WISP CPE \(Wi-Fi client\)
-
-– 4 : WISP \(required to run an access point\)
-
-– 5 : WISP \(more capacities\)
-
-– 6 : Controller \(unlimited capacities\)
+  * 0 : Demo \(24 hours\)
+  * 1 : Free \(very limited\)
+  * 3 : WISP CPE \(Wi-Fi client\)
+  * 4 : WISP \(required to run an access point\)
+  * 5 : WISP \(more capacities\)
+  * 6 : Controller \(unlimited capacities\)
 
 ### Licenses
 
 * Determines the capacities allowed on your router.
 * RouterBOARD come with a preinstalled license.
-
-– Levels vary
-
+  * Levels vary
 * Licenses must be purchased for an X86 system.
-
-– One license is valid for only one machine.
+  * One license is valid for only one machine.
 
 ### Updating licenses
 
@@ -476,14 +463,10 @@ Reboot, yes? [y/N]:
 [http://wiki.mikrotik.com/wiki/Manual:License](http://wiki.mikrotik.com/wiki/Manual:License)
 
 * Typical uses
-
-– Level 3: CPE, wireless client
-
-– Level 4: WISP
-
-– Level 5: Larger WISP
-
-– Level 6: ISP internal infrastructure \(Cloud Core\)
+  * Level 3: CPE, wireless client
+  * Level 4: WISP
+  * Level 5: Larger WISP
+  * Level 6: ISP internal infrastructure \(Cloud Core\)
 
 ### Use of licenses
 
@@ -504,58 +487,41 @@ Reboot, yes? [y/N]:
 For RBs without a COM port.
 
 * Connect computer to **Ethernet port 1**
-
-– Give computer a static IP address and mask
-
+  * Give computer a static IP address and mask
 * Launch Netinstall
-
-– Click on “Net booting” and write a random IP address in the same subnet as computer
-
+  * Click on “Net booting” and write a random IP address in the same subnet as computer
 * In “Packages” section, click “Browse” and select directory containing valid NPK files
 
 Procedure, no COM port
 
 * Press the “reset” button until the “ACT” LED turns off
-
-– Router will appear in “Routers/Drives” section
-
-– Select it!
-
+  * Router will appear in “Routers/Drives” section
+  * Select it!
 * Select required RouterOS version from “Packages” section
-
-– “Install” button becomes available; click it!
+  * “Install” button becomes available; click it!
 
 Procedure, no COM port
 
 * The progress bar will turn blue as the NPK file is being transferred
 * Once completed, reconnect the computer cable in one of valid ports and Internet access cable in port 1
 * Use MAC-Winbox to connect as configuration will be blank
-
-– Even if “Keep old configuration” was checked!!
+  * Even if “Keep old configuration” was checked!!
 
 Procedure, no COM port
 
 * Upload a configuration backup and reboot
-
-– \(thus the importance of proper backup management!\)
-
-* If the problem was a lost password, redo the configuration from scratch, as the backup will use the same _forgotten_ password
-
-\(thus the importance of proper access – management!\)
+  * \(thus the importance of proper backup management!\)
+* If the problem was a lost password, redo the configuration from scratch, as the backup will use the same _forgotten_ password \(thus the importance of proper access – management!\)
 
 Procedure, with COM port
 
 For RBs with a COM port
 
 * It starts off \(almost\) the same
-
-– PC in **Ethernet port 1** with static address
-
-– Connect PC’s serial port to RouterBOARD’s console \(COM\) port
-
-– Launch Netinstall \(and configure the “Net Booting” parameter\)
-
-– Select directory with NPK files
+  * PC in **Ethernet port 1** with static address
+  * Connect PC’s serial port to RouterBOARD’s console \(COM\) port
+  * Launch Netinstall \(and configure the “Net Booting” parameter\)
+  * Select directory with NPK files
 
 Procedure, with COM port
 
@@ -580,8 +546,7 @@ Procedure, with COM port
 * The progress bar will turn blue as the NPK file is being transferred
 * Once completed, reconnect the computer cable in one of valid ports and Internet access cable in port 1
 * You can use Winbox to connect
-
-– The “Keep old configuration” option works here!!
+  * The “Keep old configuration” option works here!!
 
 Procedure, with COM port
 
@@ -589,9 +554,7 @@ Procedure, with COM port
 * Press “Enter”, when prompted, to enter setup
 * Press “o” for boot device
 * Press “n” for NAND then Ethernet on fail
-
-– **If you forget, you will always boot** **from Ethernet**
-
+  * **If you forget, you will always boot** **from Ethernet**
 * Press “x” to exit setup \(which reboots the router\)
 
 ## **Additional Ressources**
