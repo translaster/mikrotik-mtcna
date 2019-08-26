@@ -1,6 +1,6 @@
 # Table of contents
 
-* [Initial Page](README.md)
+* [Начальная страница](README.md)
 * [Change Log](changelog.md)
 * [M1 Intro](m1-intro.md)
 * [M2 Routing](m2-routing.md)

@@ -429,259 +429,236 @@ Reboot, yes? [y/N]:
 
 ### Архивирование файлов резервных копий
 
-* Once generated, copy them to a server
-  * With SFTP \(secured approach\)
-  * With FTP, if enabled in IP Services
-  * Using drag and drop from “Files” window
-* Leaving backup files on the router IS NOT a good archival strategy
+* После создания скопируйте их на сервер
+  * Через SFTP \(безопасный метод\)
+  * Через FTP, если он включен в IP Services
+  * Используя перетаскивание из окна “Files”
+* Оставлять резервные копии файлов на маршрутизаторе не очень хорошая стратегия архивирования
   * No tape or CD backups are made of routers
 
-## **RouterOS licenses**
+## **Лицензии RouterOS**
 
-### License levels
+### Уровни лицензий
 
-* 6 levels of licenses
-  * 0 : Demo \(24 hours\)
-  * 1 : Free \(very limited\)
-  * 3 : WISP CPE \(Wi-Fi client\)
-  * 4 : WISP \(required to run an access point\)
-  * 5 : WISP \(more capacities\)
-  * 6 : Controller \(unlimited capacities\)
+* 6 уровней лицензий
+  * 0 : Демо \(24 часа\)
+  * 1 : Free \(весьма ограничена\)
+  * 3 : WISP CPE \(Wi-Fi клиент\)
+  * 4 : WISP \(требуется для запуска точки доступа\)
+  * 5 : WISP \(более производительная\)
+  * 6 : Controller \(неограниченные возможности\)
 
-### Licenses
+### Лицензии
 
-* Determines the capacities allowed on your router.
-* RouterBOARD come with a preinstalled license.
-  * Levels vary
-* Licenses must be purchased for an X86 system.
-  * One license is valid for only one machine.
+* Определяет допустимую производительность маршрутизатора.
+* RouterBOARD поставляется с предустановленной лицензией.
+  * Уровни варьируются
+* Лицензии должны быть приобретены для системы X86.
+  * Одна лицензия действительна только для одной машины.
 
-### Updating licenses
+### Обновление лицензий
 
-* Levels are described at the web page
+* Уровни описаны на веб-странице
 
 [http://wiki.mikrotik.com/wiki/Manual:License](http://wiki.mikrotik.com/wiki/Manual:License)
 
-* Typical uses
-  * Level 3: CPE, wireless client
+* Типовое применение
+  * Level 3: CPE, беспроводной клиент
   * Level 4: WISP
-  * Level 5: Larger WISP
-  * Level 6: ISP internal infrastructure \(Cloud Core\)
+  * Level 5: Большой WISP
+  * Level 6: внутренняя инфраструктура интернет-провайдера \(ядро облака\)
 
-### Use of licenses
+### Использование лицензий
 
-* Buy the right device / license right from the start.
-* The license is bound to the drive it is installed on. Be careful not to format the drive using non-Mikrotik tools.
-* Read the license web page for more details!
+* Купите нужное устройство/лицензию с самого начала.
+* Лицензия привязана к диску, на котором она установлена. Будьте осторожны, чтобы не отформатировать диск с помощью инструментов не Mikrotik.
+* Прочитайте веб-страницу лицензии для получения более подробной информации!
 
-## **Netinstall**
+## **Сетевая установка**
 
-### Uses of Netinstall
+### Использование сетевой установки
 
-* Reinstall RouterOS if the original one became damaged
-* Reinstall RouterOS if the “admin” password was lost
-* Can be found on MikroTik’s web site under the download tab
+* Переустановка RouterOS если исходный образ был поврежден
+* Переустановка RouterOS, если пароль ”admin" был потерян
+* Вы можете найти на веб-сайте MikroTik на вкладке загрузки
 
-### Procedure, no COM port
+### Процедура без COM-порта
 
-For RBs without a COM port.
+Для RB без COM-порта.
 
-* Connect computer to **Ethernet port 1**
-  * Give computer a static IP address and mask
-* Launch Netinstall
-  * Click on “Net booting” and write a random IP address in the same subnet as computer
-* In “Packages” section, click “Browse” and select directory containing valid NPK files
+* Подключите компьютер к **порту Ethernet 1**
+  * Дайте компьютеру статический IP-адрес и маску
+* Запустите Netinstall
+  * Нажмите на кнопку " Net booting” и напишите случайный IP-адрес в той же подсети, что и компьютер
+* В разделе “Packages”, нажмите “Browse” и выберите каталог, содержащий допустимые файлы NPK
+* Нажмите кнопку "reset", пока светодиод " ACT " не погаснет
+  * Маршрутизатор появится в разделе "Routers/Drives"
+  * Выберите его!
+* Выберите необходимую версию RouterOS из раздела "Packages"
+  * Кнопка “Install” станет доступной; нажмите её!
+* Прогресс-бар будет закрашиваться в синий цвет пока файл NPK будет передаваться
+* После завершения подсоедините компьютерный кабель к одному из допустимых портов и кабель доступа в Интернет к порту 1
+* Используйте MAC-Winbox для подключения, поскольку конфигурация будет пустой
+  * Даже если было выбрано "Keep old configuration"!!
+* Загрузите резервную копию конфигурации и перезагрузите
+  * \(вот в чем важность правильного управления резервным копированием!\)
+* Если проблема заключалась в утерянном пароле, переделайте конфигурацию с нуля, так как при резервном копировании будет использоваться тот же _**забытый**_ пароль \(при этом важна правильность управления доступом!\)
 
-Procedure, no COM port
+### Процедура с COM-портом
 
-* Press the “reset” button until the “ACT” LED turns off
-  * Router will appear in “Routers/Drives” section
-  * Select it!
-* Select required RouterOS version from “Packages” section
-  * “Install” button becomes available; click it!
+Для RB с COM-портом
 
-Procedure, no COM port
+* Она начинается \(почти\) так же
+  * ПК в **порт Ethernet 1** со статическим адресом
+  * Подключить серийный порт ПК к консольному \(COM\) порту RouterBOARD
+  * Запустите Netinstall \(и настройте параметр "Net Booting"\)
+  * Выберите каталог с файлами NPK
+* Перезагрузите маршрутизатор
+* Нажмите кнопку "Enter", когда появится запрос, чтобы войти в настройки
+* Нажмите “o” для загрузочного устройства
+* Нажмите “e” для Ethernet
+* Нажмите “x” для выхода из установок \(что перезагрузит маршрутизатор\)
+  * Маршрутизатор появится в разделе “Routers/Drives”
+  * Select it
+* Выберите пакет RouterOS, который будет установлен
+  * Нажмите кнопку **“Keep old configuration” \(Сохранить старую конфигурацию\)**
+  * Кнопка “Install” становится доступной; нажмите её!
+* Прогресс-бар будет закрашиваться в синий цвет пока файл NPK будет передаваться
+* После завершения подсоедините компьютерный кабель к одному из допустимых портов и кабель доступа в Интернет к порту 1
+* Вы можете использовать Winbox для подключения
+  * Опция “Keep old configuration” здесь работает!!
+* Перезагрузите маршрутизатор
+* Нажмите кнопку "Enter", когда появится запрос, для входа в настройки
+* Нажмите “o” для загрузки устройства
+* Нажмите “n” для NAND затем Ethernet при сбое
+  * **Если вы забыли, вы всегда будете загружаться из Ethernet**
+* Нажмите “x” для выхода из настроек \(что перезагрузит маршрутизатор\)
 
-* The progress bar will turn blue as the NPK file is being transferred
-* Once completed, reconnect the computer cable in one of valid ports and Internet access cable in port 1
-* Use MAC-Winbox to connect as configuration will be blank
-  * Even if “Keep old configuration” was checked!!
-
-Procedure, no COM port
-
-* Upload a configuration backup and reboot
-  * \(thus the importance of proper backup management!\)
-* If the problem was a lost password, redo the configuration from scratch, as the backup will use the same _forgotten_ password \(thus the importance of proper access – management!\)
-
-Procedure, with COM port
-
-For RBs with a COM port
-
-* It starts off \(almost\) the same
-  * PC in **Ethernet port 1** with static address
-  * Connect PC’s serial port to RouterBOARD’s console \(COM\) port
-  * Launch Netinstall \(and configure the “Net Booting” parameter\)
-  * Select directory with NPK files
-
-Procedure, with COM port
-
-* Reboot the router
-* Press “Enter”, when prompted, to enter setup
-* Press “o” for boot device
-* Press “e” for Ethernet
-* Press “x” to exit setup \(which reboots the router\)
-
-Procedure, with COM port
-
-– Router will appear in “Routers/Drives” section
-
-– Select it
-
-* Select RouterOS package that will be installed
-  * * Click **“Keep old configuration”**
-    * “Install” button becomes available; click it!
-
-Procedure, with COM port
-
-* The progress bar will turn blue as the NPK file is being transferred
-* Once completed, reconnect the computer cable in one of valid ports and Internet access cable in port 1
-* You can use Winbox to connect
-  * The “Keep old configuration” option works here!!
-
-Procedure, with COM port
-
-* Reboot the router
-* Press “Enter”, when prompted, to enter setup
-* Press “o” for boot device
-* Press “n” for NAND then Ethernet on fail
-  * **If you forget, you will always boot** **from Ethernet**
-* Press “x” to exit setup \(which reboots the router\)
-
-## **Additional Ressources**
+## **Дополнительные ресурсы**
 
 ### Wiki
 
 [http://wiki.mikrotik.com/wiki/Manual:TOC](http://wiki.mikrotik.com/wiki/Manual:TOC)
 
-* RouterOS main Wiki page
-* Documentation on all RouterOS commands
-  * Explanation
-  * Syntax
-  * Examples
-* Extra tips and tricks
+* RouterOS главная страница Вики
+* Документация по всем командам маршрутизаторов
+  * Пояснение
+  * Синтаксис
+  * Примеры
+* Дополнительные советы и рекомендации
 
 ### Tiktube
 
 [http://www.tiktube.com/](http://www.tiktube.com/)
 
-* Video resources on various subjects
-* Presented by trainers, partners, ISPs, etc.
-* May include presentation slides
-* Various languages
+* Видео ресурсы на различные темы
+* Представления тренеров, партнеров, интернет-провайдеров и др.
+* Может включать в себя презентации слайдов
+* Различные языки
 
-### Forum
+### Форум
 
 [http://forum.mikrotik.com/](http://forum.mikrotik.com/)
 
-* Moderated by Mikrotik staff
-* Discussion board on various topics
-* A LOT of information can be found here
-  * You could find a solution to your problem!
-* Please search BEFORE posting a question
-  * Standard forum etiquette
+* Модерируется сотрудниками Mikrotik
+* Дискуссии по различным темам
+* Много информации можно найти здесь
+  * Вы можете найти решение своей проблемы!
+* Пожалуйста, воспользуйтесь поиском ПЕРЕД размещением вопроса
+  * Стандартный этикет форума
 
-### Mikrotik support
+### Поддержка Mikrotik
 
 [support@mikrotik.com](mailto:support@mikrotik.com)
 
-* Support procedures explained at [http://](http://www.mikrotik.com/support.html) [www.mikrotik.com/support.html](http://www.mikrotik.com/support.html)
-* Support from Mikrotik for 15 days \(license level 4\) and 30 days \(license level 5 and level 6\) if router bought from them
+* Процедуры поддержки описанны в [http://](http://www.mikrotik.com/support.html) [www.mikrotik.com/support.html](http://www.mikrotik.com/support.html)
+* Поддержка от Mikrotik в течение 15 дней \(уровень лицензии 4\) и 30 дней \(уровень лицензии 5 и уровень 6\), если маршрутизатор куплен у них
 
-Distributor / consultant support
+### Дистрибьюторская/консультационная поддержка
 
-* Support is given by distributor when router is purchased from them
-* Certified consultants can be hired for special needs. Visit [http://](http://www.mikrotik.com/consultants.html) [www.mikrotik.com/consultants.html](http://www.mikrotik.com/consultants.html) for more information
+* Поддержка предоставляется дистрибьютором при покупке маршрутизатора у них
+* Сертифицированные консультанты могут быть наняты для особых нужд. Посетите [http://](http://www.mikrotik.com/consultants.html) [www.mikrotik.com/consultants.html](http://www.mikrotik.com/consultants.html) для получения дополнительной информации
 
-Time for a practical exercise
+Время для практических занятий
 
-## Laboratory
+## Лаботаторка
 
-* Goals of the lab
-  * Familiarise students with access methods
-  * Configure Internet access
-  * Upgrade the router with current RouterOS
-  * Create a limited access group, assign it a user
-  * Manage IP services
-  * Do a backup of current configuration and restore it after doing a factory reset
+* Цель лабораторной работы
+  * Ознакомление студентов с методами доступа
+  * Настройка доступа в интернет
+  * Обновление маршрутизатора на текущую RouterOS
+  * Создание группы ограниченного доступа, назначение ей пользователя
+  * Управление IP-службами
+  * Создание резервной копии текущей конфигурации и восстановление ее после сброса настроек
 
-Laboratory : Setup
+Лабораторка: Установка
 
 ![](.gitbook/assets/19.jpeg)
 
-Laboratory : step 1
+Лабораторка: шаг 1
 
-* Configure your computer with the static IP address of your pod
-  * Specify subnet mask
-  * Specify default gateway \(your router\)
-  * Specify DNS server \(your router\)
-* Do a Netinstall of ROS 6
-* Once rebooted, connect to it in the manner that will allow you full access
+* Настройка компьютера со статическим IP-адресом вашего модуля
+  * Укажите маску подсети
+  * Укажите шлюз по умолчанию \(ваш маршрутизатор\)
+  * Укажите DNS-сервер \(маршрутизатор\)
+* Сделайте Netinstall на ROS 6
+* После перезагрузки подключиться к нему таким образом, что позволит вам полный доступ
 
 ![](.gitbook/assets/8%20%281%29.jpeg)
 
-Laboratory : step 2
+Лабораторка: шаг 2
 
-* Configure the router’s LAN IP address
-* Configure the router’s WAN IP address
-* Configure the router’s NAT rule
-* Configure the router’s DNS server
-* Configure the router’s default route\*
+* Настройка LAN IP-адреса маршрутизатора
+* Настройка WAN IP-адреса маршрутизатора
+* Настройка правила NAT маршрутизатора
+* Настройка DNS-сервера маршрутизатора
+* Настройка маршрута по умолчанию для маршрутизатора\*
 
-Laboratory : step 3
+Лабораторка: шаг 3
 
-* Add a group named “minimal”
-  * Give it the “telnet”, “read”, and “winbox” rights
-  * Explain these rights
-* Add a user and give it your name
-  * Assign it to “minimal” group
-  * Give it a password
-* Assign a password to “admin”
-  * Give it “pod_X_”, where “_X_” is your pod number
-  * Open a new terminal. What happened?
+* Добавить группу под названием “minimal”
+  * Дайте ей права” telnet“, ”read“ и ”winbox"
+  * Объясните эти права
+* Добавьте пользователя и дайте ему свое имя
+  * Назначьте ему группу "minimal"
+  * Назначьте ему пароль
+* Назначьте пароль для “администратора”
+  * Дайте ему "pod_X_“, где "_X_" - номер вашего модуля
+  * Откройте новый терминал. Что произошло?
 
-Laboratory : step 4
+Лабораторка: шаг 4
 
-* Insure that RouterBOARD firmware is up to date.
-* Copy NTP package \(NPK file\)
+* Убедитесь, что прошивка RouterBOARD обновлена.
+* Скопируйте пакет NTP \(файл NPK\)
   * Check System -&gt; SNTP Client
   * Check System -&gt; NTP Client and NTP Server
-  * What happened?
-* Once rebooted
+  * Что произошло
+* Как только перезагрзится
   * Check System -&gt; SNTP Client
   * Check System -&gt; NTP Client and NTP Server
-* Configure NTP client and clock’s timezone
+* Настройка NTP-клиента и часового пояса
 
-Laboratory : step 5
+Лабораторка: шаг 5
 
-* The students will telnet into the router
-* The students will disable these IP services:
+* Студенты подключатся через телнет к маршрутизатору
+* Студенты отключат эти IP-сервисы:
   * Telnet
   * WWW
-* The students will connect to the router using Telnet, a Web browser and SSH
-  * Explain the results
+* Студенты будут подключаться к маршрутизатору с помощью Telnet, веб-браузера и SSH
+  * Объясните результаты
 
-Laboratory : step 6
+Лабораторка: шаг 6
 
-* Open a “New Terminal” and the “Files” window
-* Export the configuration, from the root, to a file named “module1-pod_X_ ”
-* Do a binary backup
-* Copy both files to your computer
-  * Open both of them and view contents
-  * Delete your NAT rule and use the “exported” file to recreate it rapidly
+* Откройте “New Terminal” и окно “Files”
+* Экспортируйте конфигурацию из корня в файл с именем “module1-pod_X_”
+* Сделайте двоичное резервное копирование
+* Скопируйте оба файла на компьютер
+  * Откройте их оба и просмотрите содержимое
+  * Удалите правило NAT и используйте ”экспортированный" файл, чтобы быстро его воссоздать
 
-Laboratory : step 7
+Лабораторка: шаг 7
 
-* View the routerBOARD’s license
-  * Check the level of the router and indicate it’s meaning
-  * As a group, discuss the potential uses from this level of license
+* Просмотр лицензии routerBOARD
+  * Проверьте уровень маршрутизатора и укажите его назначение
+  * Как группа обсудите потенциальные возможности использования этого уровня лицензии
 
