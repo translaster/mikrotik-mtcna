@@ -1,89 +1,46 @@
 # M4 Wireless
 
-## **802.11 concepts**
+## Концепция **802.11**
 
-Frequencies
+### Частоты
 
 * 802.11b
-
-– 2.4GHz \(22MHz bandwidth\), 11Mbps
-
+  * 2.4GHz \(ширина полосы 22MHz\), 11Mbps
 * 802.11g
-
-– 2.4GHz \(22MHz bandwidth\), 54Mbps
-
+  * 2.4GHz \(ширина полосы 22MHz\), 54Mbps
 * 802.11a
-
-– 5GHz \(20MHz bandwidth\), 54Mbps
-
+  * 5GHz \(ширина полосы 20MHz\), 54Mbps
 * 802.11n
+  * 2.4GHz или 5GHz до 300Mbps, если используется канал 40MHz и 2 радио \(каналы\)
 
-– 2.4GHz or 5GHz up to 300Mbps, if using 40MHz channel and 2 radios \(chains\)
+![&#x414;&#x438;&#x430;&#x433;&#x440;&#x430;&#x43C;&#x43C;&#x430; &#x41C;&#x430;&#x439;&#x43A;&#x43B;&#x430; &#x413;&#x43E;&#x442;&#x44C;&#x435;](.gitbook/assets/0%20%283%29.jpeg)
 
-Frequencies
-
-![](.gitbook/assets/0%20%283%29.jpeg)
-
-Diagram by Michael Gauthier
-
-* 802.11b,g frequency range
-* Channels 1, 6 and 11 non-overlapping
-
-Frequencies
+* 802.11b,g диапазон частот
+* Каналы 1, 6 и 11 неперекрывающиеся
 
 ![](.gitbook/assets/1%20%283%29.jpeg)
 
-* 802.11a frequency range
-* 12 20MHz wide channels and 5 40MHz channels
-
-Frequencies
-
-* Bands
-
-– Mikrotik supports both 5GHz \(802.11a/n\) and 2.4GHz bands \(802.11b/g/n\)
-
-Frequencies
-
-* The “Advanced Channels” feature provides extended possibilities in wireless interface configuration:
-
-– scan-list that covers multiple bands and channel widths;
-
-– non-standard channel center frequencies \(specified with KHz granularity\) for hardware that allows it;
-
-– non-standard channel widths \(specified with KHz granularity\) for hardware that allows it.
-
-Frequencies
-
+* 802.11a частотный диапазон
+* 12 каналов с шириной 20MHz и 5 с шириной 40MHz
+* Диапазон
+  * Mikrotik поддерживает оба 5GHz \(802.11a/n\) и 2.4GHz \(802.11b/g/n\)
+* Функции “Advanced Channels” предоставляет расширенные возможности в конфигурации беспроводного интерфейса:
+  * scan-list that covers multiple bands and channel widths;
+  * non-standard channel center frequencies \(specified with KHz granularity\) for hardware that allows it;
+  * non-standard channel widths \(specified with KHz granularity\) for hardware that allows it.
 * Basic-rates are the speeds that a client MUST support in order to connect to an AP
 * Supported-rates are the speeds that can be achieved once the connection has been accepted \(factors may influence top speed achieved\)
 * Data-rates are the supported rates according to the standard being used.
-
-– 802.11b : 1 to 11Mbps
-
-– 802.11a/g : 6 to 54Mbps
-
-– 802.11n : 6 to 300Mbps, according to factors such as channel bandwidth \(20 or 40 MHz\), Guard Interval \(GI\), and chains
-
-Frequencies
-
+  * 802.11b : 1 to 11Mbps
+  * 802.11a/g : 6 to 54Mbps
+  * 802.11n : 6 to 300Mbps, according to factors such as channel bandwidth \(20 or 40 MHz\), Guard Interval \(GI\), and chains
 * HT chains
-
-– Are antennas for one radio
-
-– Used for 802.11n and is a factor in throughput
-
-Frequencies
-
+  * Are antennas for one radio
+  * Used for 802.11n and is a factor in throughput
 * Frequency mode
-
-– Regulatory-domain : Limit channels and TX power based on country regulations.
-
-– Manual-txpower : Same as above but without TX power restriction.
-
-– Superchannel : Will ignore all restrictions
-
-Frequencies
-
+  * Regulatory-domain : Limit channels and TX power based on country regulations.
+  * Manual-txpower : Same as above but without TX power restriction.
+  * Superchannel : Will ignore all restrictions
 * “Country” parameter : Frequencies and power limitations are based on “_country_”’s regulations. Using “_no\_country\_set_” will configure FCC approved set of channels.
 
 Setting-up a simple wireless link
@@ -91,16 +48,11 @@ Setting-up a simple wireless link
 ![](.gitbook/assets/2%20%281%29.jpeg)
 
 * Access point configuration
-
-– Mode : ap bridge
-
-– Band : Based on router’s and clients’ capacities. If AP supports multiple bands \(ex. B/G/N\) select the one that best fits your needs
-
-– Frequency : Any of the available channels \(_we’ll talk more about_ _this later on!!_\)
-
-– SSID : The wireless network’s identity clients will look for
-
-– Wireless protocol : Based on router’s and clients’ capacities. For “normal” AP to PC links, use 802.11
+  * Mode : ap bridge
+  * Band : Based on router’s and clients’ capacities. If AP supports multiple bands \(ex. B/G/N\) select the one that best fits your needs
+  * Frequency : Any of the available channels \(_we’ll talk more about_ _this later on!!_\)
+  * SSID : The wireless network’s identity clients will look for
+  * Wireless protocol : Based on router’s and clients’ capacities. For “normal” AP to PC links, use 802.11
 
 Setting-up a simple wireless link
 
@@ -113,16 +65,11 @@ Setting-up a simple wireless link
 ![](.gitbook/assets/4.jpeg)Setting-up a simple wireless link
 
 * To add a security profile
-
-– Click on “Add” \(+\)
-
-– Name : The profile’s name
-
-– Mode : Type of authentication to use
-
-– Authentication types : Methods used to authenticate a connection
-
-– Ciphers : Encryption methods
+  * Click on “Add” \(+\)
+  * Name : The profile’s name
+  * Mode : Type of authentication to use
+  * Authentication types : Methods used to authenticate a connection
+  * Ciphers : Encryption methods
 
 Setting-up a simple w![](.gitbook/assets/5%20%283%29.jpeg)ireless link
 
@@ -133,10 +80,8 @@ Setting-up a simple wireless link
 ![](.gitbook/assets/6%20%281%29.jpeg)
 
 * Back to frequencies! Which one to use?
-
-– Click on “Snooper”
-
-– Beware! This WILL disconnect the wlan interface and associated clients
+  * Click on “Snooper”
+  * Beware! This WILL disconnect the wlan interface and associated clients
 
 Setting-up a simple wireless link
 
@@ -190,12 +135,9 @@ MAC address filtering
 ![](.gitbook/assets/12%20%281%29.jpeg)
 
 * Access lists are used **on** **APs** to restrict connections to specific clients and control their connection parameters.
-
-– Rules are checked sequentially
-
-– Applies only the first matching rule
-
-– If “Default Authenticate” option \(“_Wireless_” tab in “_Interface -&gt; wlan_ ” screen\) is unchecked, devices that do not match an access-list rule are rejected
+  * Rules are checked sequentially
+  * Applies only the first matching rule
+  * If “Default Authenticate” option \(“_Wireless_” tab in “_Interface -&gt; wlan_ ” screen\) is unchecked, devices that do not match an access-list rule are rejected
 
 MAC address filtering
 
@@ -207,9 +149,7 @@ MAC address filtering
 MAC address filtering
 
 * AP Tx Limit restricts data rate from AP to client
-
-– Setting it too low might cause connection problems. Test first!
-
+  * Setting it too low might cause connection problems. Test first!
 * Client TX Limit restricts data rate from client to AP
 
 ![](.gitbook/assets/14%20%281%29.jpeg)

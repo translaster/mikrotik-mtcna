@@ -1,146 +1,111 @@
 # M3 Bridging
 
-## **Bridging overview**
+## Обзор **Bridging \(Моста\)**
 
-Bridging concepts
+Концепция Моста
 
-* Bridges are OSI layer 2 devices.
-* Traditionally, they were used to join two segments of different \(or similar\) technology.
+* Мосты - это устройства 2 уровня OSI.
+* Традиционно они использовались для объединения двух сегментов различных \(или похожих\) технологий.
 
 ![](.gitbook/assets/0%20%281%29.png)
 
-Bridging concepts
+* Мосты также использовались для создания меньших доменов колизий.
+  * Целью было повышение производительности за счет уменьшения размера подсети. Особенно полезно перед появлением коммутаторов.
+* Коммутаторы известны как многопортовые мосты.
+  * **Каждый порт** является доменом колизий одного устройства!
 
-* Bridges were also used to create smaller collision domains.
+Пример 1
 
-– The goal was to improve performance by reducing the size of the subnet. Especially useful before the advent of switches.
-
-* Switches are known as multi-port bridges.
-
-– Each port is a collision domain of ONE device!
-
-Example 1
-
-* All computers can communicate with each other.
-* All have to wait for everybody to be quiet before one can begin transmitting!
+* Все компьютеры могут взаимодействовать друг с другом.
+* Все должны ждать, пока все успокоятся, прежде чем начать передачу!
 
 ![](.gitbook/assets/1%20%283%29.png)
 
-Example 2
+Пример 2
 
-* All computers still “hear” each other.
-* All computers now only share half the “wire”.
-* All still have to wait for everybody to be quiet before one can begin transmitting, but the group is half the size now.
-
-– Better performance for all devices!
+* Все компьютеры по-прежнему ”слышат" друг друга.
+* Все компьютеры теперь разделяют только половину "полосы".
+* Все еще должны ждать, пока все успокоятся, прежде чем можно будет начать передачу, но сейчас группа в два раза меньше.
+  * Лучшая производительность для всех устройств!
 
 ![](.gitbook/assets/2%20%281%29.png)
 
-Using bridges
+## Использование мостов
 
-* By default, in MikroTik routers, Ethernet ports are associated \(slave\) to a master port.
+* По умолчанию в маршрутизаторах MikroTik порты Ethernet связаны \(slave\) с master портом.
+  * Преимущество: скорость переключения полосы \(через чип коммутатора, а не программное обеспечение\).
+  * Недостаток: отсутствие видимости трафика slave портов. Не желательно при использовании SNMP для мониторинга использования портов.
+* Удаляя конфигурацию master и slave, вы должны использовать интерфейс моста для связывания с ним необходимых портов в одной локальной сети.
+  * Преимущество: полная видимость всей статистики портов для этих портов.
+  * Недостаток: переключение осуществляется через программное обеспечение. Некий удар по ЦП. Скорость передачи пакетов меньше оптимальной 
 
-– Advantage : Wire speed switching \(through switch chip, not software\).
+    .
 
-– Disadvantage : No visibility of traffic of slave ports. Not desirable if using SNMP to monitor port usage.
+## Создание мостов
 
-Using bridges
+* Используя меню
+  * Bridge
+  * Add \(**+**\)
+  * Задание имя моста
+  * Нажать “OK” и всё готово!
 
-* By removing master and slave configuration, you must use a bridge interface to bundle to it the required ports in a single LAN.
+Создание моста, пример
 
-– Advantage : Complete visibility of all port statistics for those ports.
+![](.gitbook/assets/image%20%2811%29.png)
 
-– Disadvantage : Switching done through software. Some CPU hit. Less than optimal packet transfer speed.
+![](.gitbook/assets/image%20%282%29.png)
 
-Creating bridges
+### Добавление портов к мостам
 
-* Using the menus
+* Добавление портов определяет, какие из них принадлежат к той же подсети.
+* Различные технологии могут быть добавлены, как например интерфейс Wi-Fi.
+* Путь меню для добавления порта
+  * Bridge
+  * Ports tab
+  * Add \(**+**\)
+  * Choose the interface and the bridge
+  * Click “OK” and you’re done!
 
-– Bridge
+#### Добавление портов к мостам, пример
 
-– Add \(**+**\)
+![](.gitbook/assets/image%20%286%29.png)
 
-– Name the bridge
+![](.gitbook/assets/image%20%2814%29.png)
 
-– Click “OK” and you’re done!
+Мост беспроводных сетей
 
-Creating bridges, example
+* То же самое можно сделать с беспроводными интерфейсами.
+* Мы увидим это в следующем модуле. Будьте терпеливы! 🙂 
 
-![](.gitbook/assets/3%20%283%29.png)
+## Лабораторка
 
-Adding ports to bridges
+* Цель лабораторки
+  * Создание моста
+  * Назначение портов мосту
+  * Убедитесь, что, выполнив следующие действия, можно назначить все свободные порты одной подсети
 
-* Adding ports will define which ones belong to the same subnet.
-* Different technologies can be added, like a Wi-Fi interface.
-
-Adding ports to bridges
-
-* Menu path to add a port
-
-–
-
-–
-
-–
-
-Bridge
-
-Ports tab
-
-Add \(**+**\)
-
-– Choose the interface and the bridge
-
-– Click “OK” and you’re done!
-
-Adding ports to bridges, example
-
-![](.gitbook/assets/4%20%281%29.png)
-
-Bridging wireless networks
-
-* The same can be done with wireless interfaces.
-* We will see this in the next module. Be patient! 
-
-Time for a practical exercise
-
-**End of module 3**
-
-## Laboratory
-
-* Goals of the lab
-
-– Create a bridge
-
-– Assign ports to a bridge
-
-– Validate that by following these steps, you can assign all free ports to the same subnet
-
-Laboratory : Setup
+Лабораторка: Установка
 
 ![](.gitbook/assets/5%20%282%29.png)
 
-Laboratory : step 1
+### Лабораторка: шаг 1
 
-* Launch “ping –t –w 500 192.168.0.254”.
-* Unplug your network cable from the current port \(\#5\) and plug it in another port.
-* Discuss the results.
-* Leave the command window up and running and visible throughout this lab.
+* Запустите “ping –t –w 500 192.168.0.254”.
+* Отсоедините сетевой кабель от текущего порта \(\#5\) и подключите его к другому порту.
+* Обсудить результаты.
+* Оставьте командное окно включенным и работающим и видимым во всей этой лаборатории.
 
-Laboratory : step 2
+### Лабораторка: шаг 2
 
-* Connect to your router in any way that will work.
-* Create a bridge interface. Name it “LAN” and leave the other values at their default.
-* Assign the pod’s LAN’s IP address \(192.168.X.1\) to the bridge interface.
-* Has anything changed?
+* Подключитесь к маршрутизатору любым способом, который будет работать.
+* Создайте интерфейс моста. Назовите его "LAN" и оставьте другие значения по умолчанию.
+* Назначьте IP-адрес локальной сети модуля \(192.168.X.1\) интерфейсу моста.
+* Что-нибудь изменилось?
 
-Laboratory : step 3
+### Лабораторка: шаг 3
 
-| • | Open the “Interface List” window and check which interfaces are running. |  |  |
-| :--- | :--- | :--- | :--- |
-| • | Assign ports \#2 through \#5 to the “LAN” bridge interface. |  |  |
-| • | Discuss the results. When did your ping return? |  |  |
-| • | Switch your cable to ports \#2 through \#5. What happens? Discuss why. Look at the status column. What does “I” mean? |  |  |
-
-**End of Laboratory 3**
+* Откройте окно "Interface List" и проверьте, какие интерфейсы запущены.
+* Назначьте порты с\#2 по \#5 для интерфейса моста "LAN".
+* Обсудить результаты. Когда ваш пинг вернулся?
+* Переключите кабель к портам №2 - 5. Что происходит? Обсудите, почему. Посмотрите на столбец статуса. Что означает "I"?
 
