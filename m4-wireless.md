@@ -24,102 +24,76 @@
 * 12 каналов с шириной 20MHz и 5 с шириной 40MHz
 * Диапазон
   * Mikrotik поддерживает оба 5GHz \(802.11a/n\) и 2.4GHz \(802.11b/g/n\)
-* Функции “Advanced Channels” предоставляет расширенные возможности в конфигурации беспроводного интерфейса:
-  * scan-list that covers multiple bands and channel widths;
-  * non-standard channel center frequencies \(specified with KHz granularity\) for hardware that allows it;
-  * non-standard channel widths \(specified with KHz granularity\) for hardware that allows it.
-* Basic-rates are the speeds that a client MUST support in order to connect to an AP
-* Supported-rates are the speeds that can be achieved once the connection has been accepted \(factors may influence top speed achieved\)
-* Data-rates are the supported rates according to the standard being used.
-  * 802.11b : 1 to 11Mbps
-  * 802.11a/g : 6 to 54Mbps
-  * 802.11n : 6 to 300Mbps, according to factors such as channel bandwidth \(20 or 40 MHz\), Guard Interval \(GI\), and chains
-* HT chains
-  * Are antennas for one radio
-  * Used for 802.11n and is a factor in throughput
-* Frequency mode
-  * Regulatory-domain : Limit channels and TX power based on country regulations.
-  * Manual-txpower : Same as above but without TX power restriction.
-  * Superchannel : Will ignore all restrictions
-* “Country” parameter : Frequencies and power limitations are based on “_country_”’s regulations. Using “_no\_country\_set_” will configure FCC approved set of channels.
+* Функция “Advanced Channels” предоставляет расширенные возможности в конфигурации беспроводного интерфейса:
+  * скан-список, который охватывает несколько полос и широт каналов;
+  * нестандартные центральные частоты канала \(заданные с детализацией кГц\) для аппаратных средств, которые позволяют это;
+  * нестандартные широты канала \(заданные с детализацией кГц\) для аппаратного обеспечения, которое позволяет это.
+* Базовые скорости - это скорости, которые клиент ДОЛЖЕН поддерживать для подключения к точке доступа.
+* Поддерживаемые скорости - это скорости, которые могут быть достигнуты после того, как соединение было принято \(факторы могут влиять на максимальную скорость, достигнутую\)
+* Скорость передачи данных - это поддерживаемая скорость в соответствии с используемым стандартом.
+  * 802.11b: от 1 до 11Mbps
+  * 802.11a/g: от 6 до 54Mbps
+  * в зависимости от таких факторов, как пропускная способность канала \(20 или 40 МГц\), защитный интервал \(GI\) и цепи
+* HT цепи
+  * Есть антенны для одного радио
+  * Используется для 802.11n и является фактором пропускной способности
+* Частотный режим
+  * Regulatory-domain: ограничение каналов и мощность передатчика на основе положения страны.
+  * Manual-txpower: то же самое, что и выше, но без ограничения мощности TX.
+  * Superchannel: будет игнорировать все ограничения
+* Параметр “Country”: частоты и ограничения мощности основаны на правилах ”_country_". Использование "_no\_country\_set_" настроит одобренный FCC набор каналов.
 
-Setting-up a simple wireless link
+## Настройка простой беспроводной связи
 
 ![](.gitbook/assets/2%20%281%29.jpeg)
 
-* Access point configuration
+* Конфигурация точки доступа
   * Mode : ap bridge
-  * Band : Based on router’s and clients’ capacities. If AP supports multiple bands \(ex. B/G/N\) select the one that best fits your needs
-  * Frequency : Any of the available channels \(_we’ll talk more about_ _this later on!!_\)
-  * SSID : The wireless network’s identity clients will look for
-  * Wireless protocol : Based on router’s and clients’ capacities. For “normal” AP to PC links, use 802.11
-
-Setting-up a simple wireless link
+  * Band : основанный на возможностях маршрутизатора и клиентов. Если AP поддерживает несколько полос \(например. B/G/ N\) выберите тот, который лучше всего соответствует вашим потребностям
+  * Frequency : любой из доступных каналов \(мы поговорим об этом позже!!\)
+  * SSID : идентификатор беспроводной сети для поиска клиентами
+  * Wireless protocol : основан на возможностях маршрутизатора и клиентов. Для ”нормальных" соединений AP на ПК используйте 802.11
 
 ![](.gitbook/assets/3.jpeg)
 
-* **PLEASE** SET-UP A SECURITY PROFILE!
+* **ПОЖАЛУЙСТА**, НАСТРОЙТЕ ПРОФИЛЬ БЕЗОПАСНОСТИ!
+  * Не делать этого - полное нарушение безопасности. Это оставляет вашу сеть широко открытой!
+* Добавление профиля безопасности
+  * Нажмите кнопку “Add” \(+\)
+  * Name: Имя профиля
+  * Mode: используемый тип аутентификации
+  * Authentication types: методы, используемые для проверки подлинности соединения
+  * Ciphers: методы шифрования
 
-– Not doing it is a total security breach. It leaves your network wide open!
+![](.gitbook/assets/image%20%288%29.png)
 
-![](.gitbook/assets/4.jpeg)Setting-up a simple wireless link
+* Теперь вы можете использовать свой новый профиль безопасности и чувствовать себя в безопасности в своей беспроводной сети
 
-* To add a security profile
-  * Click on “Add” \(+\)
-  * Name : The profile’s name
-  * Mode : Type of authentication to use
-  * Authentication types : Methods used to authenticate a connection
-  * Ciphers : Encryption methods
+![](.gitbook/assets/image%20%2815%29.png)
 
-Setting-up a simple w![](.gitbook/assets/5%20%283%29.jpeg)ireless link
+* Вернемся к частотам! Какую из них использовать?
+  * Кликните “Snooper”
+  * Опасно! Это отключит интерфейс wlan и подключенных клиентов
+  * У вас будет полное представление об используемых диапазонах и частотах
+  * Выберите свободный канал или, по крайней мере, канал с низким уровнем загруженности
 
-* Now you can use your new security profile and feel better about your wireless network’s security
+![](.gitbook/assets/image%20%289%29.png)
 
-Setting-up a simple wireless link
-
-![](.gitbook/assets/6%20%281%29.jpeg)
-
-* Back to frequencies! Which one to use?
-  * Click on “Snooper”
-  * Beware! This WILL disconnect the wlan interface and associated clients
-
-Setting-up a simple wireless link
-
-* Back to frequencies! Which on![](.gitbook/assets/7.jpeg)e to use?
-
-– Click on “Snooper”
-
-– Beware! This WILL disconnect the wlan interface and associated clients
-
-– You have a complete view of used bands and frequencies
-
-– Select a free channel or, at least, one with low usage
-
-Setting-up a simple wireless link
-
-![](.gitbook/assets/8%20%282%29.jpeg)
-
-* Station configuration
-
-– Mode : station
-
-– Band : To match your AP.
-
-– Frequency : Not important for clients
-
-Setting-up a simple wireless link
+* Конфгурация станции
+  * Mode : station
+  * Band : В соответствии с вашим AP
+  * Frequency : для клиентов неважно
 
 ![](.gitbook/assets/9.jpeg)
 
-* Station configuration
+* Конфигурация станции
+  * SSID : должно соответствовать точке доступа, к которой подключаетесь
+  * Wireless protocol : должен соответствовать точке доступа, к которой подключаетесь
+  * Создайте профиль безопасности, как показано в конфигурации "точка доступа", и примените его здесь. Параметры ДОЛЖНЫ совпадать.
 
-– SSID : To match the AP you wish to connect to
+![](.gitbook/assets/image%20%2812%29.png)
 
-– Wireless protocol : To match the AP you wish to connect to
-
-– Create a security profile, as demonstrated in “access point” configuration, and apply it here. Parameters MUST match
-
-MAC address fil![](.gitbook/assets/10.jpeg)tering
+MAC address filtering
 
 * MAC address filtering is an extra way of limiting connection from clients.
 * To add an entry to an Access List \(on an AP!!\), select a registered node and click “Copy to Access list”
