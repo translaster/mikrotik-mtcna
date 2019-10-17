@@ -101,7 +101,7 @@ routerboard.com
 
 **CCR1036-12G-4S Cloud Router**
 
-![](.gitbook/assets/image%20%284%29.png)
+![](.gitbook/assets/image%20%285%29.png)
 
 _**Флагманская модель**_
 
@@ -151,7 +151,7 @@ _**Флагманская модель**_
 
 ![](.gitbook/assets/image%20%281%29.png)
 
-![](.gitbook/assets/image%20%287%29.png)
+![](.gitbook/assets/image%20%288%29.png)
 
 * **RB493G**
   * 9 gig портов
@@ -196,7 +196,7 @@ _**Флагманская модель**_
 * Введите IP 192.168.88.1 и нажмите "Connect".
 * Вы увидите окно первого запуска
 
-![](.gitbook/assets/image%20%285%29.png)
+![](.gitbook/assets/image%20%286%29.png)
 
 Меню WinBox’а
 

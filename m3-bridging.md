@@ -51,9 +51,9 @@
 
 Создание моста, пример
 
-![](.gitbook/assets/image%20%2814%29.png)
+![](.gitbook/assets/image%20%2816%29.png)
 
-![](.gitbook/assets/image%20%282%29.png)
+![](.gitbook/assets/image%20%283%29.png)
 
 ### Добавление портов к мостам
 
@@ -68,9 +68,9 @@
 
 #### Добавление портов к мостам, пример
 
-![](.gitbook/assets/image%20%286%29.png)
+![](.gitbook/assets/image%20%287%29.png)
 
-![](.gitbook/assets/image%20%2818%29.png)
+![](.gitbook/assets/image%20%2821%29.png)
 
 Мост беспроводных сетей
 

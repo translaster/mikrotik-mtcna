@@ -65,11 +65,11 @@
   * Authentication types: методы, используемые для проверки подлинности соединения
   * Ciphers: методы шифрования
 
-![](.gitbook/assets/image%20%288%29.png)
+![](.gitbook/assets/image%20%289%29.png)
 
 * Теперь вы можете использовать свой новый профиль безопасности и чувствовать себя в безопасности в своей беспроводной сети
 
-![](.gitbook/assets/image%20%2815%29.png)
+![](.gitbook/assets/image%20%2817%29.png)
 
 * Вернемся к частотам! Какую из них использовать?
   * Кликните “Snooper”
@@ -77,11 +77,11 @@
   * У вас будет полное представление об используемых диапазонах и частотах
   * Выберите свободный канал или, по крайней мере, канал с низким уровнем загруженности
 
-![](.gitbook/assets/image%20%289%29.png)
+![](.gitbook/assets/image%20%2810%29.png)
 
 * Конфгурация станции
   * Mode : station
-  * Band : В соответствии с вашим AP
+  * Band : В соответствии с вашей точкой доступа
   * Frequency : для клиентов неважно
 
 ![](.gitbook/assets/9.jpeg)
@@ -91,295 +91,161 @@
   * Wireless protocol : должен соответствовать точке доступа, к которой подключаетесь
   * Создайте профиль безопасности, как показано в конфигурации "точка доступа", и примените его здесь. Параметры ДОЛЖНЫ совпадать.
 
-![](.gitbook/assets/image%20%2812%29.png)
+![](.gitbook/assets/image%20%2813%29.png)
 
-MAC address filtering
+## Фильтрация MAC-адресов
 
-* MAC address filtering is an extra way of limiting connection from clients.
-* To add an entry to an Access List \(on an AP!!\), select a registered node and click “Copy to Access list”
+* Фильтрация MAC-адресов является дополнительным способом ограничения соединения с клиентами.
+* Чтобы добавить запись в список доступа \(на ТД!!\), выберите зарегистрированный узел и нажмите кнопку “Copy to Access list”
 
-MAC address filtering
+![](.gitbook/assets/image%20%282%29.png)
 
-* You now have a new entry!
+* Теперь у Вас есть новая запись!
 
 ![](.gitbook/assets/11.jpeg)
 
-MAC address filtering
+Фильтрация MAC-адресов
 
 ![](.gitbook/assets/12%20%281%29.jpeg)
 
-* Access lists are used **on** **APs** to restrict connections to specific clients and control their connection parameters.
-  * Rules are checked sequentially
-  * Applies only the first matching rule
-  * If “Default Authenticate” option \(“_Wireless_” tab in “_Interface -&gt; wlan_ ” screen\) is unchecked, devices that do not match an access-list rule are rejected
-
-MAC address filtering
+* Списки доступа используются **на ТД** для ограничения подключений к определенным клиентам и управления их параметрами подключения.
+  * Правила проверяются последовательно
+  * Применяется только первое совпадающее правило
+  * Если параметр “Default Authenticate” \(вкладка _”Wireless“_ на экране _”Interface -&gt; wlan"_\) снята, устройства, не соответствующие правилу списка доступа, отклоняются
 
 ![](.gitbook/assets/13%20%281%29.jpeg)
 
-* **Authentication** option will tell router to check the “security-profile” to determine if connection should be allowed. If unchecked, authentication will always fail.
-* Forwarding option will tell the router to allow clients of the AP to reach each other without the APs assistance \(thus bypassing firewall rules you may have\) . For added security, leave unchecked
-
-MAC address filtering
-
-* AP Tx Limit restricts data rate from AP to client
-  * Setting it too low might cause connection problems. Test first!
-* Client TX Limit restricts data rate from client to AP
-
-![](.gitbook/assets/14%20%281%29.jpeg)
-
-–
-
-–
-
-Proprietary extension that is supported only by RouterOS clients
-
-Again, you may want to test to see what’s acceptable
-
-MAC address filtering
-
-* Connect lists \(on client stations\) assign priorities, based on signal strength and security settings, that specify to which APs the client can connect to
+* Параметр **Authentication** укажет маршрутизатору проверить "security-profile", чтобы определить, должно ли соединение быть разрешено. Если флажок снят, проверка подлинности всегда завершается ошибкой.
+* Параметр Forwarding укажет маршрутизатору, чтобы позволил клиентам ТД связаться друг с другом без помощи ТД \(таким образом, минуя правила брандмауэра, которые у вас могут быть\). Для дополнительной безопасности отключите.
+* AP TX Limit ограничивает скорость передачи данных от ТД к клиенту
+  * Установка слишком низкого уровня может вызвать проблемы с подключением. Сперва протестируйте!
+* Client TX Limit ограничивает скорость передачи данных от клиента к точке доступа
+  * Собственное расширение, которое поддерживается только клиентами RouterOS
+  * Опять же, вы должны протестировать, чтобы увидеть приемлимое значение
 
 ![](.gitbook/assets/15.jpeg)
 
-| Rules are checked sequentially |  |
-| :--- | :--- |
-|  |  |
-| Applies only the first matching rule |  |
-|  |  |
-| If “Default Authenticate” option \(“_Wireless_” tab in |  |
-|  |  |
-| “_Interface -&gt; wlan_ ” screen\) |  |
-| is checked and no connect- |  |
-| list rule is matched, client |  |
-| will attempt connexion |  |
-| based on best signal and |  |
-| security compatibility | 25 |
-
-MAC address filtering
-
-* Example : This station has no **SSID** or **Security** **profile** defined, but because it has a connect-list match, a connexion was established
+* Connect List \(cписки соединений\) \(на клиентских станциях\) назначают приоритеты на основе параметров уровня сигнала и безопасности, которые определяют, к каким точкам доступа клиент может подключиться
+  * Правила проверяются последовательно
+  * Применяется только первое совпадающее правило
+  * Если опция ”Deafult Authentificate“ \(вкладка _”Wireless“_ на экране _”Interface -&gt; wlan"_\) проверена и не соответствует правилам списка соединений, клиент попытается подключиться на основе лучшей совместимости сигнала и безопасности
 
 ![](.gitbook/assets/16%20%281%29.jpeg)
 
-MAC address filtering
-
-* **Interesting note** : If the SSID field \(_in station connect_ _rule_\) is empty, the client will connect to any SSID with a matching **Security profile** .
-* Interface SSID field must also be empty!
+* Пример: У этой станции не определены **SSID** или **Security** **profile**, но поскольку у нее есть соответствие списка соединений, соединение было установлено
 
 ![](.gitbook/assets/17.png)
 
-MAC address filtering
+* **Интересное замечание**: Если поле SSID \(_в правилах подключения станции_\) пусто, клиент подключится к любому SSID с соответствующим **Security profile**.
+* Поле SSID интерфейса так же должно быть пустым!
 
-* Default-authentication : Specifies behavior following verification of access and connect lists.
 
-– For APs, if set to yes, will allow connections if there is no access-list match provided interface SSID and security profile match. Otherwise, no connexions are allowed.
 
-– For stations, if set to yes, will allow connections if there is no connect-list match provided interface SSID and security profile match. Otherwise, no connexions are allowed.
-
-MAC address filtering
-
-* Default-authentication
-
-– If AP has no access list, and default-authenticate is unchecked, clients will never connect
-
-– If station has no connect list, and default-authenticate is unchecked, it will never connect to an AP
-
-MAC address filtering
-
+* Default-authentication : задает поведение после проверки списков доступа и подключения.
+  * For APs, if set to yes, will allow connections if there is no access-list match provided interface SSID and security profile match. Otherwise, no connexions are allowed.
+  * For stations, if set to yes, will allow connections if there is no connect-list match provided interface SSID and security profile match. Otherwise, no connexions are allowed.
+  * If AP has no access list, and default-authenticate is unchecked, clients will never connect
+  * If station has no connect list, and default-authenticate is unchecked, it will never connect to an AP
 * Default-forwarding : Specifies forwarding behavior of clients following verification of access lists.
+  * If set to yes, will allow layer 2 communications between clients.
+  * If set to no, clients will still see each other \(at layer 3\) IF firewall rules permit it.
 
-– If set to yes, will allow layer 2 communications between clients.
-
-– If set to no, clients will still see each other \(at layer 3\) IF firewall rules permit it.
-
-Wireless security and encryption
+## Wireless security and encryption
 
 * WPA, WPA2
-
-– Wi-Fi Protected Access \(I and II\)
-
-– Authentication protocol created after weaknesses were found in WEP
-
-– If properly set-up, WPA is very secure
-
-* * * Weaknesses to brute force attacks were found when using WPS \(Wi -Fi Protected Setup\)
+  * Wi-Fi Protected Access \(I and II\)
+  * Authentication protocol created after weaknesses were found in WEP
+  * If properly set-up, WPA is very secure
+    * Weaknesses to brute force attacks were found when using WPS \(Wi -Fi Protected Setup\)
     * WPS not used by Mikrotik
-
-Wireless security and encryption
-
 * WPA
-
-– Used to replace WEP \(weaknesses found\)
-
-– Uses TKIP as encryption protocol
-
-* * * Generates a new key for each packet
-
-Wireless security and encryption
-
+  * Used to replace WEP \(weaknesses found\)
+  * Uses TKIP as encryption protocol
+    * Generates a new key for each packet
 * WPA2
-
-– Uses CCMP to replace as encryption protocol
-
-* * * Based on AES
+  * Uses CCMP to replace as encryption protocol
+    * Based on AES
     * Stronger than TKIP
-
-– Is mandatory in Wi-Fi certified devices since 2006
-
-– Must be used to achieve higher bitrates, otherwise limited at 54Mbps \([http://](http://www.intel.com/support/wireless/wlan/4965agn/sb/cs-025643.htm)[www.intel.com/support/wireless/wlan/4965agn/sb/cs-025643.htm](http://www.intel.com/support/wireless/wlan/4965agn/sb/cs-025643.htm)\)
-
-Wireless security and encryption
-
+  * Is mandatory in Wi-Fi certified devices since 2006
+  * Must be used to achieve higher bitrates, otherwise limited at 54Mbps \([_http://www.intel.com/support/wireless/wlan/4965agn/sb/cs-025643.htm_](http://www.intel.com/support/wireless/wlan/4965agn/sb/cs-025643.htm)\)
 * WPA-Personal
-
-– Also referred to as WPA-PSK, is designed for small offices and the home
-
-– Does not require an authentication server
-
-– Client to AP authentication is based on a 256-bit key generated from a pre-shared key \(PSK\), which can be a password or passphrase, known to both
-
-Wireless security and encryption
-
+  * Also referred to as WPA-PSK, is designed for small offices and the home
+  * Does not require an authentication server
+  * Client to AP authentication is based on a 256-bit key generated from a pre-shared key \(PSK\), which can be a password or passphrase, known to both
 * WPA-Enterprise
+  * Also referred to as WPA-802.1X mode, is designed for enterprise networks
+  * Uses EAP for authentication
+  * Require a RADIUS authentication server
+  * More complicated to deploy, but provides added features such as protection against dictionary attacks on weaker passwords
 
-– Also referred to as WPA-802.1X mode, is designed for enterprise networks
-
-– Uses EAP for authentication
-
-– Require a RADIUS authentication server
-
-– More complicated to deploy, but provides added features such as protection against dictionary attacks on weaker passwords
-
-MikroTik wireless protocols
+## MikroTik wireless protocols
 
 * NV2 \(Nstreme Version 2\)
-
-– A Mikrotik proprietary protocol in it’s second version
-
-– For use with the Atheros 802.11 wireless chip.
-
-– Based on TDMA \(_Time Division Multiple_ _Access_\) instead of CSMA \(_Carrier Sense Multiple Access_\)
-
-– Used to improve performance over long distances
-
-MikroTik wireless protocols
-
+  * A Mikrotik proprietary protocol in it’s second version
+  * For use with the Atheros 802.11 wireless chip.
+  * Based on TDMA \(_Time Division Multiple_ _Access_\) instead of CSMA \(_Carrier Sense Multiple Access_\)
+  * Used to improve performance over long distances
 * NV2 benefits
+  * Increased speed
+  * More client connections in point to multipoint environments \(limit is 511 clients\)
+  * Lower latency
+  * No distance limitations
+  * No penalty for long distances
 
-– Increased speed
-
-– More client connections in point to multipoint environments \(limit is 511 clients\)
-
-–
-
-–
-
-–
-
-Lower latency
-
-No distance limitations
-
-No penalty for long distances
-
-Monitoring tools
+## Monitoring tools
 
 * There are various tools that will help you analyse what’s in the air so you can choose the frequency with no \(or the least\) interference
-
-Monitoring tools
-
 * Wireless scan : Two options
+  * Frequency usage
+  * Scan
 
-– Frequency usage
-
-– Scan
-
-![](.gitbook/assets/18.png)Monitoring tools
+![](.gitbook/assets/image%20%2820%29.png)
 
 * Wireless scan : Frequency Usage
+  * Shows all supported frequencies and their usage by neighboring APs
+  * **Drops** **connected wireless clients!**
 
-– Shows all supported frequencies and their usage by neighboring APs
-
-– **Drops** **connected wireless clients!**
-
-Monitoring tools
+![](.gitbook/assets/image%20%2814%29.png)
 
 * Wireless scan : Scan
-
-– Gives information about neighboring APs
-
-– **Drops** **connected wireless clients!**
-
-![](.gitbook/assets/19%20%281%29.jpeg)
-
-Monitoring tools
-
-* Snooper
-
-– Gives more detailed information about other APs AND clients
-
-– **Drops connected** **wireless clients!**
+  * Gives information about neighboring APs
+  * **Drops** **connected wireless clients!**
 
 ![](.gitbook/assets/20.jpeg)
 
-Monitoring tools
-
 * Snooper
-
-– Gives more detailed information about other Aps AND stations by double-clicking
+  * Gives more detailed information about other APs AND clients
+  * **Drops connected** **wireless clients!**
 
 ![](.gitbook/assets/21.png)
 
-Monitoring tools
-
+* Snooper
+  * Gives more detailed information about other Aps AND stations by double-clicking
 * Registration table : Used to get information on connected client stations.
-
-– Useful only on access points.
-
-Monitoring tools
+  * Useful only on access points.
 
 ![](.gitbook/assets/22.jpeg)
 
-Monitoring tools
+![](.gitbook/assets/image%20%2823%29.png)
 
-• Registration table
+* Registration table
+  * We can see current station connection status
+  * Note : Comments appearing above stations is from “Access List” tab. Useful to see under which criteria station was authorized
 
-| – | We can see |  |
-| :--- | :--- | :--- |
-|  | current station |  |
-|  | connection status |  |
-| – | Note : Comments |  |
-|  | appearing above |  |
-|  | stations is from |  |
-|  | “Access List” tab. |  |
-|  | Useful to see |  |
-|  | under which |  |
-|  | criteria station |  |
-|  | was authorized |  |
-
-![](.gitbook/assets/23.jpeg)
-
-Bridging wireless networks
+## Bridging wireless networks
 
 * Station-bridge : A Mikrotik proprietary mode to create a secure L2 bridge between Mikrotik routers
 * Can be used to expand a wireless subnet to many clients
 
 Time for a practical exercise
 
-**End of module 4**
-
-Laboratory
+## Laboratory
 
 * Goals of the lab
-
-– Use the various tools to analyze used channels and characteristics of wireless networks, APs and stations
-
-– Configure pod routers as wireless clients to the teacher’s router
-
-– Configure pod routers as wireless APs
-
-– Familiarise yourselves with Connect Lists and Access lists
+  * Use the various tools to analyze used channels and characteristics of wireless networks, APs and stations
+  * Configure pod routers as wireless clients to the teacher’s router
+  * Configure pod routers as wireless APs
+  * Familiarise yourselves with Connect Lists and Access lists
 
 Laboratory : Setup
 
@@ -388,180 +254,106 @@ Laboratory : Setup
 Laboratory : Preliminary step
 
 * **BEFORE WE DO ANYTHING!!!**
+  * Do a binary backup of the current configuration under the name:
+    * Module3-pod_X_ where _X_ is your pod number
+  * How would you go about doing it?
+  * What windows would you open?
 
-– Do a binary backup of the current configuration under the name:
-
-* * * Module3-pod_X_ where _X_ is your pod number
-
-– How would you go about doing it?
-
-– What windows would you open?
-
-Laboratory : step 1
+### Laboratory : step 1
 
 * Launch, one after the other :
-
-– Frequency Usage
-
-* * * Write down channels with most usage
-
-– Scan
-
-* * * Make a link between frequencies and visible SSIDs
-
-– Snooper
-
-* * * What can you tell from the visible networks?
+  * Frequency Usage
+    * Write down channels with most usage
+  * Scan
+    * Make a link between frequencies and visible SSIDs
+  * Snooper
+    * What can you tell from the visible networks?
     * What do the symbols in the left column represent?
 
-Laboratory : step 2
+### Laboratory : step 2
 
 * Open the “Bridge” window and go to the “Ports” tab
 * By using the procedures that we saw in previous modules, add “wlan1” interface to “LAN” bridge.
 * Close the “Bridge” window
 
-Laboratory : step 3
+### Laboratory : step 3
 
 * Open the “Wireless” window and make sure the “wlan1” interface is enabled
 
-Laboratory : step 4
+### Laboratory : step 4
 
 * Double-click on the interface and go to the “Wireless” tab. Click “Advanced Mode”, then enter the following parameters:
+  * Mode : ap bridge
+  * Band : 2GHz-B/G/N
+  * Channel width : 20MHz
+  * Frequency : Odd pods use 2437, even pods use 2462
+  * SSID : pod_X_
+  * Wireless protocol : 802.11
+  * Security Profile : default **\(which would be a** _**BAD**_ **idea any** **other time\)**
+  * Frequency Mode : Regulatory-domain
+  * Country : &lt;_where you are now_&gt;
+  * Default Authenticate is checked
 
-–
-
-–
-
-–
-
-–
-
-–
-
-–
-
-–
-
-–
-
-–
-
-–
-
-Mode : ap bridge
-
-Band : 2GHz-B/G/N
-
-Channel width : 20MHz
-
-Frequency : Odd pods use 2437, even pods use 2462
-
-SSID : pod_X_
-
-Wireless protocol : 802.11
-
-Security Profile : default **\(which would be a** _**BAD**_ **idea any** **other time\)**
-
-Frequency Mode : Regulatory-domain
-
-Country : &lt;_where you are now_&gt;
-
-Default Authenticate is checked
-
-Laboratory : step 5
+### Laboratory : step 5
 
 * Remove the network cable between your laptop and router. The cable from your router to the teacher’s router must stay
 * Set-up you laptop to use your router’s wi-fi parameters
 * Ensure that you have wi-fi connectivity
 * Connect to the Internet
 
-Laboratory : step 6
+### Laboratory : step 6
 
 * Do a binary backup of the current configuration under the name:
-
-– Module4a-pod_X_ where _X_ is your pod number
-
+  * Module4a-pod_X_ where _X_ is your pod number
 * From the “File List” window, select module3-pod_X_ and click on the “Restore” button on the top part of the window
 * Answer “yes” to reboot the router
 
-Laboratory : step 7
+### Laboratory : step 7
 
 * Reconnect your laptop’s network cable to your router
 * Disconnect your router’s network cable to the teacher’s router
 * You should now have no Internet access
 
-Laboratory : step 8
+### Laboratory : step 8
 
 **Preliminary work**
 
 * IP address for WLAN1
-
-– 192.168.252.pod_X_
-
+  * 192.168.252.pod_X_
 * Enable wlan1 interface if such is not the case
 * Security profile
+  * Name : WPA2
+  * Authentication types : WPA2 PSK
+  * Unicast and group ciphers : aes ccm
+  * WPA2 pre-shared key : mtcna123!
 
-– Name : WPA2
-
-– Authentication types : WPA2 PSK
-
-– Unicast and group ciphers : aes ccm
-
-– WPA2 pre-shared key : mtcna123!
-
-Laboratory : step 9
+### Laboratory : step 9
 
 * Activate the “Advanced Mode” in the “Wireless” tab of “Interface &lt;wlan1&gt;”
 * We need to connect to the class’s AP. The following parameters MUST be compatible to that of the AP to connect to.
+  * Mode : Station
+  * Band : 2GHz-only-N
+  * SSID : WISP
+  * Radio name : WISP-POD_X_
+  * Wireless protocol : 802.11
+  * Security profile : WPA2
 
-–
+### Laboratory : step 10
 
-–
-
-–
-
-–
-
-–
-
-–
-
-Mode : Station
-
-Band : 2GHz-only-N
-
-SSID : WISP
-
-Radio name : WISP-POD_X_
-
-Wireless protocol : 802.11
-
-Security profile : WPA2
-
-Laboratory : step 10
-
-– Frequency Mode : regulatory-domain
-
-– Country : Normally, you select the country where the AP will be installed.
-
-– Leave “Default Authenticate” checked for now
-
+* Frequency Mode : regulatory-domain
+* Country : Normally, you select the country where the AP will be installed.
+* Leave “Default Authenticate” checked for now
 * Click OK, and select the “Registration” tab in the “Wireless Tables” window
 * Your should see the teacher’s AP appear. If so, you’re connected!
+  * **But wait!!!**
 
-– **But wait!!!**
-
-Laboratory : step 11
+### Laboratory : step 11
 
 * Before browsing can work, let’s correct our routing tables.
-
-– Redefine the default gateway to be 192.168.252.254
-
-– Redefine the route to your neighbor’s pod’s LAN interface \(192.168._Y_.1\) to go through 192.168.252._Y_
-
-– Ping your neighbor’s pod’s LAN interface \(192. 168._Y_.1\)
-
-* * * What’s the result?
+  * Redefine the default gateway to be 192.168.252.254
+  * Redefine the route to your neighbor’s pod’s LAN interface \(192.168._Y_.1\) to go through 192.168.252._Y_
+  * Ping your neighbor’s pod’s LAN interface \(192. 168._Y_.1\)
+    * What’s the result?
 
 **End of Laboratory 4**
 
