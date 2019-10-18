@@ -142,32 +142,32 @@
 
 
 * Default-authentication : задает поведение после проверки списков доступа и подключения.
-  * For APs, if set to yes, will allow connections if there is no access-list match provided interface SSID and security profile match. Otherwise, no connexions are allowed.
-  * For stations, if set to yes, will allow connections if there is no connect-list match provided interface SSID and security profile match. Otherwise, no connexions are allowed.
-  * If AP has no access list, and default-authenticate is unchecked, clients will never connect
-  * If station has no connect list, and default-authenticate is unchecked, it will never connect to an AP
-* Default-forwarding : Specifies forwarding behavior of clients following verification of access lists.
-  * If set to yes, will allow layer 2 communications between clients.
-  * If set to no, clients will still see each other \(at layer 3\) IF firewall rules permit it.
+  * Для точек доступа, если установлено в yes - разрешит соединение, если нет соответствия в списке доступа, предоставленного интерфейсу SSID и соответствия профиля безопасности. В противном случае никакие соединения не допускаются.
+  * Для станций, если задано значение yes, будут разрешены соединения, если нет совпадения в списке соединений, предоставленного интерфейсу SSID и профиля безопасности. В противном случае никакие связи не допускаются.
+  * Если у ТД нет списка доступа и default-authenticate не установлено, клиенты никогда не смогут подключиться
+  * Если у станции нет списка подключений и default-authenticate не установлен, она никогда не подключится к точке доступа
+* Default-forwarding : задает поведение переадресации клиентов после проверки списков доступа.
+  * Если установлено значение да, будет разрешена связь 2 уровня между клиентами.
+  * Если установлено нет - клиенты будут по-прежнему видеть друг друга \(на уровне 3\), ЕСЛИ это разрешено правилами брандмауэра.
 
-## Wireless security and encryption
+## Безопасность и шифрование беспроводного соединения
 
 * WPA, WPA2
-  * Wi-Fi Protected Access \(I and II\)
-  * Authentication protocol created after weaknesses were found in WEP
-  * If properly set-up, WPA is very secure
-    * Weaknesses to brute force attacks were found when using WPS \(Wi -Fi Protected Setup\)
-    * WPS not used by Mikrotik
+  * Wi-Fi защищенный доступ \(I и II\)
+  * Протокол аутентификации, созданный после обнаружения слабых мест в WEP
+  * При правильной настройке WPA весьма безопасен
+    * Слабые места для атак брутфорсом были обнаружены при использовании WPS \(Wi-Fi Protected Setup\)
+    * WPS не используется Mikrotik
 * WPA
-  * Used to replace WEP \(weaknesses found\)
-  * Uses TKIP as encryption protocol
-    * Generates a new key for each packet
+  * Используется для замены WEP \(найдены слабые места\)
+  * Использует TKIP в качестве протокола шифрования
+    * Генерирует новый ключ для каждого пакета
 * WPA2
-  * Uses CCMP to replace as encryption protocol
-    * Based on AES
-    * Stronger than TKIP
-  * Is mandatory in Wi-Fi certified devices since 2006
-  * Must be used to achieve higher bitrates, otherwise limited at 54Mbps \([_http://www.intel.com/support/wireless/wlan/4965agn/sb/cs-025643.htm_](http://www.intel.com/support/wireless/wlan/4965agn/sb/cs-025643.htm)\)
+  * Использует CCMP в качестве протокола шифрования
+    * Основан на AES
+    * Сильнее чем TKIP
+  * Является обязательным в Wi-Fi сертифицированных устройствах с 2006 года
+  * Должен использоваться для достижения более высокой скорости передачи данных, иначе ограничивается 54 Мбит/с \([_http://www.intel.com/support/wireless/wlan/4965agn/sb/cs-025643.htm_](http://www.intel.com/support/wireless/wlan/4965agn/sb/cs-025643.htm)\)
 * WPA-Personal
   * Also referred to as WPA-PSK, is designed for small offices and the home
   * Does not require an authentication server
