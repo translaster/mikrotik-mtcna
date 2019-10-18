@@ -11,51 +11,32 @@ ARP
 ARP modes
 
 * “ARP modes” tell RouterOS how ARP is to work
-
-– Modes are configured on a “per interface” basis
-
+  * Modes are configured on a “per interface” basis
 * The “modes” are
-
-– **Enabled** : Default mode. ARP requests will be answered and the ARP table will be filled automatically
-
-– **Disabled** : Interface will not send or reply to ARP requests. Other hosts MUST be told the router’s MAC address
-
-– **Proxy ARP** : The router answers ARP request coming for it’s directly connected network \(regardless of origin\)
-
-– **Reply only** : The router answers ARP requests. Router’s ARP table must be filled statically
+  * **Enabled** : Default mode. ARP requests will be answered and the ARP table will be filled automatically
+  * **Disabled** : Interface will not send or reply to ARP requests. Other hosts MUST be told the router’s MAC address
+  * **Proxy ARP** : The router answers ARP request coming for it’s directly connected network \(regardless of origin\)
+  * **Reply only** : The router answers ARP requests. Router’s ARP table must be filled statically
 
 RouterOS ARP table
 
 * The ARP Table displays all ARP entries and the interface from which they are learned
 * The ARP table provides:
-
-– The IP address of know devices
-
-– The MAC addresses associated with the IP addresses
-
-– The interfaces from which they were learned
-
-RouterOS ARP table
-
+  * The IP address of know devices
+  * The MAC addresses associated with the IP addresses
+  * The interfaces from which they were learned
 * You can add static entries to the ARP table to secure your network
-
-– Can avoid ARP poisoning / ARP spoofing
-
-– Requires a lot of work and planning
+  * Can avoid ARP poisoning / ARP spoofing
+  * Requires a lot of work and planning
 
 ARP syntax
 
 * View ARP table :
-
-– /ip arp print
-
+  * /ip arp print
 * Add a static entry :
-
-– /ip arp add address=172.16.2.222 mac-address=11:22:33:44:55:66 interface=Bridge-PC
-
+  * /ip arp add address=172.16.2.222 mac-address=11:22:33:44:55:66 interface=Bridge-PC
 * Configure ARP mode :
-
-– /interface ethernet set ether04 arp=proxy-arp
+  * /interface ethernet set ether04 arp=proxy-arp
 
 ## **DHCP server and client**
 
@@ -67,32 +48,23 @@ DHCP server
 DHCP server setup
 
 * The interface hosting the DHCP-server must have it’s own IP address that is NOT in the address pool
-
-– A pool is a range of IP addresses that will be made available to clients
+  * A pool is a range of IP addresses that will be made available to clients
 
 DHCP server setup
 
 * In the DHCP-server window, simply click on the “DHCP Setup” button and answer the questions
-
-– DHCP Server Interface
-
-– DHCP Address Space
-
-– Gateway for DHCP Network
-
-– Addresses to Give Out
-
-– DNS Servers \(more than one can be entered\)
-
-– Lease Time
+  * DHCP Server Interface
+  * DHCP Address Space
+  * Gateway for DHCP Network
+  * Addresses to Give Out
+  * DNS Servers \(more than one can be entered\)
+  * Lease Time
 
 DHCP server setup
 
 * The automated setup :
-
-– Creates an IP Pool
-
-* * * A pool of IP addresses to assign
+  * Creates an IP Pool
+    * A pool of IP addresses to assign
 
 – Creates the DHCP server
 
