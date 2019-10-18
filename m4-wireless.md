@@ -169,116 +169,116 @@
   * Является обязательным в Wi-Fi сертифицированных устройствах с 2006 года
   * Должен использоваться для достижения более высокой скорости передачи данных, иначе ограничивается 54 Мбит/с \([_http://www.intel.com/support/wireless/wlan/4965agn/sb/cs-025643.htm_](http://www.intel.com/support/wireless/wlan/4965agn/sb/cs-025643.htm)\)
 * WPA-Personal
-  * Also referred to as WPA-PSK, is designed for small offices and the home
-  * Does not require an authentication server
-  * Client to AP authentication is based on a 256-bit key generated from a pre-shared key \(PSK\), which can be a password or passphrase, known to both
+  * Также известен как WPA-PSK, предназначен для небольших офисов и дома
+  * Не требует сервера аутентификации
+  * Аутентификация клиента на ТД основана на 256-битном ключе, созданном из предварительно общедоступного ключа \(PSK\), который может быть паролем или парольной фразой, известной обоим
 * WPA-Enterprise
-  * Also referred to as WPA-802.1X mode, is designed for enterprise networks
-  * Uses EAP for authentication
-  * Require a RADIUS authentication server
-  * More complicated to deploy, but provides added features such as protection against dictionary attacks on weaker passwords
+  * Также упоминается как режим WPA-802.1X, предназначен для корпоративных сетей
+  * Использует EAP для аутентификации
+  * Требуется сервер проверки подлинности RADIUS
+  * Более сложное развертывание, но предоставляет дополнительные функции, такие как защита от атак по словарю на более слабые пароли
 
-## MikroTik wireless protocols
+## Протоколы беспроводных соединений MikroTik
 
 * NV2 \(Nstreme Version 2\)
-  * A Mikrotik proprietary protocol in it’s second version
-  * For use with the Atheros 802.11 wireless chip.
-  * Based on TDMA \(_Time Division Multiple_ _Access_\) instead of CSMA \(_Carrier Sense Multiple Access_\)
-  * Used to improve performance over long distances
-* NV2 benefits
-  * Increased speed
-  * More client connections in point to multipoint environments \(limit is 511 clients\)
-  * Lower latency
-  * No distance limitations
-  * No penalty for long distances
+  * Проприетарный протокол Mikrotik во второй версии
+  * Для использования с беспроводным чипом Atheros 802.11.
+  * На основе TDMA \(_Множественный доступ с разделением по времени_\) вместо CSMA \(_Множественный доступ с контролем несущей_\)\(_Carrier Sense Multiple Access_\)
+  * Используется для повышения производительности на больших расстояниях
+* Преимущества NV2
+  * Увеличенная скорость
+  * Больше клиентских подключений в многопользовательских средах \(ограничение в 511 клиентов\)
+  * Снижение задержек
+  * Отсутствие ограничений по расстоянию
+  * Нет штрафов за большие расстояния
 
-## Monitoring tools
+## Инструменты мониторинга
 
-* There are various tools that will help you analyse what’s in the air so you can choose the frequency with no \(or the least\) interference
-* Wireless scan : Two options
-  * Frequency usage
+* Существуют различные инструменты, которые помогут вам проанализировать, что находится в воздухе, так что вы можете выбрать частоту без \(или с наименьшим количеством\) помех
+* Беспроводное сканирование: два варианта
+  * Frequency Usage
   * Scan
 
 ![](.gitbook/assets/image%20%2820%29.png)
 
 * Wireless scan : Frequency Usage
-  * Shows all supported frequencies and their usage by neighboring APs
-  * **Drops** **connected wireless clients!**
+  * Показывает все поддерживаемые частоты и их использование соседними точками доступа
+  * **Удаляет подключенных беспроводных клиентов!**
 
 ![](.gitbook/assets/image%20%2814%29.png)
 
 * Wireless scan : Scan
-  * Gives information about neighboring APs
-  * **Drops** **connected wireless clients!**
+  * Дает информацию о соседних точках доступа
+  * **Удаляет подключенных беспроводных клиентов!**
 
 ![](.gitbook/assets/20.jpeg)
 
 * Snooper
-  * Gives more detailed information about other APs AND clients
-  * **Drops connected** **wireless clients!**
+  * Предоставляет более подробную информацию о других точках доступа и клиентах
+  * **Удаляет подключенных беспроводных клиентов!**
 
 ![](.gitbook/assets/21.png)
 
 * Snooper
-  * Gives more detailed information about other Aps AND stations by double-clicking
-* Registration table : Used to get information on connected client stations.
-  * Useful only on access points.
+  * Дает более подробную информацию о других AP и станций, дважды щелкнув
+* Registration table : Используется для получения информации о подключенных клиентских станциях.
+  * Полезно только на точках доступа.
 
 ![](.gitbook/assets/22.jpeg)
 
 ![](.gitbook/assets/image%20%2823%29.png)
 
 * Registration table
-  * We can see current station connection status
-  * Note : Comments appearing above stations is from “Access List” tab. Useful to see under which criteria station was authorized
+  * Мы можем видеть текущее состояние соединения станции
+  * Примечание: комментарии, появляющиеся над станциями, находятся на вкладке "Access List". Полезно посмотреть, по каким критериям станция была авторизована
 
-## Bridging wireless networks
+## Соединение беспроводвных сетей
 
-* Station-bridge : A Mikrotik proprietary mode to create a secure L2 bridge between Mikrotik routers
-* Can be used to expand a wireless subnet to many clients
+* Station-bridge : проприетарный режим Mikrotik для создания безопасного L2-моста между маршрутизаторами Mikrotik
+* Может использоваться для расширения беспроводной подсети для большего количества клиентов
 
-Time for a practical exercise
+Время для практических занятий
 
-## Laboratory
+## Лабораторка
 
-* Goals of the lab
-  * Use the various tools to analyze used channels and characteristics of wireless networks, APs and stations
-  * Configure pod routers as wireless clients to the teacher’s router
-  * Configure pod routers as wireless APs
-  * Familiarise yourselves with Connect Lists and Access lists
+* Цель лабораторки
+  * Используйте различные инструменты для анализа используемых каналов и характеристик беспроводных сетей, точек доступа и станций
+  * Настройте под маршрутизаторы как беспроводные клиенты к маршрутизатору учителя
+  * Настройте под маршрутизаторы как беспроводные точки доступа
+  * Ознакомьтесь со списками подключений и списками доступа
 
-Laboratory : Setup
+Лабораторка: Установка
 
 ![](.gitbook/assets/24.jpeg)
 
-Laboratory : Preliminary step
+Лабораторка : Предварительный шаг
 
-* **BEFORE WE DO ANYTHING!!!**
-  * Do a binary backup of the current configuration under the name:
-    * Module3-pod_X_ where _X_ is your pod number
-  * How would you go about doing it?
-  * What windows would you open?
+* **ПРЕЖДЕ ЧЕМ МЫ ЧТО-НИБУДЬ СДЕЛАЕМ!!!**
+  * Сделайте бинарную резервную копию текущей конфигурации под именем:
+    * Module3-pod_X_ где _X_ это ваш под номер
+  * Как бы вы это сделали?
+  * Какие окна вы бы открыли?
 
-### Laboratory : step 1
+### Лабораторка: шаг 1
 
-* Launch, one after the other :
+* Запустите один за другим:
   * Frequency Usage
-    * Write down channels with most usage
+    * Запишите наиболее используемые каналы
   * Scan
-    * Make a link between frequencies and visible SSIDs
+    * Создайте связь между частотами и видимыми SSID
   * Snooper
-    * What can you tell from the visible networks?
-    * What do the symbols in the left column represent?
+    * Что вы можете сказать о видимых сетях?
+    * Что представляют собой символы в левом столбце?
 
-### Laboratory : step 2
+### Лабораторка: шаг 2
 
-* Open the “Bridge” window and go to the “Ports” tab
-* By using the procedures that we saw in previous modules, add “wlan1” interface to “LAN” bridge.
-* Close the “Bridge” window
+* Откройте окно “Bridge” и перейдите во вкладку the “Ports”
+* Используя процедуры, которые мы видели в предыдущих модулях, добавьте интерфейс “wlan1” к подключению “LAN”.
+* Закройте окно “Bridge”
 
-### Laboratory : step 3
+### Лабораторка: шаг 3
 
-* Open the “Wireless” window and make sure the “wlan1” interface is enabled
+* Откройте окно “Wireless” и убедитесь что интерфейс “wlan1” включен
 
 ### Laboratory : step 4
 
