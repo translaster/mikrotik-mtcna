@@ -87,11 +87,11 @@ description: М2 Маршрутизация
 
 **Всего 15 статических маршрутов для добавления вручную!!**
 
-![](.gitbook/assets/image%20%2822%29.png)
+![](.gitbook/assets/image%20%2826%29.png)
 
 ### Создание маршрутов
 
-![](.gitbook/assets/image%20%284%29.png)
+![](.gitbook/assets/image%20%287%29.png)
 
 ![](.gitbook/assets/m2-create.png)
 
@@ -116,15 +116,15 @@ description: М2 Маршрутизация
 
 #### Управление динамическими маршрутами, пример
 
-![](.gitbook/assets/image%20%2818%29.png)
+![](.gitbook/assets/image%20%2822%29.png)
 
-![](.gitbook/assets/image%20%2819%29.png)
+![](.gitbook/assets/image%20%2823%29.png)
 
 Реализация статической маршрутизации в простых сетях
 
 Рассмотрим следующий пример.
 
-![](.gitbook/assets/image%20%2815%29.png)
+![](.gitbook/assets/image%20%2818%29.png)
 
 * Упражнение:
   * Предполагая, что ip-адреса были правильно введены, какие команды вы бы использовали для включения полной связи для обеих подсетей \(LAN1 и LAN2\)?

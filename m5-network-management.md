@@ -49,9 +49,6 @@ DHCP server setup
 
 * The interface hosting the DHCP-server must have it’s own IP address that is NOT in the address pool
   * A pool is a range of IP addresses that will be made available to clients
-
-DHCP server setup
-
 * In the DHCP-server window, simply click on the “DHCP Setup” button and answer the questions
   * DHCP Server Interface
   * DHCP Address Space
@@ -59,113 +56,76 @@ DHCP server setup
   * Addresses to Give Out
   * DNS Servers \(more than one can be entered\)
   * Lease Time
-
-DHCP server setup
-
 * The automated setup :
   * Creates an IP Pool
     * A pool of IP addresses to assign
-
-– Creates the DHCP server
-
-* * * It’s name and parameters \(such as the interface it will accept requests from\)
-
-– Creates the address space
-
-* * * The IP network and various parameters
-
-DHCP server setup
-
+  * Creates the DHCP server
+    * It’s name and parameters \(such as the interface it will accept requests from\)
+  * Creates the address space
+    * The IP network and various parameters
 * The results of the automated setup
 
 ![](.gitbook/assets/0%20%284%29.png)
 
-DHCP server setup
-
 * DHCP can be used to set up options such as
-
-– 42 : NTP Servers
-
-– 70 : POP3-Server
-
-– Visit for more DHCP options
-
+  * 42 : NTP Servers
+  * 70 : POP3-Server
+  * Visit for more DHCP options
 * **Important note**
-
-– If you have a bridged environment, DHCP Server MUST be set on the bridge interface. If set on a bridge port, the DHCP server will not work.
+  * If you have a bridged environment, DHCP Server MUST be set on the bridge interface. If set on a bridge port, the DHCP server will not work.
 
 DHCP server syntax
 
 * Configure a DHCP scope
-
-– /ip dhcp-server setup
-
+  * /ip dhcp-server setup
 * Configure a DHCP option
-
-– /ip dhcp-server option add name=46-node-type code=46 value=0x0008
-
-DHCP server syntax
-
+  * /ip dhcp-server option add name=46-node-type code=46 value=0x0008
 * Assign a DHCP option to a network
-
-– /ip dhcp-server network print \(_to view_ _available networks_\)
-
-– /ip dhcp-server network set dhcp-option=46-node-type numbers=1
-
+  * /ip dhcp-server network print \(_to view_ _available networks_\)
+  * /ip dhcp-server network set dhcp-option=46-node-type numbers=1
 * Assign a WINS server to a network
+  * /ip dhcp-server network set wins-server=172.16.2.100 numbers=1
 
-– /ip dhcp-server network set wins-server=172.16.2.100 numbers=1
-
-DHCP server![](.gitbook/assets/1.png) “Networks” configuration
+DHCP server “Networks” configuration
 
 * Example of basic configuration
+
+![](.gitbook/assets/image.png)
+
 * Example of expanded configuration
+
+![](.gitbook/assets/image%20%286%29.png)
 
 DHCP client
 
 * Allows Ethernet-like interfaces to request an IP address.
-
-– The remote DHCP server will supply:
-
-* * * Address
+  * The remote DHCP server will supply:
+    * Address
     * Mask
     * Default gateway
     * Two DNS servers \(if the remote DHCP server is so configured\)
-
-– The DHCP client will supply configurable options:
-
-* * * Hostname
+  * The DHCP client will supply configurable options:
+    * Hostname
     * Clientid \(in the form of it’s MAC address\)
 * Normally used on interfaces facing the Internet, for example
 
 DHCP client syntax
 
 * To configure a DHCP-client interface
-
-– /ip dhcp-client add interface=ether5 dhcp-options=clientid,hostname
-
+  * /ip dhcp-client add interface=ether5 dhcp-options=clientid,hostname
 * To view and enable a DHCP client
-
-– /ip dhcp-client print
-
-– /ip dhcp-client enable numbers=1
-
+  * /ip dhcp-client print
+  * /ip dhcp-client enable numbers=1
 * To view the DHCP client's address
-
-– /ip address print
+  * /ip address print
 
 Lease management
 
 * The "/ip dhcp-server lease" section provides information about DHCP clients and leases
 * Shows dynamic and static leases
 * Can turn a dynamic lease into a static one
-
-– Can be very useful when a device needs to maintain the same IP address
-
-– Beware! If you change the network card, it will get a new address
-
-Lease management
-
+  * Can be very useful when a device needs to maintain the same IP address
+  * Beware! If you change the network card, it will get a new address
 * DHCP Server could be made to run only with static addresses
 * Clients will only receive the preconfigured IP addresses
 * Evaluate your situation and the need to do this before doing it this way. It will require a lot of work for large networks
@@ -173,302 +133,178 @@ Lease management
 Lease management syntax
 
 * To view DHCP leases
-
-– /ip dhcp-server lease print
-
-– /ip dhcp-server lease print detail \(_gives more_ _detailed information_\)
-
+  * /ip dhcp-server lease print
+  * /ip dhcp-server lease print detail \(_gives more_ _detailed information_\)
 * To make a dynamic IP address static
-
-– /ip dhcp-server lease make-static numbers=0
-
+  * /ip dhcp-server lease make-static numbers=0
 * To modify the previous entry's assigned IP address
-
-– /ip dhcp-server lease set address=192.168.3.100 numbers=0
+  * /ip dhcp-server lease set address=192.168.3.100 numbers=0
 
 ## **RouterOS tools**
 
-E-mail
+### E-mail
 
 * A tool that allows you to send e-mail from the router
 * It can be used, along with other tools, to send the network administrator regular configuration backups, for example
 * Tool CLI path
+  * /tools e-mail
 
-– /tools e-mail
-
-E-mail, example
+#### E-mail, example
 
 * Configure the SMTP server
-* /tool e-mail
+* /tool e-mail set address=172.31.2.1 from=mymail@gmail.com last-status=succeeded password=never123! \ port=587 start-tls=yes [user=mymail@gmail.com](mailto:user%3Dmymail@gmail.com)
+* Send a configuration file via e-mail /export file=export /tool e-mail send to=home@gmail.com subject="$\[/system identity get name\] export"\ body="$\[/system clock get date\] configuration file" file=export.rsc
 
-set address=172.31.2.1 from=mymail@gmail.com last-status=succeeded password=never123! port=\
-
-587 start-tls=yes [user=mymail@gmail.com](mailto:user%3Dmymail@gmail.com)
-
-* Send a configuration file via e-mail
-
-/export file=export
-
-/tool e-mail send to=home@gmail.com subject="$\[/system identity get name\] export"\
-
-body="$\[/system clock get date\] configuration file" file=export.rsc
-
-Netwatch
+### Netwatch
 
 * A tool that allows you to monitor the status of network devices
 * For each entry, you can specify
-
-– IP address
-
-– Ping interval
-
-– Up and/or Down scripts
-
-Netwatch
-
+  * IP address
+  * Ping interval
+  * Up and/or Down scripts
 * VERY useful to
+  * Be made aware of network failures
+  * Automate a change of default gateway, for example, should the main router fail
+  * Just to have a quick view of what is up
+  * Whatever else you can come up with to simplify and speed up your job \(_and make_ _you look efficient!_\)
 
-– Be made aware of network failures
-
-– Automate a change of default gateway, for example, should the main router fail
-
-– Just to have a quick view of what is up
-
-– Whatever else you can come up with to simplify and speed up your job \(_and make_ _you look efficient!_\)
-
-Ping
+### Ping
 
 * Basic connectivity tool that uses ICMP Echo messages to determine remote host accessibility and round-trip delay
 * One of the first tools to use to troubleshoot. If it pings, the host is alive \(_from a networking point of view_\)
 * Use it with other tools when troubleshooting. It's not THE ultimate tool, but a good start
 
-Ping syntax
+#### Ping syntax
 
 * CLI
 * \[admin@MikroAC1\] &gt; ping www.mikrotik.com
-
-| • | HOST | SIZE TTL TIME STATUS |  |
-| :--- | :--- | :--- | :--- |
-| • | 159.148.147.196 | 56 | 50 163ms |
-| • | 159.148.147.196 | 56 | 50 156ms |
-| • | 159.148.147.196 | 56 | 50 156ms |
-| • | 159.148.147.196 | 56 | 50 160ms |
-
+* sent=4 received=4 packet-loss=0% min-rtt=156ms avg-rtt=158ms max-rtt=163ms
+* HOST                            SIZE TTL TIME STATUS 
+* 159.148.147.196        56 50 163ms
+* 159.148.147.196        56 50 156ms
+* 159.148.147.196        56 50 156ms
+* 159.148.147.196        56 50 160ms
 * sent=4 received=4 packet-loss=0% min-rtt=156ms avg-rtt=158ms max-rtt=163ms
 
-–You’ll need to hit “CTRL-C” to stop the ping
+You’ll need to hit “CTRL-C” to stop the ping
 
-Traceroute
+### Traceroute
 
 * Used to display all the routers traveled through to reach your destination
 * It indicates the delay to reach each router in the path to reach your destination
 * Good to locate a failure or slow node
-
-Traceroute
-
 * CLI
 
-–
+  * /tools traceroute [www.mikrotik.com](http://www.mikrotik.com/) 
+  * \[admin@GateWay\] &gt; tool traceroute www.mikrotik.com
+  * \#ADDRESS            LOSS SENT LAST   AVG   BEST   WORST STD-DEV STATUS
+  * 1 89.179.48.140    0%     20     6.7ms   4.5     1.7 11.6 2.2 
+  * 2 89.179.48.166    0%     20     5ms      5.3      2.7 10.6 2.4 
+  * 3 213.33.229.109  0%     20     5ms      6.9      1.4 35.9 8.1 
+  * 4 213.221.4.132    0%     20     31.6ms 34.5   30.9 39.5 2.1
+  * 5 195.13.224.86    0%     19     30.8ms 33.4   30.4 39.4 2.4
+  * 6                              100% 19 timeout
+  * 7 159.148.147.196 0%    19     33.4ms 32.9   30.9 37.1 1.7
 
-–
-
-–
-
-–
-
-–
-
-–
-
-–
-
-–
-
-–
-
-–
-
-/tools traceroute [www.mikrotik.com](http://www.mikrotik.com/) \[admin@GateWay\] &gt; tool traceroute www.mikrotik.com
-
-| \# ADDRESS | LOSS SENT LAST AVG |  | BEST | WORST STD-DEV STATUS |  |  |  |  |  |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| 1 | 89.179.48.140 | 0% | 20 | 6.7ms | 4.5 | 1.7 | 11.6 | 2.2 |  |
-| 2 | 89.179.48.166 | 0% | 20 | 5ms | 5.3 | 2.7 | 10.6 2.4 |  |  |
-| 3 | 213.33.229.109 | 0% | 20 | 5ms | 6.9 | 1.4 | 35.9 | 8.1 |  |
-| 4 | 213.221.4.132 | 0% | 20 | 31.6ms | 34.5 | 30.9 |  | 39.5 | 2.1 |
-| 5 | 195.13.224.86 | 0% | 19 | 30.8ms | 33.4 | 30.4 |  | 39.4 | 2.4 |
-| 6 |  | 100% 19 timeout |  |  |  |  |  |  |  |
-| 7 | 159.148.147.196 | 0% | 19 | 33.4ms | 32.9 | 30.9 | 37.1 | 1.7 |  |
-
-Profiler \(CPU load\)
+### Profiler \(CPU load\)
 
 * Tool that shows the CPU load
 * Shows the processes and their load o the
 
-CPU
+#### CPU
 
 * Note : “**idle**” is not a process. It means just that; the percentage of the CPU NOT being used
-
-Profiler \(CPU load\)
-
 * CLI
-
-–
-
-–
-
-–
-
-–
-
-–
-
-–
-
-–
-
-–
-
-–
-
-–
-
-–
-
-–
-
-–
-
-| /tool profile |  |  |
-| :--- | :--- | :--- |
-| \[admin@MikroAC1\] &gt; /tool profile |  |  |
-| NAME | CPU | USAGE |
-| console | all | 0% |
-| flash | all | 0% |
-| networking | all | 0% |
-| radius | all | 0% |
-| management | all | 0.5% |
-| telnet | all | 0.5% |
-| idle | all | 99% |
-| profiling | all | 0% |
-| unclassified | all | 0% |
-
--- \[Q quit\|D dump\|C-z continue\]
+  * /tool profile
+  * \[admin@MikroAC1\] &gt; /tool profile 
+  * NAME CPU USAGE 
+  * console all 0% 
+  * flash all 0% 
+  * networking all 0% 
+  * radius all 0% 
+  * management all 0.5% 
+  * telnet all 0.5% 
+  * idle all 99% 
+  * profiling all 0% 
+  * unclassified all 0% 
+  * -- \[Q quit\|D dump\|C-z continue\]
 
 System identity
 
 * Although it is not a tool, it's important to set the system's identity.
-
-– You can't manage 100 routers that all have the name "MikroTik". It makes troubleshooting almost impossible.
-
-– Once set, it will make identifying the router you're working on much simpler.
-
+  * You can't manage 100 routers that all have the name "MikroTik". It makes troubleshooting almost impossible.
+  * Once set, it will make identifying the router you're working on much simpler.
 * Syntax
+  * /system identity print \(_show current name_\)
+  * /system identity set name=my-router \(_sets the_ _router's name_\)
 
-– /system identity print \(_show current name_\)
+## **Contacting Mikrotik support**
 
-– /system identity set name=my-router \(_sets the_ _router's name_\)
-
-**Contacting Mikrotik support**
-
-Supout.rif
+### Supout.rif
 
 * Supout.rif is a support file used for RouterOS debugging purposes and to help Mikrotik support personnel resolve issues faster
 * Syntax
-
-– CLI : /system sup-output
-
-Supout.rif
-
+  * CLI : /system sup-output
 * Once generated, the "supout.rif" file will be found in File List
 
 ![](.gitbook/assets/2.jpeg)
 
-| Supout.rif Viewer |  |  |  |
-| :--- | :--- | :--- | :--- |
-| • To access the |  |  |  |
-| "supout.rif |  |  |  |
-| viewer", access |  |  |  |
-| your Mikrotik |  |  |  |
-| account |  |  |  |
-| – | You must |  |  |
-|  | have an |  |  |
-|  | account \(_it’s a_ |  |  |
-|  | _good idea to_ |  |  |
-|  | _have one_ |  |  |
-|  | _anyway_\) | 38 |  |
-|  |  |  |  |
+### Supout.rif Viewer
 
-Supout.rif Viewer
+* To access the "supout.rif viewer", access your Mikrotik account
+  * You must have an account \(it’s a good idea to have one anyway\)
 
-| • | The first steps are |  |  |  |
-| :--- | :--- | :--- | :--- | :--- |
-|  | to locate and |  |  |  |
-|  | upload the file | 1 | 2 |  |
-|  | that you |  |  |  |
-|  |  |  |  |  |
-|  | generated |  |  |  |
-| • | Start browsing all |  |  |  |
-|  | aspects of your |  |  |  |
-|  | configuration |  | 3 |  |
+![](.gitbook/assets/image%20%282%29.png)
+
+* The first steps are to locate and upload the file that you generated
+* Start browsing all aspects of your configuration
+  * The default view is “resource”
 
 ![](.gitbook/assets/3%20%281%29.png)
 
-– The default view is “resource”
-
-Autosupout.rif
+### Autosupout.rif
 
 * A file can be generated automatically upon software failure \(ex. kernel panic or the system becomes unresponsive for a minute\)
 * Done through the watchdog \(system\)
 
-System logging and debug logs
+### System logging and debug logs
 
 * Logging is important to insure a history \(permanent or not\) of router events
-* ![](.gitbook/assets/4%20%284%29.jpeg)The easiest way to view logs is through the “log” \(Menu\) window
+* The easiest way to view logs is through the “log” \(Menu\) window
 * The CLI equivalent is
+  * /log print
 
-– /log print
+![](.gitbook/assets/image%20%2820%29.png)
 
-System logging
+#### System logging
 
 * Actions
-
-– Tasks that the router will undertake with certain events
-
-– Rules tell the router which “action” to take
-
-– There are five types of actions, so you can have a very flexible logging system
-
+  * Tasks that the router will undertake with certain events
+  * Rules tell the router which “action” to take
+  * There are five types of actions, so you can have a very flexible logging system
 * Suggestion
-
-– You should define news “actions” first as custom actions won’t be made available to your “rules” until they are created
+  * You should define news “actions” first as custom actions won’t be made available to your “rules” until they are created
 
 System logging
 
 * Actions, examples
 * \[admin@MikroAC5\] &gt; /system logging action print
 * Flags: \* - default
-
-| • | \# | NAME | TARGET REMOTE |
-| :--- | :--- | :--- | :--- |
-| • | 0 | \* memory | memory |
-| • | 1 | \* disk | disk |
-| • | 2 | \* echo | echo |
-| • | 3 | \* remote | remote 172.16.1.105 |
-| • | 4 | webproxy | remote 172.16.1.105 |
-| • | 5 | firewallJournal | remote 172.16.1.105 |
+* \#NAME    TARGET REMOTE
+* 0  \* memory memory 
+* 1  \* disk disk 
+* 2  \* echo echo 
+* 3 \* remote remote 172.16.1.105 
+* 4 \* webproxy remote 172.16.1.105
+* 5 \* firewallJournal remote 172.16.1.105
 
 System logging
 
 * Rules
-
-– They tell RouterOS what “action” to undertake with a given event \(which is called a “topic”\)
-
-– You can have more than one rule for a same topic, each rule performing a different “action”
-
-– You can have one rule with two or more topics, performing an “action”
-
-– Adding rules is simple, choose one or many topics, name the rule, choose one action. \(This is why it is suggested to create actions first\)
+  * They tell RouterOS what “action” to undertake with a given event \(which is called a “topic”\)
+  * You can have more than one rule for a same topic, each rule performing a different “action”
+  * You can have one rule with two or more topics, performing an “action”
+  * Adding rules is simple, choose one or many topics, name the rule, choose one action. \(This is why it is suggested to create actions first\)
 
 System logging
 

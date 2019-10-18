@@ -101,7 +101,7 @@ routerboard.com
 
 **CCR1036-12G-4S Cloud Router**
 
-![](.gitbook/assets/image%20%285%29.png)
+![](.gitbook/assets/image%20%288%29.png)
 
 _**Флагманская модель**_
 
@@ -149,9 +149,9 @@ _**Флагманская модель**_
 
 * Запустите
 
-![](.gitbook/assets/image%20%281%29.png)
+![](.gitbook/assets/image%20%283%29.png)
 
-![](.gitbook/assets/image%20%288%29.png)
+![](.gitbook/assets/image%20%2811%29.png)
 
 * **RB493G**
   * 9 gig портов
@@ -196,7 +196,7 @@ _**Флагманская модель**_
 * Введите IP 192.168.88.1 и нажмите "Connect".
 * Вы увидите окно первого запуска
 
-![](.gitbook/assets/image%20%286%29.png)
+![](.gitbook/assets/image%20%289%29.png)
 
 Меню WinBox’а
 
@@ -210,7 +210,7 @@ _**Флагманская модель**_
 
 ### Console port
 
-![](.gitbook/assets/image.png)
+![](.gitbook/assets/image%20%281%29.png)
 
 * Обязательно изучите статью: [http://wiki.mikrotik.com/wiki/Serial\_Port\_Usage](http://wiki.mikrotik.com/wiki/Serial_Port_Usage)
 * Необходим для подключения к роутеру через нуль-модемный кабель \(RS-232 port\).
