@@ -6,44 +6,26 @@
 * The firewall acts as a barrier between two networks.
 * A common example is your LAN \(trusted\) and the Internet \(not trusted\).
 
-Firewall principles
-
 How the firewall works
 
 * The firewall operates using rules. These have two parts
-
-– The matcher : _The conditions that I need to have a match_
-
-– The Action : _What I'll do once I have a match_
-
-* The matcher looks at parameters such as :
-
-– Source MAC address
-
-– IP addresses \(network or list\) and address types \(broadcast, local, multicast, unicast\)
-
-– Port or port range
-
-– Protocol
-
-– Protocol options \(ICMP type and code fields, TCP flags, IP options\)
-
-– Interface the packet arrives from or leaves through
-
-– DSCP byte
-
-– _**And more…**_
-
-4
+  * The matcher : _The conditions that I need to have a match_
+  * The Action : _What I'll do once I have a match_
+* The matcher looks at parameters such as:
+  * Source MAC address
+  * IP addresses \(network or list\) and address types \(broadcast, local, multicast, unicast\)
+  * Port or port range
+  * Protocol
+  * Protocol options \(ICMP type and code fields, TCP flags, IP options\)
+  * Interface the packet arrives from or leaves through
+  * DSCP byte
+  * _**And more…**_
 
 Packet flows
 
 * MikroTik created the packet flow diagrams to help us in the creation of more advanced configurations
 * It's good to be familiar with them to know what's happening with packets and in which order
 * For this course, we'll keep it simple
-
-Packet flows
-
 * Overall diagrams
 
 ![](.gitbook/assets/0%20%282%29.jpeg)
@@ -60,96 +42,85 @@ Packet flows, example
 
 * Complicated? Welcome to the club!
 * This next example might help to illustrate a simple flow of packets : Pinging a \(non-existent node\) on a router's LAN interface through it's WAN interface
-
-– IP of node doing the pinging : 172.16.2.100
-
-– IP of node being pinged : 192.168.3.2
-
-– IP of router's WAN \(ether1\) : 192.168.0.3
-
-Packet flows, example
+  * IP of node doing the pinging : 172.16.2.100
+  * IP of node being pinged : 192.168.3.2
+  * IP of router's WAN \(ether1\) : 192.168.0.3
 
 **Ping in**
 
-**===PREROUTING===**
-
-Mangle-prerouting prerouting: in:ether1 out:\(none\), src-mac d4:ca:6d:33:b5:ef, proto ICMP \(type 8, code 0\), 172.16.2.100-&gt;192.168.3.2, len 60
-
-dstnat dstnat: in:ether1 out:\(none\), src-mac d4:ca:6d:33:b5:ef, proto ICMP \(type 8, code 0\), 172.16.2.100-&gt;192.168.3.2, len 60
-
-**===FORWARD===**
-
-Mangle-forward forward: in:ether1 out:Bridge-PC, src-mac d4:ca:6d:33:b5:ef, proto ICMP \(type 8, code 0\), 172.16.2.100-&gt;192.168.3.2, len 60
-
-Filter-forward forward: in:ether1 out:Bridge-PC, src-mac d4:ca:6d:33:b5:ef, proto ICMP \(type 8, code 0\), 172.16.2.100-&gt;192.168.3.2, len 60
-
-**===POSTROUTING===**
-
-Mangle-postrouting postrouting: in:\(none\) out:Bridge-PC, src-mac d4:ca:6d:33:b5:ef, proto ICMP \(type 8, code 0\), 172.16.2.100-&gt;192.168.3.2, len 60
-
-srcnat srcnat: in:\(none\) out:Bridge-PC, src-mac d4:ca:6d:33:b5:ef, proto ICMP \(type 8, code 0\), 172.16.2.100-&gt;192.168.3.2, len 60
+```text
+===PREROUTING===
+Mangle-prerouting prerouting: in:ether1 out:(none), src-mac d4:ca:6d:33:b5:ef, proto ICMP (type 8, code 0),
+172.16.2.100->192.168.3.2, len 60
+dstnat dstnat: in:ether1 out:(none), src-mac d4:ca:6d:33:b5:ef, proto ICMP (type 8, code 0), 172.16.2.100-
+>192.168.3.2, len 60
+===FORWARD===
+Mangle-forward forward: in:ether1 out:Bridge-PC, src-mac d4:ca:6d:33:b5:ef, proto ICMP (type 8, code 0),
+172.16.2.100->192.168.3.2, len 60
+Filter-forward forward: in:ether1 out:Bridge-PC, src-mac d4:ca:6d:33:b5:ef, proto ICMP (type 8, code 0),
+172.16.2.100->192.168.3.2, len 60
+===POSTROUTING===
+Mangle-postrouting postrouting: in:(none) out:Bridge-PC, src-mac d4:ca:6d:33:b5:ef, proto ICMP (type 8, code 0),
+172.16.2.100->192.168.3.2, len 60
+srcnat srcnat: in:(none) out:Bridge-PC, src-mac d4:ca:6d:33:b5:ef, proto ICMP (type 8, code 0), 172.16.2.100-
+>192.168.3.2, len 60
+```
 
 **Reply out**
 
-**===OUTPUT===**
-
-Mangle-output output: in:\(none\) out:ether1, proto ICMP \(type 3, code 1\), 192.168.0.3-&gt;172.16.2.100, len 88
-
-Filter-output output: in:\(none\) out:ether1, proto ICMP \(type 3, code 1\), 192.168.0.3-&gt;172.16.2.100, len 88
-
-**===POSTROUTING===**
-
-Mangle-postrouting postrouting: in:\(none\) out:ether1, proto ICMP \(type 3, code 1\), 192.168.0.3-&gt;172.16.2.100, len 88
+```text
+===OUTPUT===
+Mangle-output output: in:(none) out:ether1, proto ICMP (type 3, code 1), 192.168.0.3->172.16.2.100, len 88
+Filter-output output: in:(none) out:ether1, proto ICMP (type 3, code 1), 192.168.0.3->172.16.2.100, len 88
+===POSTROUTING===
+Mangle-postrouting postrouting: in:(none) out:ether1, proto ICMP (type 3, code 1), 192.168.0.3->172.16.2.100, len 88
+```
 
 Packet flows, example explained
 
-/**ip firewall filter**
-
-add action=log chain=input log-prefix=Filter-input protocol=icmp add action=log chain=output log-prefix=Filter-output protocol=icmp add action=log chain=forward log-prefix=Filter-forward protocol=icmp
-
-**/ip firewall mangle**
-
-add action=log chain=prerouting log-prefix=Mangle-prerouting protocol=icmp add action=log chain=output log-prefix=Mangle-output protocol=icmp
-
-add action=log chain=input log-prefix=Mangle-input protocol=icmp add action=log chain=forward log-prefix=Mangle-forward protocol=icmp
-
-add action=log chain=postrouting log-prefix=Mangle-postrouting protocol=icmp **/ip firewall nat**
-
-add action=log chain=srcnat log-prefix=srcnat protocol=icmp add action=log chain=dstnat log-prefix=dstnat protocol=icmp
+```text
+/ip firewall filter
+add action=log chain=input log-prefix=Filter-input protocol=icmp
+add action=log chain=output log-prefix=Filter-output protocol=icmp
+add action=log chain=forward log-prefix=Filter-forward protocol=icmp
+/ip firewall mangle
+add action=log chain=prerouting log-prefix=Mangle-prerouting protocol=icmp
+add action=log chain=output log-prefix=Mangle-output protocol=icmp
+add action=log chain=input log-prefix=Mangle-input protocol=icmp
+add action=log chain=forward log-prefix=Mangle-forward protocol=icmp
+add action=log chain=postrouting log-prefix=Mangle-postrouting protocol=icmp
+/ip firewall nat
+add action=log chain=srcnat log-prefix=srcnat protocol=icmp
+add action=log chain=dstnat log-prefix=dstnat protocol=icmp
+```
 
 Connection tracking and states
 
 * Connection tracking manages information about all active connections.
 * Before creating your firewall filters \(or rules\), it's good to know what kind of traffic goes through your router. Connection tracking show you just that.
 
-| Flags: S - seen reply, A - assured |  |  |  |  |  |  |  |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| \# | PROTOCOL SRC-ADDRESS | DST-ADDRESS | TCP-STATE TIMEOUT |  |  |  |  |
-| 0 | SA tcp | 172.16.2.140:52010 | 17.172.232.126:5223 | established 23h42m6s |  |  |  |
-| 1 | ospf | 172.16.0.6 | 224.0.0.5 | 5m49s |  |  |  |
-| 2 | SA tcp | 172.16.2.100:49164 | 172.16.9.254:445 | established 23h42m51s |  |  |  |
-| 3 | SA tcp | 172.16.2.122:61739 | 206.53.159.211:443 | established 23h44m8s |  |  |  |
-| 4 | SA tcp | 172.16.2.130:58171 | 17.149.36.108:443 |  | established 23h43m41s |  |  |
-| 5 | SA gre | 172.16.0.254 | 172.16.0.1 |  | 4h44m11s |  |  |
-| 6 | SA udp | 172.16.0.254:4569 | 209.217.98.158:4569 | 13m9s |  |  |  |
-| 7 | SA tcp | 172.16.2.130:58174 | 173.252.103.16:443 | established 23h42m40s |  |  |  |
-| 8 | SA tcp | 172.16.2.140:52032 | 69.171.235.48:443 |  | established 23h43m27s |  |  |
-| 9 | SA tcp | 172.16.2.107:47318 | 173.252.79.23:443 |  | established 23h43m26s |  |  |
-| 10 SA tcp | 172.16.2.102:57632 | 173.252.102.241:443 | established 23h44m15s |  |  |  |  |
-| 11 | ospf | 172.16.0.5 | 224.0.0.5 | 5m49s |  |  |  |
-| 12 SA tcp | 172.16.2.102:56774 | 65.54.167.16:12350 | established 23h35m28s |  |  |  |  |
-| 13 SA tcp | 172.16.2.102:56960 | 173.194.76.125:5222 | established 23h43m57s |  |  |  |  |
-| 14 SA tcp | 172.16.0.254:37467 | 172.16.0.1:1723 | established 4h44m11s |  |  |  |  |
-| 15 SA tcp | 172.16.2.107:39374 | 79.125.114.47:5223 | established 23h29m1s |  |  |  |  |
-|  |  |  |  |  |  |  |  |
+1 ospf 172.16.0.6 224.0.0.5 5m49s  
+2 SA tcp 172.16.2.100:49164 172.16.9.254:445 established 23h42m51s  
+3 SA tcp 172.16.2.122:61739 206.53.159.211:443 established 23h44m8s  
+4 SA tcp 172.16.2.130:58171 17.149.36.108:443 established 23h43m41s  
+5 SA gre 172.16.0.254 172.16.0.1 4h44m11s  
+6 SA udp 172.16.0.254:4569 209.217.98.158:4569 13m9s  
+7 SA tcp 172.16.2.130:58174 173.252.103.16:443 established 23h42m40s  
+8 SA tcp 172.16.2.140:52032 69.171.235.48:443 established 23h43m27s  
+9 SA tcp 172.16.2.107:47318 173.252.79.23:443 established 23h43m26s  
+10 SA tcp 172.16.2.102:57632 173.252.102.241:443 established 23h44m15s  
+11 ospf 172.16.0.5 224.0.0.5 5m49s  
+12 SA tcp 172.16.2.102:56774 65.54.167.16:12350 established 23h35m28s  
+13 SA tcp 172.16.2.102:56960 173.194.76.125:5222 established 23h43m57s  
+14 SA tcp 172.16.0.254:37467 172.16.0.1:1723 established 4h44m11s  
+15 SA tcp 172.16.2.107:39374 79.125.114.47:5223 established 23h29m1s  
+
 
 Connection tracking and states
 
 * Should you disable tracking for any reason, the following features will not work:
-
-– NAT
-
-– Firewall
+  * NAT
+  * Firewall
 
 | ● | connection-bytes | connection-mark |  |
 | :--- | :--- | :--- | :--- |
