@@ -2,8 +2,6 @@
 
 ## **ARP**
 
-ARP
-
 * Stands for “Address Resolution Protocol”
 * Mechanism that links layer 3 IP address to layer 2 MAC address
 * Is normally used as a dynamic process, but can be configured statically in certain situations where security warrants it
@@ -311,92 +309,54 @@ System logging
 * Rules, examples
 * \[admin@MikroAC5\] &gt; /system logging print
 * Flags: X - disabled, I - invalid, \* - default
-
-•
-
-•
-
-\# TOPICS ACTION 0 \* info memory
-
-PREFIX
-
-INF
-
-* !firewall
-
-| • | 1 | \* error | memory | ERR |
-| :--- | :--- | :--- | :--- | :--- |
-| • | 2 | \* warning | memory | WRN |
-| • | 3 | \* critical | memory | CRT |
-| • | 4 | firewall | memory | FW |
-| • | 5 | firewall | firewallJournal | FW |
-| • | 6 | info | remote | INF |
-
-* !firewall
-
-| • | 7 | error | remote | ERR |
-| :--- | :--- | :--- | :--- | :--- |
-| • | 8 | warning | remote | WRN |
-| • | 9 | critical | remote | CRT |
-| • | 10 X snmp | memory | SNMP |  |
-| • | 11 | web-proxy | webproxy | PROXY |
-
+* \# TOPICS          ACTION          PREFIX
+* 0 \* info              memory          INF
+*    !firewall
+* 1  _\*_ error           memory          ERR 
+* 2 __ \* warning     memory          WRN 
+* 3 \* critical        memory          CRT 
+* 4   firewall       memory           FW 
+* 5   firewall      firewallJournal FW 
+* 6   info             remote             INF 
+*      !firewall 
+* 7 error             remote             ERR 
+* 8 warning       remote             WRN
+* 9 critical         remote             CRT 
+* 10 X snmp     memory          SNMP
+* 11 web-proxy webproxy       PROXY
 * !debug
 
 System logging syntax
 
 * View rules
-
-– /system logging print
-
+  * /system logging print
 * View actions
-
-– /system logging action print
-
+  * /system logging action print
 * Store firewall messages to a syslog server
-
-– /system logging action
-
-– add bsd-syslog=yes name=firewallJournal remote=172.16.1.105 src-address=10.5.5.5 syslog-facility=local5 target=remote
-
+  * /system logging action
+  * add bsd-syslog=yes name=firewallJournal remote=172.16.1.105 src-address=10.5.5.5 syslog-facility=local5 target=remote
 * Create a rule for firewall topics that will use the previous action
-
-–
-
-–
-
-/system logging
-
-add action=firewallJournal prefix=FW topics=firewall
+  * /system logging
+  * add action=firewallJournal prefix=FW topics=firewall
 
 Where logs are sent
 
 * As stated in “actions”, logs can be found in five places
-
-– Disk : A hard drive on the router
-
-– Echo : The router’s console \(if present\)
-
-– Email : A predefined e-mail account
-
-– Memory : The router’s internal memory \(as seen in the “log” window\)
-
-– Remote : A syslog server
+  * Disk : A hard drive on the router
+  * Echo : The router’s console \(if present\)
+  * Email : A predefined e-mail account
+  * Memory : The router’s internal memory \(as seen in the “log” window\)
+  * Remote : A syslog server
 
 Readable configuration
 
 * AKA “Make it clear!”
 * Obscurity is your worst enemy. Keep your configurations clear and readable through **comments**, **names** and **uniformity**
-
-– Comments : Give a simple description of the item
-
-– Names : Make it meaningful
-
-– Uniformity : Do things the same way everywhere
-
+  * Comments : Give a simple description of the item
+  * Names : Make it meaningful
+  * Uniformity : Do things the same way everywhere
 * Why should you do all this?
-
-– For yourself. In the long run, this will simplify your job and make you look efficient \(again\)
+  * For yourself. In the long run, this will simplify your job and make you look efficient \(again\)
 
 Readable configuration
 
@@ -410,22 +370,15 @@ Network diagrams
 * Identify all key components
 * Keep the diagram up to date
 * It is a major troubleshooting tool.
-
-– Use it to identify potential problem spots
-
-– Using the tools seen if this module \(ping, traceroute\), write down possible issues
+  * Use it to identify potential problem spots
+  * Using the tools seen if this module \(ping, traceroute\), write down possible issues
 
 Network diagrams
 
 * Example
-
-– All ports are marked, even available ones
-
-– Devices are
-
-identified
-
-– Revision \# is current
+  * All ports are marked, even available ones
+  * Devices are identified
+  * Revision \# is current
 
 ![](.gitbook/assets/6.png)
 
@@ -436,12 +389,9 @@ Time for a practical exercise
 ## Laboratory
 
 * Goals of the lab
-
-– Practice ARP concepts shown in this module
-
-– Add DHCP \(client and server\) functionality to your router
-
-– Use various troubleshooting tools
+  * Practice ARP concepts shown in this module
+  * Add DHCP \(client and server\) functionality to your router
+  * Use various troubleshooting tools
 
 Laboratory : Setup
 
@@ -450,11 +400,8 @@ Laboratory : Setup
 ### Laboratory : step 1
 
 * Display the ARP entries of your router
-
-– Identify each entry
-
-– Based on the network diagram, does it make sense? Compare with the port the MAC address was learned
-
+  * Identify each entry
+  * Based on the network diagram, does it make sense? Compare with the port the MAC address was learned
 * Validate in which ARP mode your interfaces are
 * Add a fake MAC address as if it was learned from the bridge named “LAN”
 
@@ -470,148 +417,113 @@ Laboratory : Setup
 ### Laboratory : step 3
 
 * Cleanup
-
-– When creating the DHCP client, the option “Add default route” was set to yes. This means that the DHCP client gets a default route dynamically
-
-– Display your routes. What do you see for the default route?
-
-– What should be done now to cleanup this table?
+  * When creating the DHCP client, the option “Add default route” was set to yes. This means that the DHCP client gets a default route dynamically
+  * Display your routes. What do you see for the default route?
+  * What should be done now to cleanup this table?
 
 ### Laboratory : step 4
 
 * Set up DHCP server for the computers of the “LAN” bridge
-
-– Create the configuration that will ensure
-
-* * * that clients will get an IP address
+  * Create the configuration that will ensure
+    * that clients will get an IP address
     * The DNS server is at the same address as the default gateway \(your router\)
-
-– Reconfigure your computer so that it receives an IP address from your router
-
-– Configure your router so that your computer always gets the .20X address \(where X is your pod’s address\)
-
-– What do you have to do to get that address?
+  * Reconfigure your computer so that it receives an IP address from your router
+  * Configure your router so that your computer always gets the .20X address \(where X is your pod’s address\)
+  * What do you have to do to get that address?
 
 ### Laboratory : step 5
 
 * Cleanup
-
-– Add a comment to your static address to indicate what the reservation is for
-
-– In the DHCP tab of DHCP Server, give a meaningful name to the DHCP server \(currently named dhcp 1\)
+  * Add a comment to your static address to indicate what the reservation is for
+  * In the DHCP tab of DHCP Server, give a meaningful name to the DHCP server \(currently named dhcp 1\)
 
 ### Laboratory : step 6
 
 * E-mail setup
-
-– Configure your e-mail settings as to allow you to send e-mails to a personal e-mail address.
-
-* * * You can use your own e-mail account to test this out
-
-– Test your configuration with a test e-mail
+  * Configure your e-mail settings as to allow you to send e-mails to a personal e-mail address.
+    * You can use your own e-mail account to test this out
+  * Test your configuration with a test e-mail
 
 ### Laboratory : step 7
 
 * Netwatch
-
-– Use this tool to monitor a test node supplied by the trainer
-
-– To speed things up, configure monitoring interval at 30 seconds
+  * Use this tool to monitor a test node supplied by the trainer
+  * To speed things up, configure monitoring interval at 30 seconds
 
 ### Laboratory : step 8
 
 * Netwatch
-
-– Use these scripts:
+  * Use these scripts:
 
 **Down**
 
-/tool e-mail send to=“&lt;your-e-mail-address&gt;" subject="$\[/system identity get name\] Netwatch status" \ body="$\[/system clock get date\] $\[/system clock get time\] Node down."
+```text
+/tool e-mail send to=“<your-e-mail-address>" subject="$[/system identity get name] Netwatch status" \
+body="$[/system clock get date] $[/system clock get time] Node down."
+```
 
-/tool e-mail send to="&lt;your-e-mail-address&gt;" subject="$\[/system identity get name\] Netwatch status" \ body="$\[/system clock get date\] $\[/system clock get time\] Node up1."
+**Up**
+
+```text
+/tool e-mail send to="<your-e-mail-address>" subject="$[/system identity get name] Netwatch status" \
+body="$[/system clock get date] $[/system clock get time] Node up."
+```
 
 ![](.gitbook/assets/8.jpeg)
-
-3
 
 ### Laboratory : step 9
 
 * Netwatch
-
-– Turn off the test node. Verify that you receive an e- mail indicating the change of status. It should look something like this
+  * Turn off the test node. Verify that you receive an e- mail indicating the change of status. It should look something like this
 
 ![](.gitbook/assets/9.png)
 
 ### Laboratory : step 10
 
 * Ping
-
-– Use the ping tool to validate that the test node answers ICMP echo packets
-
+  * Use the ping tool to validate that the test node answers ICMP echo packets
 * Traceroute
-
-– Use the traceroute tool to see which hops are between you and the test node. Validate that what you see is what is in the class’ network diagram
+  * Use the traceroute tool to see which hops are between you and the test node. Validate that what you see is what is in the class’ network diagram
 
 ### Laboratory : step 11
 
 * Profiler
-
-– Launch the profiling tool and view the various processes running on your router
-
-– What does the highest percentage represent?
-
-* * * Sort tasks by “usage”
+  * Launch the profiling tool and view the various processes running on your router
+  * What does the highest percentage represent?
+    * Sort tasks by “usage”
 
 ### Laboratory : step 12
 
 * Supout.rif
-
-– Create a supout.rif file. Where is it?
-
-– Upload it and take a look at the various sections of your router as viewed by the supout.rif viewer. It’s interesting to see that such a small file can go a long way to help Mikrotik help you.
-
-– Important note : If you don't have a MikroTik account, please create one now as it is required to take the certification exam!!
+  * Create a supout.rif file. Where is it?
+  * Upload it and take a look at the various sections of your router as viewed by the supout.rif viewer. It’s interesting to see that such a small file can go a long way to help Mikrotik help you.
+  * Important note : If you don't have a MikroTik account, please create one now as it is required to take the certification exam!!
 
 ### Laboratory : step 13
 
 * Logging
-
-– Create an action:
-
-* * * Type is “memory”
-
-– Create a rule:
-
-* * * topics “e-mail” and “debug”
+  * Create an action:
+    * Type is “memory”
+  * Create a rule:
+    * topics “e-mail” and “debug”
     * Action “action1”
-
-– Open the “log” window
-
-– Go back to the e-mail tool and send yourself a test e-mail. What do you see in the log window?
+  * Open the “log” window
+  * Go back to the e-mail tool and send yourself a test e-mail. What do you see in the log window?
 
 ### Laboratory : step 14
 
-• Cleaning up our configuration
-
-– Go to the logging window, actions tab and rename “action1” to “E-mail-Debug”
-
-– What happened? Rename “action1” to “EmailDebug”
-
-– Switch back to the rules tab. What do you notice about the “e-mail,debug” entry?
-
-• Do a binary backup of your configuration that respects the previous file name structure from the previous module
+* Cleaning up our configuration
+  * Go to the logging window, actions tab and rename “action1” to “E-mail-Debug”
+  * What happened? Rename “action1” to “EmailDebug”
+  * Switch back to the rules tab. What do you notice about the “e-mail,debug” entry?
+* Do a binary backup of your configuration that respects the previous file name structure from the previous module
 
 ### Laboratory : step 15
 
-* Lastly, rename your router so that :
-
-– it is named after your pod
-
-– The first letter is capitalized
-
+* Lastly, rename your router so that:
+  * it is named after your pod
+  * The first letter is capitalized
 * Create two backups named Module5-Pod_x_
-
-– one must be binary
-
-– one must be an export
+  * one must be binary
+  * one must be an export
 
