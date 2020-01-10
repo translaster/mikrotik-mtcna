@@ -1,4 +1,4 @@
-# Table of contents
+# Оглавление
 
 * [Начальная страница](README.md)
 * [Change Log](changelog.md)
@@ -10,4 +10,3 @@
 * [M6 Firewall](m6-firewall.md)
 * [M7 QoS](m7-qos.md)
 * [M8 Tunnels](m8-tunnels.md)
-
