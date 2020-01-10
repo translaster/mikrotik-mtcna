@@ -1,7 +1,5 @@
 # Оглавление
 
-* [Начальная страница](README.md)
-* [Change Log](changelog.md)
 * [M1 Intro](m1-intro.md)
 * [M2 Routing](m2-routing.md)
 * [M3 Bridging](m3-bridging.md)
@@ -10,3 +8,4 @@
 * [M6 Firewall](m6-firewall.md)
 * [M7 QoS](m7-qos.md)
 * [M8 Tunnels](m8-tunnels.md)
+* [Change Log перевода](changelog.md)
