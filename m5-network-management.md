@@ -2,48 +2,48 @@
 
 ## **ARP**
 
-* Stands for “Address Resolution Protocol”
-* Mechanism that links layer 3 IP address to layer 2 MAC address
-* Is normally used as a dynamic process, but can be configured statically in certain situations where security warrants it
+* Означает “Address Resolution Protocol” - "Протокол определения адреса”
+* Механизм, который связывает IP-адрес уровня 3 с MAC-адресом уровня 2
+* Обычно используется как динамический процесс, но может быть сконфигурирован статически в определенных ситуациях, когда этого требует безопасность
 
-ARP modes
+### Режимы ARP
 
-* “ARP modes” tell RouterOS how ARP is to work
-  * Modes are configured on a “per interface” basis
-* The “modes” are
-  * **Enabled** : Default mode. ARP requests will be answered and the ARP table will be filled automatically
-  * **Disabled** : Interface will not send or reply to ARP requests. Other hosts MUST be told the router’s MAC address
-  * **Proxy ARP** : The router answers ARP request coming for it’s directly connected network \(regardless of origin\)
-  * **Reply only** : The router answers ARP requests. Router’s ARP table must be filled statically
+* "Режимы ARP" расскажут RouterOS, как должен работать ARP
+  - Режимы настраиваются по принципу "на интерфейсе".
+* "Режимы" могут быть
+  - **Enabled**: режим по умолчанию. На запросы ARP будут даны ответы и таблица ARP будет заполнена автоматически
+  - **Disabled**: интерфейс не будет отправлять или отвечать на запросы ARP. Другим хостам необходимо сообщить MAC-адрес маршрутизатора
+  - **Proxy ARP**: маршрутизатор отвечает на запрос ARP, поступающий для его непосредственно подключенной сети (независимо от источника)
+  - **Reply only**: маршрутизатор отвечает на запросы ARP. Таблица ARP маршрутизатора должна быть заполнена статически
 
-RouterOS ARP table
+### Таблица ARP RouterOS
 
-* The ARP Table displays all ARP entries and the interface from which they are learned
-* The ARP table provides:
-  * The IP address of know devices
-  * The MAC addresses associated with the IP addresses
-  * The interfaces from which they were learned
-* You can add static entries to the ARP table to secure your network
-  * Can avoid ARP poisoning / ARP spoofing
-  * Requires a lot of work and planning
+* Таблица ARP отображает все записи ARP и интерфейс, из которого они извлекаются
+* Таблица ARP предоставляет:
+  - IP-адрес известных устройств
+  - MAC-адреса, связанные с IP-адресами
+  - Интерфейсы, с которых они были извлечены
+* Вы можете добавить статические записи в таблицу ARP, чтобы защитить свою сеть
+  - Может избежать заражения/подмены ARP
+  - Требует много работы и планирования
 
-ARP syntax
+### Синтаксис ARP
 
-* View ARP table :
-  * /ip arp print
-* Add a static entry :
-  * /ip arp add address=172.16.2.222 mac-address=11:22:33:44:55:66 interface=Bridge-PC
-* Configure ARP mode :
-  * /interface ethernet set ether04 arp=proxy-arp
+* Просмотр таблицы ARP:
+  - /ip arp print
+* Добавить статическую запись:
+  -  /ip arp add address=172.16.2.222 macaddress=11:22:33:44:55:66 interface=Bridge-PC
+* Настройка режима ARP:
+  - /interface ethernet set ether04 arp=proxyarp
 
-## **DHCP server and client**
+## DHCP сервер и клиент
 
-DHCP server
+### DHCP сервер
 
-* Stands for Dynamic Host Configuration Protocol
-* It is used to automatically allocate an IP address, netmask, default gateway and, optionally, other parameters to requesting nodes
+* Расшифровывается как Dynamic Host Configuration Protocol - протокол динамической настройки узла
+* Он используется для автоматического выделения IP-адреса, маски сети, шлюза по умолчанию и, возможно, других параметров запрашиваемых узлом
 
-DHCP server setup
+#### Настройки DHCP-сервера
 
 * The interface hosting the DHCP-server must have it’s own IP address that is NOT in the address pool
   * A pool is a range of IP addresses that will be made available to clients
@@ -177,7 +177,7 @@ Lease management syntax
 * CLI
 * \[admin@MikroAC1\] &gt; ping www.mikrotik.com
 * sent=4 received=4 packet-loss=0% min-rtt=156ms avg-rtt=158ms max-rtt=163ms
-* HOST                            SIZE TTL TIME STATUS 
+* HOST                            SIZE TTL TIME STATUS
 * 159.148.147.196        56 50 163ms
 * 159.148.147.196        56 50 156ms
 * 159.148.147.196        56 50 156ms
@@ -193,12 +193,12 @@ You’ll need to hit “CTRL-C” to stop the ping
 * Good to locate a failure or slow node
 * CLI
 
-  * /tools traceroute [www.mikrotik.com](http://www.mikrotik.com/) 
+  * /tools traceroute [www.mikrotik.com](http://www.mikrotik.com/)
   * \[admin@GateWay\] &gt; tool traceroute www.mikrotik.com
   * \#ADDRESS            LOSS SENT LAST   AVG   BEST   WORST STD-DEV STATUS
-  * 1 89.179.48.140    0%     20     6.7ms   4.5     1.7 11.6 2.2 
-  * 2 89.179.48.166    0%     20     5ms      5.3      2.7 10.6 2.4 
-  * 3 213.33.229.109  0%     20     5ms      6.9      1.4 35.9 8.1 
+  * 1 89.179.48.140    0%     20     6.7ms   4.5     1.7 11.6 2.2
+  * 2 89.179.48.166    0%     20     5ms      5.3      2.7 10.6 2.4
+  * 3 213.33.229.109  0%     20     5ms      6.9      1.4 35.9 8.1
   * 4 213.221.4.132    0%     20     31.6ms 34.5   30.9 39.5 2.1
   * 5 195.13.224.86    0%     19     30.8ms 33.4   30.4 39.4 2.4
   * 6                              100% 19 timeout
@@ -214,17 +214,17 @@ You’ll need to hit “CTRL-C” to stop the ping
 * Note : “**idle**” is not a process. It means just that; the percentage of the CPU NOT being used
 * CLI
   * /tool profile
-  * \[admin@MikroAC1\] &gt; /tool profile 
-  * NAME CPU USAGE 
-  * console all 0% 
-  * flash all 0% 
-  * networking all 0% 
-  * radius all 0% 
-  * management all 0.5% 
-  * telnet all 0.5% 
-  * idle all 99% 
-  * profiling all 0% 
-  * unclassified all 0% 
+  * \[admin@MikroAC1\] &gt; /tool profile
+  * NAME CPU USAGE
+  * console all 0%
+  * flash all 0%
+  * networking all 0%
+  * radius all 0%
+  * management all 0.5%
+  * telnet all 0.5%
+  * idle all 99%
+  * profiling all 0%
+  * unclassified all 0%
   * -- \[Q quit\|D dump\|C-z continue\]
 
 System identity
@@ -289,10 +289,10 @@ System logging
 * \[admin@MikroAC5\] &gt; /system logging action print
 * Flags: \* - default
 * \#NAME    TARGET REMOTE
-* 0  \* memory memory 
-* 1  \* disk disk 
-* 2  \* echo echo 
-* 3 \* remote remote 172.16.1.105 
+* 0  \* memory memory
+* 1  \* disk disk
+* 2  \* echo echo
+* 3 \* remote remote 172.16.1.105
 * 4 \* webproxy remote 172.16.1.105
 * 5 \* firewallJournal remote 172.16.1.105
 
@@ -312,16 +312,16 @@ System logging
 * \# TOPICS          ACTION          PREFIX
 * 0 \* info              memory          INF
 *    !firewall
-* 1  _\*_ error           memory          ERR 
-* 2 __ \* warning     memory          WRN 
-* 3 \* critical        memory          CRT 
-* 4   firewall       memory           FW 
-* 5   firewall      firewallJournal FW 
-* 6   info             remote             INF 
-*      !firewall 
-* 7 error             remote             ERR 
+* 1  _\*_ error           memory          ERR
+* 2 __ \* warning     memory          WRN
+* 3 \* critical        memory          CRT
+* 4   firewall       memory           FW
+* 5   firewall      firewallJournal FW
+* 6   info             remote             INF
+*      !firewall
+* 7 error             remote             ERR
 * 8 warning       remote             WRN
-* 9 critical         remote             CRT 
+* 9 critical         remote             CRT
 * 10 X snmp     memory          SNMP
 * 11 web-proxy webproxy       PROXY
 * !debug
@@ -526,4 +526,3 @@ body="$[/system clock get date] $[/system clock get time] Node up."
 * Create two backups named Module5-Pod_x_
   * one must be binary
   * one must be an export
-
