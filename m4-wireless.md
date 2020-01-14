@@ -5,13 +5,13 @@
 ### Частоты
 
 * 802.11b
-  * 2.4GHz \(ширина полосы 22MHz\), 11Mbps
+  * 2.4GHz (ширина полосы 22MHz), 11Mbps
 * 802.11g
-  * 2.4GHz \(ширина полосы 22MHz\), 54Mbps
+  * 2.4GHz (ширина полосы 22MHz), 54Mbps
 * 802.11a
-  * 5GHz \(ширина полосы 20MHz\), 54Mbps
+  * 5GHz (ширина полосы 20MHz), 54Mbps
 * 802.11n
-  * 2.4GHz или 5GHz до 300Mbps, если используется канал 40MHz и 2 радио \(каналы\)
+  * 2.4GHz или 5GHz до 300Mbps, если используется канал 40MHz и 2 радио (каналы)
 
 ![&#x414;&#x438;&#x430;&#x433;&#x440;&#x430;&#x43C;&#x43C;&#x430; &#x41C;&#x430;&#x439;&#x43A;&#x43B;&#x430; &#x413;&#x43E;&#x442;&#x44C;&#x435;](.gitbook/assets/0%20%283%29.jpeg)
 
@@ -23,7 +23,7 @@
 * 802.11a частотный диапазон
 * 12 каналов с шириной 20MHz и 5 с шириной 40MHz
 * Диапазон
-  * Mikrotik поддерживает оба 5GHz \(802.11a/n\) и 2.4GHz \(802.11b/g/n\)
+  * Mikrotik поддерживает оба 5GHz (802.11a/n) и 2.4GHz (802.11b/g/n)
 * Функция “Advanced Channels” предоставляет расширенные возможности в конфигурации беспроводного интерфейса:
   * скан-список, который охватывает несколько полос и широт каналов;
   * нестандартные центральные частоты канала \(заданные с детализацией кГц\) для аппаратных средств, которые позволяют это;
@@ -251,11 +251,11 @@
 
 ![](.gitbook/assets/24.jpeg)
 
-Лабораторка : Предварительный шаг
+Лабораторка: Предварительная подготовка
 
 * **ПРЕЖДЕ ЧЕМ МЫ ЧТО-НИБУДЬ СДЕЛАЕМ!!!**
   * Сделайте бинарную резервную копию текущей конфигурации под именем:
-    * Module3-pod_X_ где _X_ это ваш под номер
+    * Module3-pod<i>X</i> где _X_ это ваш подномер
   * Как бы вы это сделали?
   * Какие окна вы бы открыли?
 
@@ -280,80 +280,79 @@
 
 * Откройте окно “Wireless” и убедитесь что интерфейс “wlan1” включен
 
-### Laboratory : step 4
+### Лабораторка: шаг 4
 
-* Double-click on the interface and go to the “Wireless” tab. Click “Advanced Mode”, then enter the following parameters:
-  * Mode : ap bridge
-  * Band : 2GHz-B/G/N
-  * Channel width : 20MHz
-  * Frequency : Odd pods use 2437, even pods use 2462
-  * SSID : pod_X_
-  * Wireless protocol : 802.11
-  * Security Profile : default **\(which would be a** _**BAD**_ **idea any** **other time\)**
-  * Frequency Mode : Regulatory-domain
-  * Country : &lt;_where you are now_&gt;
-  * Default Authenticate is checked
+* Кликните дважды на интерфейсе и перейдите на вкладку Wireless”. Нажмите кнопку "Advanced Mode”, затем введите следующие параметры:
+  - Mode: ap bridge
+  - Band: 2GHz-B/G/N
+  - Channel width: 20MHz
+  - Frequency: Odd pods use 2437, even pods use 2462
+  - SSID: pod<i>X</i>
+  - Wireless protocol: 802.11
+  - Security Profile: default **(что было бы _ПЛОХОЙ_ идеей в любое другое время)**
+  - Frequency Mode: Regulatory-domain
+  - Country: _<где_вы_сейчас_находитесь>_
+  - Default Authenticate is checked
 
-### Laboratory : step 5
+### Лабораторка: шаг 5
 
-* Remove the network cable between your laptop and router. The cable from your router to the teacher’s router must stay
-* Set-up you laptop to use your router’s wi-fi parameters
-* Ensure that you have wi-fi connectivity
-* Connect to the Internet
+* Отключите сетевой кабель между ноутбуком и маршрутизатором. Кабель от вашего маршрутизатора к маршрутизатору учителя должен остаться
+* Настройте Ваш ноутбук для использования параметров wi-fi вашего маршрутизатора
+* Убедитесь, что у вас есть подключение wi-fi
+* Подключитесь к Интернету
 
-### Laboratory : step 6
+### Лабораторка: шаг 6
 
-* Do a binary backup of the current configuration under the name:
-  * Module4a-pod_X_ where _X_ is your pod number
-* From the “File List” window, select module3-pod_X_ and click on the “Restore” button on the top part of the window
-* Answer “yes” to reboot the router
+* Сделайте двоичную резервную копию текущей конфигурации под именем:
+  - Module4a-pod<i>X</i>, где _X_ - номер вашего модуля
+* В окне "File List" выберите module3-pod<i>X</i> и нажмите на кнопку "Restore" в верхней части окна
+* Ответьте “Yes”, чтобы перезагрузить маршрутизатор.
 
-### Laboratory : step 7
+### Лабораторка: шаг 7
 
-* Reconnect your laptop’s network cable to your router
-* Disconnect your router’s network cable to the teacher’s router
-* You should now have no Internet access
+* Подключите сетевой кабель вашего ноутбука к маршрутизатору.
+* Отсоедините сетевой кабель вашего маршрутизатора от маршрутизатора преподавателя.
+* Теперь у вас не должно быть доступа в Интернет
 
-### Laboratory : step 8
+### Лабораторка: шаг 8
 
-**Preliminary work**
+**Предварительная подготовка**
 
-* IP address for WLAN1
-  * 192.168.252.pod_X_
-* Enable wlan1 interface if such is not the case
-* Security profile
-  * Name : WPA2
-  * Authentication types : WPA2 PSK
-  * Unicast and group ciphers : aes ccm
-  * WPA2 pre-shared key : mtcna123!
+* IP-адрес для WLAN1
+  - 192.168.252.pod<i>X</i>
+* Включите интерфейс wlan1, если он не включен
+* Профиль безопасности
+  - Name: WPA2
+  - Authentication types: WPA2 PSK
+  - Unicast and group ciphers: aes ccm
+  - WPA2 pre-shared key: mtcna123!
 
-### Laboratory : step 9
+### Лабораторка: шаг 9
 
-* Activate the “Advanced Mode” in the “Wireless” tab of “Interface &lt;wlan1&gt;”
-* We need to connect to the class’s AP. The following parameters MUST be compatible to that of the AP to connect to.
-  * Mode : Station
-  * Band : 2GHz-only-N
-  * SSID : WISP
-  * Radio name : WISP-POD_X_
-  * Wireless protocol : 802.11
-  * Security profile : WPA2
+* Активируйте “Advanced Mode” во вкладке "Wireless" раздела "Interface <wlan1>"
+* Нам нужно подключиться к точке доступа класса. Следующие параметры должны быть совместимы с параметрами точки доступа для подключения.
+  - Mode: Station
+  - Band: 2GHz-only-N
+  - SSID: WISP
+  - Radio name: WISP-POD<i>X</i>
+  - Wireless protocol: 802.11
+  - Security profile: WPA2
 
-### Laboratory : step 10
+### Лабораторка: шаг 10
 
-* Frequency Mode : regulatory-domain
-* Country : Normally, you select the country where the AP will be installed.
-* Leave “Default Authenticate” checked for now
-* Click OK, and select the “Registration” tab in the “Wireless Tables” window
-* Your should see the teacher’s AP appear. If so, you’re connected!
-  * **But wait!!!**
+* Frequency Mode: regulatory-domain
+* Country: выбирите страну, в которой будет установлена ТД.
+* Оставьте пока флажок “Default Authenticate”
+* Кликните OK и выберите вкладку “Registration” в окне “Wireless Tables”
+* Вы должны видеть, как появляется ТД учителя. Если это так, то вы подключены!
+  - **Но подождите!!!**
 
-### Laboratory : step 11
+### Лабораторка: шаг 11
 
-* Before browsing can work, let’s correct our routing tables.
-  * Redefine the default gateway to be 192.168.252.254
-  * Redefine the route to your neighbor’s pod’s LAN interface \(192.168._Y_.1\) to go through 192.168.252._Y_
-  * Ping your neighbor’s pod’s LAN interface \(192. 168._Y_.1\)
-    * What’s the result?
+* Прежде чем просмотр сможет работать, давайте исправим наши таблицы маршрутизации.
+  - Переопределите шлюз по умолчанию на 192.168.252.254
+  - Переопределите маршрут к локальному интерфейсу модуля вашего соседа (192.168._Y_.1) через 192.168.252._Y_
+  - Проверьте пинг до сетевого интерфейса модуля вашего соседа (192. 168._Y_.1)
+    - Каков же результат?
 
-**End of Laboratory 4**
-
+**Конец 4 лабораторки**
