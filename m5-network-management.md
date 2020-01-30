@@ -45,56 +45,59 @@
 
 #### Настройки DHCP-сервера
 
-* The interface hosting the DHCP-server must have it’s own IP address that is NOT in the address pool
-  * A pool is a range of IP addresses that will be made available to clients
-* In the DHCP-server window, simply click on the “DHCP Setup” button and answer the questions
-  * DHCP Server Interface
-  * DHCP Address Space
-  * Gateway for DHCP Network
-  * Addresses to Give Out
-  * DNS Servers \(more than one can be entered\)
-  * Lease Time
-* The automated setup :
-  * Creates an IP Pool
-    * A pool of IP addresses to assign
-  * Creates the DHCP server
-    * It’s name and parameters \(such as the interface it will accept requests from\)
-  * Creates the address space
-    * The IP network and various parameters
-* The results of the automated setup
+* Интерфейс, на котором размещается DHCP-сервер, должен иметь собственный IP-адрес, отсутствующий в пуле адресов
+  - Пул - это диапазон IP-адресов, которые будут доступны клиентам.
+
+* В окне DHCP-сервера просто нажмите на кнопку "DHCP Setup" и ответьте на вопросы
+  - DHCP Server Interface - интерфейс DHCP-сервера
+  - DHCP Address Space - адресное пространство dhcp
+  - Gateway for DHCP Network - шлюз для DHCP-сети
+  - Addresses to Give Out - адреса для выдачи
+  - DNS Servers (можно ввести более одного)
+  - Lease Time - время аренды
+
+* Автоматическая настройка:
+  - Создаем пул IP-адресов:
+    - Пул IP-адресов для назначения
+  - Создаем DHCP-сервер
+    - Его имя и параметры (например, интерфейс, от которого он будет принимать запросы)
+  - Создаем адресное пространство:
+    - IP-сеть и различные параметры
+
+* Результаты автоматизированной настройки
 
 ![](.gitbook/assets/0%20%284%29.png)
 
-* DHCP can be used to set up options such as
-  * 42 : NTP Servers
-  * 70 : POP3-Server
-  * Visit for more DHCP options
-* **Important note**
-  * If you have a bridged environment, DHCP Server MUST be set on the bridge interface. If set on a bridge port, the DHCP server will not work.
+* DHCP можно использовать для настройки таких параметров, как:
+  - 42: серверы NTP
+  - 70: POP3-сервер
+  - Посетите для получения дополнительных параметров DHCP
+* **Важное примечание**
+  - Если у вас есть бриджевое пространство, DHCP-сервер должен быть установлен на интерфейсе бриджа. Если он установлен на порту бриджа, DHCP-сервер не будет работать.
 
-DHCP server syntax
+#### Синтаксис DHCP-сервера
 
-* Configure a DHCP scope
-  * /ip dhcp-server setup
-* Configure a DHCP option
-  * /ip dhcp-server option add name=46-node-type code=46 value=0x0008
-* Assign a DHCP option to a network
-  * /ip dhcp-server network print \(_to view_ _available networks_\)
-  * /ip dhcp-server network set dhcp-option=46-node-type numbers=1
-* Assign a WINS server to a network
-  * /ip dhcp-server network set wins-server=172.16.2.100 numbers=1
+  * Настройка области DHCP
+    - `/ip dhcp-server setup`
+  * Настройка параметра DHCP
+    - `/ip dhcp-server option add name=46-node-type code=46 value=0x0008`
+  * Назначить параметр DHCP для сети
+    - `/ip dhcp-server network print` (для просмотра доступных сетей)
+    - `/ip dhcp-server network set dhcp-option=46-node-type numbers=1`
+  * Назначение WINS-сервера сети
+    - `/ip dhcp-server network set wins-server=172.16.2.100 numbers=1`
 
-DHCP server “Networks” configuration
+#### Конфигурация DHCP-сервера “Networks”
 
-* Example of basic configuration
+* Пример базовой конфигурации
 
 ![](.gitbook/assets/image.png)
 
-* Example of expanded configuration
-
+* Пример расширенной конфигурации
+*
 ![](.gitbook/assets/image%20%286%29.png)
 
-DHCP client
+### DHCP-клиент
 
 * Allows Ethernet-like interfaces to request an IP address.
   * The remote DHCP server will supply:
