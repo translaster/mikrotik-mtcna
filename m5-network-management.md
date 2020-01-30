@@ -30,11 +30,11 @@
 ### Синтаксис ARP
 
 * Просмотр таблицы ARP:
-  - /ip arp print
+  - `/ip arp print`
 * Добавить статическую запись:
-  -  /ip arp add address=172.16.2.222 macaddress=11:22:33:44:55:66 interface=Bridge-PC
+  -  `/ip arp add address=172.16.2.222 macaddress=11:22:33:44:55:66 interface=Bridge-PC`
 * Настройка режима ARP:
-  - /interface ethernet set ether04 arp=proxyarp
+  - `/interface ethernet set ether04 arp=proxyarp`
 
 ## DHCP сервер и клиент
 
@@ -94,7 +94,7 @@
 ![](.gitbook/assets/image.png)
 
 * Пример расширенной конфигурации
-*
+
 ![](.gitbook/assets/image%20%286%29.png)
 
 ### DHCP-клиент
@@ -104,13 +104,13 @@
     * Address
     * Mask
     * Default gateway
-    * Two DNS servers \(if the remote DHCP server is so configured\)
+    * Two DNS servers (if the remote DHCP server is so configured)
   * The DHCP client will supply configurable options:
     * Hostname
-    * Clientid \(in the form of it’s MAC address\)
+    * Clientid (in the form of it’s MAC address)
 * Normally used on interfaces facing the Internet, for example
 
-DHCP client syntax
+#### DHCP client syntax
 
 * To configure a DHCP-client interface
   * /ip dhcp-client add interface=ether5 dhcp-options=clientid,hostname
@@ -120,7 +120,7 @@ DHCP client syntax
 * To view the DHCP client's address
   * /ip address print
 
-Lease management
+#### Lease management
 
 * The "/ip dhcp-server lease" section provides information about DHCP clients and leases
 * Shows dynamic and static leases
@@ -131,7 +131,7 @@ Lease management
 * Clients will only receive the preconfigured IP addresses
 * Evaluate your situation and the need to do this before doing it this way. It will require a lot of work for large networks
 
-Lease management syntax
+##### Lease management syntax
 
 * To view DHCP leases
   * /ip dhcp-server lease print
@@ -141,7 +141,7 @@ Lease management syntax
 * To modify the previous entry's assigned IP address
   * /ip dhcp-server lease set address=192.168.3.100 numbers=0
 
-## **RouterOS tools**
+## RouterOS tools
 
 ### E-mail
 
@@ -239,7 +239,7 @@ System identity
   * /system identity print \(_show current name_\)
   * /system identity set name=my-router \(_sets the_ _router's name_\)
 
-## **Contacting Mikrotik support**
+## Contacting Mikrotik support
 
 ### Supout.rif
 
@@ -286,8 +286,6 @@ System identity
 * Suggestion
   * You should define news “actions” first as custom actions won’t be made available to your “rules” until they are created
 
-System logging
-
 * Actions, examples
 * \[admin@MikroAC5\] &gt; /system logging action print
 * Flags: \* - default
@@ -299,15 +297,11 @@ System logging
 * 4 \* webproxy remote 172.16.1.105
 * 5 \* firewallJournal remote 172.16.1.105
 
-System logging
-
 * Rules
   * They tell RouterOS what “action” to undertake with a given event \(which is called a “topic”\)
   * You can have more than one rule for a same topic, each rule performing a different “action”
   * You can have one rule with two or more topics, performing an “action”
   * Adding rules is simple, choose one or many topics, name the rule, choose one action. \(This is why it is suggested to create actions first\)
-
-System logging
 
 * Rules, examples
 * \[admin@MikroAC5\] &gt; /system logging print
@@ -376,8 +370,6 @@ Network diagrams
   * Use it to identify potential problem spots
   * Using the tools seen if this module \(ping, traceroute\), write down possible issues
 
-Network diagrams
-
 * Example
   * All ports are marked, even available ones
   * Devices are identified
@@ -387,20 +379,20 @@ Network diagrams
 
 Time for a practical exercise
 
-**End of module 5**
+**Конец 5 модуля**
 
-## Laboratory
+## Лабораторка
 
 * Goals of the lab
   * Practice ARP concepts shown in this module
   * Add DHCP \(client and server\) functionality to your router
   * Use various troubleshooting tools
 
-Laboratory : Setup
+Лабораторка: Установка
 
 ![](.gitbook/assets/7%20%281%29.jpeg)
 
-### Laboratory : step 1
+### Лабораторка: шаг 1
 
 * Display the ARP entries of your router
   * Identify each entry
@@ -408,7 +400,7 @@ Laboratory : Setup
 * Validate in which ARP mode your interfaces are
 * Add a fake MAC address as if it was learned from the bridge named “LAN”
 
-### Laboratory : step 2
+### Лабораторка: шаг 2
 
 * Add a DHCP client on WLAN1 interface
 * Ask the trainer to make a static reservation on his DHCP server. The fourth digit of your IP address must match your pod
@@ -417,14 +409,14 @@ Laboratory : Setup
 * Renew your DHCP client address
 * What’s the final address?
 
-### Laboratory : step 3
+### Лабораторка: шаг 3
 
 * Cleanup
   * When creating the DHCP client, the option “Add default route” was set to yes. This means that the DHCP client gets a default route dynamically
   * Display your routes. What do you see for the default route?
   * What should be done now to cleanup this table?
 
-### Laboratory : step 4
+### Лабораторка: шаг 4
 
 * Set up DHCP server for the computers of the “LAN” bridge
   * Create the configuration that will ensure
@@ -434,26 +426,26 @@ Laboratory : Setup
   * Configure your router so that your computer always gets the .20X address \(where X is your pod’s address\)
   * What do you have to do to get that address?
 
-### Laboratory : step 5
+### Лабораторка: шаг 5
 
 * Cleanup
   * Add a comment to your static address to indicate what the reservation is for
   * In the DHCP tab of DHCP Server, give a meaningful name to the DHCP server \(currently named dhcp 1\)
 
-### Laboratory : step 6
+### Лабораторка: шаг 6
 
 * E-mail setup
   * Configure your e-mail settings as to allow you to send e-mails to a personal e-mail address.
     * You can use your own e-mail account to test this out
   * Test your configuration with a test e-mail
 
-### Laboratory : step 7
+### Лабораторка: шаг 7
 
 * Netwatch
   * Use this tool to monitor a test node supplied by the trainer
   * To speed things up, configure monitoring interval at 30 seconds
 
-### Laboratory : step 8
+### Лабораторка: шаг 8
 
 * Netwatch
   * Use these scripts:
@@ -474,35 +466,35 @@ body="$[/system clock get date] $[/system clock get time] Node up."
 
 ![](.gitbook/assets/8.jpeg)
 
-### Laboratory : step 9
+### Лабораторка: шаг 9
 
 * Netwatch
   * Turn off the test node. Verify that you receive an e- mail indicating the change of status. It should look something like this
 
 ![](.gitbook/assets/9.png)
 
-### Laboratory : step 10
+### Лабораторка: шаг 10
 
 * Ping
   * Use the ping tool to validate that the test node answers ICMP echo packets
 * Traceroute
   * Use the traceroute tool to see which hops are between you and the test node. Validate that what you see is what is in the class’ network diagram
 
-### Laboratory : step 11
+### Лабораторка: шаг 11
 
 * Profiler
   * Launch the profiling tool and view the various processes running on your router
   * What does the highest percentage represent?
     * Sort tasks by “usage”
 
-### Laboratory : step 12
+### Лабораторка: шаг 12
 
 * Supout.rif
   * Create a supout.rif file. Where is it?
   * Upload it and take a look at the various sections of your router as viewed by the supout.rif viewer. It’s interesting to see that such a small file can go a long way to help Mikrotik help you.
   * Important note : If you don't have a MikroTik account, please create one now as it is required to take the certification exam!!
 
-### Laboratory : step 13
+### Лабораторка: шаг 13
 
 * Logging
   * Create an action:
@@ -513,7 +505,7 @@ body="$[/system clock get date] $[/system clock get time] Node up."
   * Open the “log” window
   * Go back to the e-mail tool and send yourself a test e-mail. What do you see in the log window?
 
-### Laboratory : step 14
+### Лабораторка: шаг 14
 
 * Cleaning up our configuration
   * Go to the logging window, actions tab and rename “action1” to “E-mail-Debug”
@@ -521,7 +513,7 @@ body="$[/system clock get date] $[/system clock get time] Node up."
   * Switch back to the rules tab. What do you notice about the “e-mail,debug” entry?
 * Do a binary backup of your configuration that respects the previous file name structure from the previous module
 
-### Laboratory : step 15
+### Лабораторка: шаг 15
 
 * Lastly, rename your router so that:
   * it is named after your pod
