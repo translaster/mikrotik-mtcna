@@ -288,107 +288,110 @@ You’ll need to hit “CTRL-C” to stop the ping
 
 ![](/pics/log.png)
 
-#### System logging
+#### Системный журнал
 
-* Actions
-  * Tasks that the router will undertake with certain events
-  * Rules tell the router which “action” to take
-  * There are five types of actions, so you can have a very flexible logging system
-* Suggestion
-  * You should define news “actions” first as custom actions won’t be made available to your “rules” until they are created
+* Действия
+  - Задачи, которые маршрутизатор будет выполнять с определенными событиями
+  - Правила указывающие маршрутизатору, какое "действие" предпринять
+  - Существует пять типов действий, поэтому вы можете иметь очень гибкую систему ведения журнала
+* Предложения
+  - Вы должны сначала определить новые "действия", поскольку пользовательские действия не будут доступны вашим "правилам", пока они не будут созданы
 
-* Actions, examples
-* [admin@MikroAC5] &gt; /system logging action print
-* Flags: \* - default
-* \#NAME    TARGET REMOTE
-* 0  \* memory memory
-* 1  \* disk disk
-* 2  \* echo echo
-* 3 \* remote remote 172.16.1.105
-* 4 \* webproxy remote 172.16.1.105
-* 5 \* firewallJournal remote 172.16.1.105
+* Действия, примеры
 
-* Rules
-  * They tell RouterOS what “action” to undertake with a given event \(which is called a “topic”\)
-  * You can have more than one rule for a same topic, each rule performing a different “action”
-  * You can have one rule with two or more topics, performing an “action”
-  * Adding rules is simple, choose one or many topics, name the rule, choose one action. \(This is why it is suggested to create actions first\)
+```
+[admin@MikroAC5] > /system logging action print
+Flags: * - default
+# NAME              TARGET REMOTE
+0 * memory          memory
+1 * disk            disk
+2 * echo            echo
+3 * remote          remote 172.16.1.105
+4 webproxy          remote 172.16.1.105
+5 firewallJournal   remote 172.16.1.105
+```
+* Правила
+  - Они указывают RouterOS, какое "действие" предпринять с данным событием (которое называется "темой")
+  - Вы можете иметь несколько правил для одной и той же темы, каждое правило выполняет различное "действие"
+  - Вы можете иметь одно правило с двумя или более темами, выполняя "действие"
+  - Добавить правило просто: выберите одну или несколько тем, назовите правило, выберите одно действие. (Именно поэтому предлагается сначала создать действия)
 
-* Rules, examples
-* \[admin@MikroAC5\] &gt; /system logging print
-* Flags: X - disabled, I - invalid, \* - default
-* \# TOPICS          ACTION          PREFIX
-* 0 \* info              memory          INF
-*    !firewall
-* 1  _\*_ error           memory          ERR
-* 2 __ \* warning     memory          WRN
-* 3 \* critical        memory          CRT
-* 4   firewall       memory           FW
-* 5   firewall      firewallJournal FW
-* 6   info             remote             INF
-*      !firewall
-* 7 error             remote             ERR
-* 8 warning       remote             WRN
-* 9 critical         remote             CRT
-* 10 X snmp     memory          SNMP
-* 11 web-proxy webproxy       PROXY
-* !debug
+* Правила, пример
 
-System logging syntax
+```
+[admin@MikroAC5] > /system logging print
+Flags: X - disabled, I - invalid, * - default
+# TOPICS          ACTION          PREFIX
+0 * info          memory          INF
+!firewall
+1 * error         memory          ERR
+2 * warning       memory          WRN
+3 * critical      memory          CRT
+4 firewall        memory          FW
+5 firewall        firewallJournal FW
+6 info            remote          INF
+  !firewall
+7 error           remote          ERR
+8 warning         remote          WRN
+9 critical        remote          CRT
+10 X snmp         memory          SNMP
+11 web-proxy      webproxy        PROXY
+  !debug
+```
 
-* View rules
-  * /system logging print
-* View actions
-  * /system logging action print
-* Store firewall messages to a syslog server
-  * /system logging action
-  * add bsd-syslog=yes name=firewallJournal remote=172.16.1.105 src-address=10.5.5.5 syslog-facility=local5 target=remote
-* Create a rule for firewall topics that will use the previous action
-  * /system logging
-  * add action=firewallJournal prefix=FW topics=firewall
+#### Синтаксис системного журнала
 
-Where logs are sent
+* Просмотр правил
+  - `/system logging print`
+* Просмотр действий
+  - `/system logging action print`
+* Хранить сообщения брандмауэра на сервере syslog
+  - `/system logging action`
+  - `add bsd-syslog=yes name=firewallJournal remote=172.16.1.105 src-address=10.5.5.5 syslog-facility=local5 target=remote`
+* Создать правило для разделов брандмауэра, в котором будет использоваться предыдущее действие
+  - `/system logging`
+  - `add action=firewallJournal prefix=FW topics=firewall`
 
-* As stated in “actions”, logs can be found in five places
-  * Disk : A hard drive on the router
-  * Echo : The router’s console \(if present\)
-  * Email : A predefined e-mail account
-  * Memory : The router’s internal memory \(as seen in the “log” window\)
-  * Remote : A syslog server
+#### Куда отправляются журналы
 
-Readable configuration
+* Как указано в разделе "actions"(действия), журналы можно найти в пяти местах:
+  - Диск: Жесткий диск на маршрутизаторе
+  - Эхо: консоль маршрутизатора (если присутствует)
+  - Электронная почта: предопределенная учетная запись электронной почты
+  - Память: внутренняя память маршрутизатора (как показано в окне "log")
+  - Удаленный syslog-сервер
 
-* AKA “Make it clear!”
-* Obscurity is your worst enemy. Keep your configurations clear and readable through **comments**, **names** and **uniformity**
-  * Comments : Give a simple description of the item
-  * Names : Make it meaningful
-  * Uniformity : Do things the same way everywhere
-* Why should you do all this?
-  * For yourself. In the long run, this will simplify your job and make you look efficient \(again\)
+#### Чтение конфигурации
 
-Readable configuration
+* АКА "Сделайте это ясно(чисто)!”
+* Неизвестность - ваш злейший враг. Держите ваши конфигурации ясными и читаемыми через **комментарии**, **имена** и **единообразие**
+  - Комментарии: дайте простое описание предмету
+  - Имена: сделайте его значимым
+  - Единообразие: делайте все одинаково везде
+* Зачем вам все это делать?
+  - Для себя. В долгосрочной перспективе это упростит вашу работу и заставит вас выглядеть эффективным (снова)
 
-* Examples
+* Пример
 
-![](.gitbook/assets/5%20%281%29.png)
+![](/pics/configuration.png)
 
-Network diagrams
+Сетевая диаграмма
 
-* A well drawn diagram is a must! Even if you start from a humble beginning, your network WILL grow.
-* Identify all key components
-* Keep the diagram up to date
-* It is a major troubleshooting tool.
-  * Use it to identify potential problem spots
-  * Using the tools seen if this module \(ping, traceroute\), write down possible issues
+* Хорошо нарисованная диаграмма - это обязательно! Даже если вы начнете со скромного начала, ваша сеть будет расти
+* Определить все ключевые компоненты
+* Держите диаграмму в актуальном состоянии
+* Это основной инструмент устранения неполадок
+  - Используйте его для выявления потенциальных проблемных мест
+  - Используя инструменты, отмеченные в этом модуле (ping, traceroute), запишите возможные проблемы
 
-* Example
-  * All ports are marked, even available ones
-  * Devices are identified
-  * Revision \# is current
+* Пример
+  - Все порты помечены, даже доступные
+  - Идентифицируются устройства
+  - Ревизия \# является актуальной
 
-![](.gitbook/assets/6.png)
+![](/pics/network_diagram.png)
 
-Time for a practical exercise
+Время для практических занятий
 
 **Конец 5 модуля**
 
