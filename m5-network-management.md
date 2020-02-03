@@ -99,145 +99,156 @@
 
 ### DHCP-клиент
 
-* Allows Ethernet-like interfaces to request an IP address.
-  * The remote DHCP server will supply:
-    * Address
-    * Mask
-    * Default gateway
-    * Two DNS servers (if the remote DHCP server is so configured)
-  * The DHCP client will supply configurable options:
-    * Hostname
-    * Clientid (in the form of it’s MAC address)
-* Normally used on interfaces facing the Internet, for example
+* Позволяет Ethernet-подобным интерфейсам запрашивать IP-адрес.
+  * Удаленный DHCP-сервер будет предоставлять:
+    * Адрес
+    * Маска
+    * Шлюз по умолчанию
+    * Два DNS-сервера (если удаленный DHCP-сервер настроен таким образом)
+  * DHCP-клиент предоставляет настраиваемые параметры:
+    * Имя хоста
+    * Clientid (в виде его MAC-адреса)
+* Обычно используется на интерфейсах, обращенных к Интернету, например
 
-#### DHCP client syntax
 
-* To configure a DHCP-client interface
-  * /ip dhcp-client add interface=ether5 dhcp-options=clientid,hostname
-* To view and enable a DHCP client
-  * /ip dhcp-client print
-  * /ip dhcp-client enable numbers=1
-* To view the DHCP client's address
-  * /ip address print
+#### Синтаксис DHCP-клиента
 
-#### Lease management
+* Настройка интерфейса DHCP-клиента
+  * `/ip dhcp-client add interface=ether5 dhcp-options=clientid,hostname`
+* Просмотр и включение DHCP-клиента
+  * `/ip dhcp-client print`
+  * `/ip dhcp-client enable numbers=1`
+* Просмотр адресов DHCP-клиентов
+  * `/ip address print`
 
-* The "/ip dhcp-server lease" section provides information about DHCP clients and leases
-* Shows dynamic and static leases
-* Can turn a dynamic lease into a static one
-  * Can be very useful when a device needs to maintain the same IP address
-  * Beware! If you change the network card, it will get a new address
-* DHCP Server could be made to run only with static addresses
-* Clients will only receive the preconfigured IP addresses
-* Evaluate your situation and the need to do this before doing it this way. It will require a lot of work for large networks
+#### Управление арендой
 
-##### Lease management syntax
+* Раздел "/ip dhcp-server lease" содержит информацию о DHCP-клиентах и арендах
+* Показывает динамическую и статическую аренду.
+* Может превратить динамическую аренду в статическую
+  - Может быть очень полезно, когда устройство должно получать один и тот же IP-адрес
+  - Осторожно! Если вы замените сетевую карту - она получит новый адрес
+* DHCP-сервер можно заставить работать только со статическими адресами
+* Клиенты будут получать только предварительно настроенные IP-адреса
+* **Оцените свою ситуацию и необходимость в этом прежде, чем делать таким образом. Это потребует много работы для крупных сетей**
 
-* To view DHCP leases
-  * /ip dhcp-server lease print
-  * /ip dhcp-server lease print detail \(_gives more_ _detailed information_\)
-* To make a dynamic IP address static
-  * /ip dhcp-server lease make-static numbers=0
-* To modify the previous entry's assigned IP address
-  * /ip dhcp-server lease set address=192.168.3.100 numbers=0
+##### Синтаксис управления арендой
 
-## RouterOS tools
+* Просмотр аренд DHCP
+  * `/ip dhcp-server lease print`
+  * `/ip dhcp-server lease print detail` \(_gives more_ _detailed information_\)
+* Чтобы сделать динамический IP-адрес - статическим
+  * `/ip dhcp-server lease make-static numbers=0`
+* Изменение назначенного IP-адреса предыдущей записи
+  * `/ip dhcp-server lease set address=192.168.3.100 numbers=0`
+
+## Инструменты RouterOS
 
 ### E-mail
 
-* A tool that allows you to send e-mail from the router
-* It can be used, along with other tools, to send the network administrator regular configuration backups, for example
-* Tool CLI path
+* Инструмент, позволяющий отправлять электронную почту с маршрутизатора
+* Его, например, можно использовать, наряду с другими инструментами, для отправки администратору сети регулярных резервных копий конфигурации
+* Путь к инструменту в CLI
   * /tools e-mail
 
-#### E-mail, example
+#### E-mail, пример
 
-* Configure the SMTP server
-* /tool e-mail set address=172.31.2.1 from=mymail@gmail.com last-status=succeeded password=never123! \ port=587 start-tls=yes [user=mymail@gmail.com](mailto:user%3Dmymail@gmail.com)
-* Send a configuration file via e-mail /export file=export /tool e-mail send to=home@gmail.com subject="$\[/system identity get name\] export"\ body="$\[/system clock get date\] configuration file" file=export.rsc
+* Настройка SMTP-сервера
+  - `/tool e-mail set address=172.31.2.1 from=mymail@gmail.com last-status=succeeded password=never123! \`
+  - `port=587 start-tls=yes user=mymail@gmail.com`
+* Отправить конфигурационный файл по электронной почте
+  - `/export file=export`
+  - `/tool e-mail send to=home@gmail.com subject="$[/system identity get name] export"\`
+  - `body="$\[/system clock get date] configuration file" file=export.rsc`
 
 ### Netwatch
 
-* A tool that allows you to monitor the status of network devices
-* For each entry, you can specify
-  * IP address
-  * Ping interval
-  * Up and/or Down scripts
-* VERY useful to
-  * Be made aware of network failures
-  * Automate a change of default gateway, for example, should the main router fail
-  * Just to have a quick view of what is up
-  * Whatever else you can come up with to simplify and speed up your job \(_and make_ _you look efficient!_\)
+* Инструмент, позволяющий контролировать состояние сетевых устройств
+* Для каждой записи вы можете указать
+  - IP-адрес
+  - Интервал пинга
+  - Скрипты подъема и/или падения
+* ОЧЕНЬ полезно
+  - Будьте в курсе сетевых сбоев
+  - Автоматизировать изменение шлюза по умолчанию, например, в случае сбоя основного маршрутизатора
+  - Просто чтобы быстро увидеть, что происходит
+- Все, что вы можете придумать, чтобы упростить и ускорить вашу работу (и заставить вас выглядеть эффективно!)
 
 ### Ping
 
-* Basic connectivity tool that uses ICMP Echo messages to determine remote host accessibility and round-trip delay
-* One of the first tools to use to troubleshoot. If it pings, the host is alive \(_from a networking point of view_\)
-* Use it with other tools when troubleshooting. It's not THE ultimate tool, but a good start
+* Базовый инструмент связи, использующий эхо-сообщения ICMP для определения доступности удаленного хоста и задержки обратного хода.
+* Один из первых инструментов для устранения неполадок. Если он пингует - хост жив _(с точки зрения сети)_
+* Используйте его с другими инструментами при устранении неполадок. Это не самый лучший инструмент, но хорошее начало.
 
-#### Ping syntax
+#### Синтаксис Ping
 
 * CLI
-* \[admin@MikroAC1\] &gt; ping www.mikrotik.com
-* sent=4 received=4 packet-loss=0% min-rtt=156ms avg-rtt=158ms max-rtt=163ms
-* HOST                            SIZE TTL TIME STATUS
-* 159.148.147.196        56 50 163ms
-* 159.148.147.196        56 50 156ms
-* 159.148.147.196        56 50 156ms
-* 159.148.147.196        56 50 160ms
-* sent=4 received=4 packet-loss=0% min-rtt=156ms avg-rtt=158ms max-rtt=163ms
+
+```
+[admin@MikroAC1] > ping www.mikrotik.com
+HOST                     SIZE TTL TIME STATUS
+159.148.147.196             56 50 163ms
+159.148.147.196             56 50 156ms
+159.148.147.196             56 50 156ms
+159.148.147.196             56 50 160ms
+  sent=4 received=4 packet-loss=0% min-rtt=156ms avg-rtt=158ms max-rtt=163ms
+
 
 You’ll need to hit “CTRL-C” to stop the ping
+```
 
 ### Traceroute
 
-* Used to display all the routers traveled through to reach your destination
-* It indicates the delay to reach each router in the path to reach your destination
-* Good to locate a failure or slow node
+* Используется для отображения всех маршрутизаторов, пройденных до места назначения
+* Указывает на задержку при достижении каждого маршрутизатора в пути по достижению пункта назначения
+* Хорош для обнаружения сбоя или медленного узла
 * CLI
 
-  * /tools traceroute [www.mikrotik.com](http://www.mikrotik.com/)
-  * \[admin@GateWay\] &gt; tool traceroute www.mikrotik.com
-  * \#ADDRESS            LOSS SENT LAST   AVG   BEST   WORST STD-DEV STATUS
-  * 1 89.179.48.140    0%     20     6.7ms   4.5     1.7 11.6 2.2
-  * 2 89.179.48.166    0%     20     5ms      5.3      2.7 10.6 2.4
-  * 3 213.33.229.109  0%     20     5ms      6.9      1.4 35.9 8.1
-  * 4 213.221.4.132    0%     20     31.6ms 34.5   30.9 39.5 2.1
-  * 5 195.13.224.86    0%     19     30.8ms 33.4   30.4 39.4 2.4
-  * 6                              100% 19 timeout
-  * 7 159.148.147.196 0%    19     33.4ms 32.9   30.9 37.1 1.7
+```
+– /tools traceroute www.mikrotik.com
+– [admin@GateWay] > tool traceroute www.mikrotik.com
+– # ADDRESS             LOSS  SENT  LAST AVG BEST WORST STD-DEV STATUS
+– 1 89.179.48.140       0%    20  6.7ms  4.5 1.7 11.6 2.2
+– 2 89.179.48.166       0%    20  5ms    5.3 2.7 10.6 2.4
+– 3 213.33.229.109      0%    20  5ms    6.9 1.4 35.9 8.1
+– 4 213.221.4.132       0%    20  31.6ms 34.5 30.9 39.5 2.1
+– 5 195.13.224.86       0%    19  30.8ms 33.4 30.4 39.4 2.4
+– 6               100% 19 timeout
+– 7 159.148.147.196     0%    19  33.4ms 32.9 30.9 37.1 1.7
+```
 
-### Profiler \(CPU load\)
+### Profiler (загрузка ЦП)
 
-* Tool that shows the CPU load
-* Shows the processes and their load o the
+* Инструмент, показывающий загрузку процессора
+* Показывает процессы и их нагрузку на ЦП
+* Примечание: “**idle**” (бездействие) - это не процесс. Это означает именно это; процент неиспользуемого процессора
 
-#### CPU
-
-* Note : “**idle**” is not a process. It means just that; the percentage of the CPU NOT being used
 * CLI
-  * /tool profile
-  * \[admin@MikroAC1\] &gt; /tool profile
-  * NAME CPU USAGE
-  * console all 0%
-  * flash all 0%
-  * networking all 0%
-  * radius all 0%
-  * management all 0.5%
-  * telnet all 0.5%
-  * idle all 99%
-  * profiling all 0%
-  * unclassified all 0%
-  * -- \[Q quit\|D dump\|C-z continue\]
 
-System identity
+```
+– /tool profile
+– [admin@MikroAC1] > /tool profile
+– NAME        CPU   USAGE
+– console     all   0%
+– flash       all   0%
+– networking  all   0%
+– radius      all   0%
+– management  all   0.5%
+– telnet      all   0.5%
+– idle        all   99%
+– profiling   all   0%
+– unclassified  all 0%
+– -- [Q quit|D dump|C-z continue]
+```
 
-* Although it is not a tool, it's important to set the system's identity.
-  * You can't manage 100 routers that all have the name "MikroTik". It makes troubleshooting almost impossible.
-  * Once set, it will make identifying the router you're working on much simpler.
-* Syntax
-  * /system identity print \(_show current name_\)
-  * /system identity set name=my-router \(_sets the_ _router's name_\)
+### Система идентификации
+
+* Хотя это не инструмент, важно установить идентичность системы
+  - Вы не можете управлять 100 маршрутизаторами, которые все имеют имя "MikroTik". Это делает устранение неполадок практически невозможным.
+  - После установки он значительно упростит идентификацию маршрутизатора, с которым вы работаете.
+* Синтаксис
+  - `/system identity print` _(показать текущее имя)_
+  - `/system identity set name=my-router` (задать имя маршрутизатора)
 
 ## Contacting Mikrotik support
 
