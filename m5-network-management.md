@@ -250,43 +250,43 @@ You’ll need to hit “CTRL-C” to stop the ping
   - `/system identity print` _(показать текущее имя)_
   - `/system identity set name=my-router` (задать имя маршрутизатора)
 
-## Contacting Mikrotik support
+## Обращение в службу поддержки Mikrotik
 
 ### Supout.rif
 
-* Supout.rif is a support file used for RouterOS debugging purposes and to help Mikrotik support personnel resolve issues faster
-* Syntax
-  * CLI : /system sup-output
-* Once generated, the "supout.rif" file will be found in File List
+* Supout.rif это файл поддержки, используемый для отладки RouterOS и помогающий персоналу службы поддержки Mikrotik быстрее решать проблемы
+* Синтаксис
+  - CLI: `/system sup-output`
+* После генерации файл "supout.rif" будет найден в File List
 
-![](.gitbook/assets/2.jpeg)
+![](/pics/supout_rif.jpeg)
 
 ### Supout.rif Viewer
 
-* To access the "supout.rif viewer", access your Mikrotik account
-  * You must have an account \(it’s a good idea to have one anyway\)
+* Чтобы получить доступ к "supout.rif viewer", необходимо иметь доступ к учетной записи Mikrotik
+  - У вас должен быть аккаунт _(это хорошая идея, чтобы иметь его в любом случае)_
 
-![](.gitbook/assets/image%20%282%29.png)
+![](/pics/account.png)
 
-* The first steps are to locate and upload the file that you generated
-* Start browsing all aspects of your configuration
-  * The default view is “resource”
+* Первые шаги - найти и загрузить созданный файл.
+* Начните просматривать все аспекты вашей конфигурации.
+  - Просмотр по умолчанию - “ресурсы”
 
-![](.gitbook/assets/3%20%281%29.png)
+![](/pics/supout_resource.png)
 
 ### Autosupout.rif
 
-* A file can be generated automatically upon software failure \(ex. kernel panic or the system becomes unresponsive for a minute\)
-* Done through the watchdog \(system\)
+* Файл может быть сгенерирован автоматически при программном сбое (напр. kernel panic или the system becomes unresponsive for a minute)
+* Сделано через watchdog (сторожевого пса) (системно)
 
-### System logging and debug logs
+### Системное логирование и журналы отладки
 
-* Logging is important to insure a history \(permanent or not\) of router events
-* The easiest way to view logs is through the “log” \(Menu\) window
-* The CLI equivalent is
-  * /log print
+* Логирование важно для обеспечения истории событий маршрутизатора (постоянной или нет)
+* Самый простой способ просмотра журналов - через окно "log" (Меню).
+* Эквивалент CLI:
+  - /log print
 
-![](.gitbook/assets/image%20%2820%29.png)
+![](/pics/log.png)
 
 #### System logging
 
@@ -298,7 +298,7 @@ You’ll need to hit “CTRL-C” to stop the ping
   * You should define news “actions” first as custom actions won’t be made available to your “rules” until they are created
 
 * Actions, examples
-* \[admin@MikroAC5\] &gt; /system logging action print
+* [admin@MikroAC5] &gt; /system logging action print
 * Flags: \* - default
 * \#NAME    TARGET REMOTE
 * 0  \* memory memory
