@@ -66,7 +66,7 @@
 
 * Результаты автоматизированной настройки
 
-![](.gitbook/assets/0%20%284%29.png)
+![](/pics/m5_dhcp_server.png)
 
 * DHCP можно использовать для настройки таких параметров, как:
   - 42: серверы NTP
@@ -91,11 +91,11 @@
 
 * Пример базовой конфигурации
 
-![](.gitbook/assets/image.png)
+![](/pics/m5_dhcp_server_basic.png)
 
 * Пример расширенной конфигурации
 
-![](.gitbook/assets/image%20%286%29.png)
+![](/pics/m5_dhcp_server_advance.png)
 
 ### DHCP-клиент
 
@@ -259,20 +259,20 @@ You’ll need to hit “CTRL-C” to stop the ping
   - CLI: `/system sup-output`
 * После генерации файл "supout.rif" будет найден в File List
 
-![](/pics/supout_rif.jpeg)
+![](/pics/m5_supout_rif.jpeg)
 
 ### Supout.rif Viewer
 
 * Чтобы получить доступ к "supout.rif viewer", необходимо иметь доступ к учетной записи Mikrotik
   - У вас должен быть аккаунт _(это хорошая идея, чтобы иметь его в любом случае)_
 
-![](/pics/account.png)
+![](/pics/m5_supout_account.png)
 
 * Первые шаги - найти и загрузить созданный файл.
 * Начните просматривать все аспекты вашей конфигурации.
   - Просмотр по умолчанию - “ресурсы”
 
-![](/pics/supout_resource.png)
+![](/pics/m5_supout_resource.png)
 
 ### Autosupout.rif
 
@@ -286,7 +286,7 @@ You’ll need to hit “CTRL-C” to stop the ping
 * Эквивалент CLI:
   - /log print
 
-![](/pics/log.png)
+![](/pics/m5_log.png)
 
 #### Системный журнал
 
@@ -373,7 +373,7 @@ Flags: X - disabled, I - invalid, * - default
 
 * Пример
 
-![](/pics/configuration.png)
+![](/pics/m5_configuration.png)
 
 Сетевая диаграмма
 
@@ -389,7 +389,7 @@ Flags: X - disabled, I - invalid, * - default
   - Идентифицируются устройства
   - Ревизия \# является актуальной
 
-![](/pics/network_diagram.png)
+![](/pics/m5_network_diagram.png)
 
 Время для практических занятий
 
@@ -397,14 +397,14 @@ Flags: X - disabled, I - invalid, * - default
 
 ## Лабораторка
 
-* Goals of the lab
-  * Practice ARP concepts shown in this module
-  * Add DHCP \(client and server\) functionality to your router
-  * Use various troubleshooting tools
+* Цели лабораторки
+  - Практика ARP концепций, показанных в этом модуле
+  - Добавление DHCP (клиент и сервер) функциональных возможностей маршрутизатора
+  - Использование различных инструментов для устранения неполадок
 
 Лабораторка: Установка
 
-![](.gitbook/assets/7%20%281%29.jpeg)
+![](/pics/m5_lab_setup.jpeg)
 
 ### Лабораторка: шаг 1
 
@@ -478,14 +478,14 @@ body="$[/system clock get date] $[/system clock get time] Node down."
 body="$[/system clock get date] $[/system clock get time] Node up."
 ```
 
-![](.gitbook/assets/8.jpeg)
+![](/pics/m5_lab_netwatch.jpeg)
 
 ### Лабораторка: шаг 9
 
 * Netwatch
   * Turn off the test node. Verify that you receive an e- mail indicating the change of status. It should look something like this
 
-![](.gitbook/assets/9.png)
+![](/pics/m5_lab_netwatch_status.png)
 
 ### Лабораторка: шаг 10
 
