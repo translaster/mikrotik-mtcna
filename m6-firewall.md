@@ -1,50 +1,47 @@
 # M6 Firewall
 
-## **Firewall Principles**
+## Принципы брандмауэра (фаерволла)
 
-* A Firewall is a service that allows or blocks data packets going to or through it based on user-defined rules.
-* The firewall acts as a barrier between two networks.
-* A common example is your LAN \(trusted\) and the Internet \(not trusted\).
+* Брандмауэр - это служба, которая пропускает или блокирует пакеты данных, идущие к нему или через него на основе определенных пользователем правил.
+* Брандмауэр действует как барьер между двумя сетями.
+* Общий пример - ваша локальная сеть (доверенная) и Интернет (не доверенная).
 
-How the firewall works
+### Как работает брандмауэр
 
-* The firewall operates using rules. These have two parts
-  * The matcher : _The conditions that I need to have a match_
-  * The Action : _What I'll do once I have a match_
-* The matcher looks at parameters such as:
-  * Source MAC address
-  * IP addresses \(network or list\) and address types \(broadcast, local, multicast, unicast\)
-  * Port or port range
-  * Protocol
-  * Protocol options \(ICMP type and code fields, TCP flags, IP options\)
-  * Interface the packet arrives from or leaves through
-  * DSCP byte
-  * _**And more…**_
+* Брандмауэр работает по правилам. Они состоят из двух частей
+  - Совпадение: _условия, которые нужны для совпадения_
+  - Действие: _что я буду делать, когда у меня будет совпадение_
+* Сопоставитель смотрит на такие параметры, как:
+  - MAC-адрес источника
+  - IP-адреса (сеть или список) и типы адресов (широковещательный, локальный, многоадресный, одноадресный)
+  - Порт или диапазон портов
+  - Протокол
+  - Параметры протокола (поля типа и кода ICMP, флаги TCP, параметры IP)
+  - Интерфейс: пакет приходит от или через
+  * Байт DSCP
+  * _**И многое другое…**_
 
-Packet flows
+### Потоки пакетов
 
-* MikroTik created the packet flow diagrams to help us in the creation of more advanced configurations
-* It's good to be familiar with them to know what's happening with packets and in which order
-* For this course, we'll keep it simple
-* Overall diagrams
+* MikroTik создал диаграммы потока пакетов, чтобы помочь нам в создании более продвинутых конфигураций.
+* Хорошо быть знакомым с ними, чтобы знать, что происходит с пакетами и в каком порядке
+* Для этого курса мы будем держать его простым
 
-![](.gitbook/assets/0%20%282%29.jpeg)
+* Общие диаграммы
 
-Packet flows
+![](/pics/m6_diagram_1.jpeg)
 
-![](.gitbook/assets/1%20%282%29.jpeg)
+![](/pics/m6_diagram_2.jpeg)
 
-Packet flows
+![](/pics/m6_diagram_3.jpeg)
 
-![](.gitbook/assets/2%20%284%29.jpeg)
+#### Потоки пакетов, пример*
 
-Packet flows, example
-
-* Complicated? Welcome to the club!
-* This next example might help to illustrate a simple flow of packets : Pinging a \(non-existent node\) on a router's LAN interface through it's WAN interface
-  * IP of node doing the pinging : 172.16.2.100
-  * IP of node being pinged : 192.168.3.2
-  * IP of router's WAN \(ether1\) : 192.168.0.3
+* Сложно? Добро пожаловать в клуб!
+* Этот следующий пример может помочь проиллюстрировать простой поток пакетов: Pinging a (несуществующий узел) на интерфейсе локальной сети маршрутизатора через его интерфейс WAN
+  - IP узла, выполняющего пинг : 172.16.2.100
+  - IP-адрес узла, который пингуется : 192.168.3.2
+  - IP WAN маршрутизатора (ether1): 192.168.0.3
 
 **Ping in**
 
@@ -76,7 +73,7 @@ Filter-output output: in:(none) out:ether1, proto ICMP (type 3, code 1), 192.168
 Mangle-postrouting postrouting: in:(none) out:ether1, proto ICMP (type 3, code 1), 192.168.0.3->172.16.2.100, len 88
 ```
 
-Packet flows, example explained
+#### Потоки пакетов, объяснение примера
 
 ```text
 /ip firewall filter
@@ -94,118 +91,63 @@ add action=log chain=srcnat log-prefix=srcnat protocol=icmp
 add action=log chain=dstnat log-prefix=dstnat protocol=icmp
 ```
 
-Connection tracking and states
+#### Отслеживание соединений и состояний
 
-* Connection tracking manages information about all active connections.
-* Before creating your firewall filters \(or rules\), it's good to know what kind of traffic goes through your router. Connection tracking show you just that.
+* Отслеживание соединений управляет информацией обо всех активных соединениях.
+* Прежде чем создавать фильтры брандмауэра (или правила), полезно знать какой трафик проходит через ваш маршрутизатор. Отслеживание соединений покажет вам именно это.
 
-1 ospf 172.16.0.6 224.0.0.5 5m49s  
-2 SA tcp 172.16.2.100:49164 172.16.9.254:445 established 23h42m51s  
-3 SA tcp 172.16.2.122:61739 206.53.159.211:443 established 23h44m8s  
-4 SA tcp 172.16.2.130:58171 17.149.36.108:443 established 23h43m41s  
-5 SA gre 172.16.0.254 172.16.0.1 4h44m11s  
-6 SA udp 172.16.0.254:4569 209.217.98.158:4569 13m9s  
-7 SA tcp 172.16.2.130:58174 173.252.103.16:443 established 23h42m40s  
-8 SA tcp 172.16.2.140:52032 69.171.235.48:443 established 23h43m27s  
-9 SA tcp 172.16.2.107:47318 173.252.79.23:443 established 23h43m26s  
-10 SA tcp 172.16.2.102:57632 173.252.102.241:443 established 23h44m15s  
-11 ospf 172.16.0.5 224.0.0.5 5m49s  
-12 SA tcp 172.16.2.102:56774 65.54.167.16:12350 established 23h35m28s  
-13 SA tcp 172.16.2.102:56960 173.194.76.125:5222 established 23h43m57s  
-14 SA tcp 172.16.0.254:37467 172.16.0.1:1723 established 4h44m11s  
-15 SA tcp 172.16.2.107:39374 79.125.114.47:5223 established 23h29m1s  
+1 ospf 172.16.0.6 224.0.0.5 5m49s
+2 SA tcp 172.16.2.100:49164 172.16.9.254:445 established 23h42m51s
+3 SA tcp 172.16.2.122:61739 206.53.159.211:443 established 23h44m8s
+4 SA tcp 172.16.2.130:58171 17.149.36.108:443 established 23h43m41s
+5 SA gre 172.16.0.254 172.16.0.1 4h44m11s
+6 SA udp 172.16.0.254:4569 209.217.98.158:4569 13m9s
+7 SA tcp 172.16.2.130:58174 173.252.103.16:443 established 23h42m40s
+8 SA tcp 172.16.2.140:52032 69.171.235.48:443 established 23h43m27s
+9 SA tcp 172.16.2.107:47318 173.252.79.23:443 established 23h43m26s
+10 SA tcp 172.16.2.102:57632 173.252.102.241:443 established 23h44m15s
+11 ospf 172.16.0.5 224.0.0.5 5m49s
+12 SA tcp 172.16.2.102:56774 65.54.167.16:12350 established 23h35m28s
+13 SA tcp 172.16.2.102:56960 173.194.76.125:5222 established 23h43m57s
+14 SA tcp 172.16.0.254:37467 172.16.0.1:1723 established 4h44m11s
+15 SA tcp 172.16.2.107:39374 79.125.114.47:5223 established 23h29m1s
 
+* Если вы отключите отслеживание по какой-либо причине, следующие функции не будут работать:
+  - NAT
+  - Брандмауэр
+    - connection-bytes connection-mark
+    - connection-type connection-state
+    - connection-limit connection-rate
+    - layer7-protocol p2p
+    - new-connection-mark tarpit
+  - p2p matching in simple queues
+* Прежде чем отключить отслеживание подключений, удостоверьтесь в том, какую цель вы хотите достичь!
 
-Connection tracking and states
+Состояния соединения являются _(предполагая, что клиент-A инициирует соединение с клиентом-B)_:
 
-* Should you disable tracking for any reason, the following features will not work:
-  * NAT
-  * Firewall
+| Состояние | Описание |
+| :-------- | :------- |
+| Established | Устанавливается сеанс TCP для удаленного хоста, обеспечивающий открытое соединение, в котором можно обмениваться данными |
+| Time-wait | Время, потраченное на ожидание, чтобы убедиться, что удаленный хост получил подтверждение запроса на завершение соединения (после "close") |
+| Close | Представляет собой ожидание запроса на завершение соединения от удаленного компьютера. |
+| Syn-sent | Клиент-A ожидает соответствующего запроса на соединение после его отправки |
+| Syn-received | Клиент-B ожидает подтверждения запроса на соединение после получения и отправки запроса на соединение. |
 
-| ● | connection-bytes | connection-mark |  |
-| :--- | :--- | :--- | :--- |
-| ● | connection-type | connection-state |  |
-| ● | connection-limit | connection-rate |  |
-| ● | layer7-protocol |  | p2p |
-| ● | new-connection-mark | tarpit |  |
+* Использование отслеживания соединений позволяет отслеживать соединения UDP, даже если UDP не имеет состояния. Таким образом, брандмауэр MikroTik может фильтровать по UDP "состояниям".
 
-– p2p matching in simple queues
-
-* Before disabling connection tracking, be certain of the goal that you want to achieve!
-
-Connection tracking and states
-
-Connection states are \(_assuming client-A is initiating a connection to client-B_\):
-
-Established
-
-Time-wait
-
-Close
-
-Syn-sent
-
-Syn-received
-
-A TCP session to the remote host is established, providing an
-
-open connection where data can be exchanged
-
-Time spent waiting to insure that remote host has received an
-
-acknowledgment of his connection termination request \(after
-
-"close"\)
-
-Represents waiting for a connection termination request from
-
-the remote
-
-Client-A is waiting for a matching connection request after
-
-having sent one
-
-Client-B is waiting for a confirming connection request
-
-acknowledgement after having both received and sent a
-
-connection request
-
-Connection tracking and states
-
-* The use of connection tracking allows tracking of UDP connections, even if UDP is stateless. As such, MikroTik's firewall can filter on UDP "states".
-
-Structure : chains and actions
+## Структура: цепочки и действия
 
 * A chain is a grouping of rules based on the same criteria. There are three default chains based on predefined criteria.
+  - Input : _Traffic going to the router_
+  - Forward : _Traffic going through the router_
+  - Output : _Traffic originating from the router_
 
-–
-
-–
-
-–
-
-Input : _Traffic going to the router_
-
-Forward : _Traffic going through the router_
-
-Output : _Traffic originating from the router_
-
-* You can have user chains based on custom criteria. For example :
-
-–
-
-–
-
-_All icmp traffic_
-
-_Traffic coming in from Ether2 and going to bridge interface "LAN“_
+* You can have user chains based on custom criteria. For example:
+  - _All icmp traffic_
+  - _Traffic coming in from Ether2 and going to bridge interface "LAN“_
 
 * User defined chains are created by selecting the desired “matchers” and choosing the “jump” action. You will give your user-defined chain a name in the “jump target” field.
-
-– After that, you can start creating filter rules using the new chain by inputting it in the “Chain” field of the new firewall filter.
-
-Structure : chains and actions
+  - After that, you can start creating filter rules using the new chain by inputting it in the “Chain” field of the new firewall filter.
 
 * An action dictates what the filter will do when packets are matched to it.
 * Packets are checked sequentially against existing rules in the current firewall chain until a match occurs. When it does, that rule is applied.
@@ -217,19 +159,16 @@ Structure : chains and actions
 Basic security philosophy
 
 * You can approach security in various ways
-
-– We trust the inside, the rules will affect what's coming from the outside
-
-– We block everything and permit that which we agree upon
-
-– We permit everything and block that which we know is problematic
+  - We trust the inside, the rules will affect what's coming from the outside
+  - We block everything and permit that which we agree upon
+  - We permit everything and block that which we know is problematic
 
 Basic tips and tricks
 
 * Before configuring or changing rules, activate "safe mode".
 * After configuring or changing rules, test your rules using a tool like ShieldsUP
 
-\(https://www.grc.com/x/ne.dll?bh0bkyd2\)
+(https://www.grc.com/x/ne.dll?bh0bkyd2)
 
 – It'll give you a weaknesses report
 
@@ -587,4 +526,3 @@ Laboratory : step 9
 Laboratory : step 10
 
 * Do an export AND a binary backup under the file name module6-pod_x_.
-

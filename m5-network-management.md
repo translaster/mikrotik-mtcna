@@ -1,6 +1,6 @@
 # M5 Network Management
 
-## **ARP**
+## ARP
 
 * Означает “Address Resolution Protocol” - "Протокол определения адреса”
 * Механизм, который связывает IP-адрес уровня 3 с MAC-адресом уровня 2
