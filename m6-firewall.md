@@ -139,99 +139,72 @@ add action=log chain=dstnat log-prefix=dstnat protocol=icmp
 
 ## Структура: цепочки и действия
 
-* A chain is a grouping of rules based on the same criteria. There are three default chains based on predefined criteria.
-  - Input : _Traffic going to the router_
-  - Forward : _Traffic going through the router_
-  - Output : _Traffic originating from the router_
+* Цепочка - это группировка правил, основанная на одних и тех же критериях. Существует три цепочки по умолчанию, основанные на предопределенных критериях.
+  - Input: _Трафик идущий к маршрутизатору_
+  - Forward: _Трафик идущий через маршрутизатор_
+  - Output: _Трафик, исходящий от маршрутизатора_
 
-* You can have user chains based on custom criteria. For example:
-  - _All icmp traffic_
-  - _Traffic coming in from Ether2 and going to bridge interface "LAN“_
+* Вы можете иметь пользовательские цепочки, основанные на пользовательских критериях. Например:
+  - _Весь icmp-трафик_
+  - _Трафик приходящий из Ether2 и идущий к интерфейсу моста "LAN"_
 
-* User defined chains are created by selecting the desired “matchers” and choosing the “jump” action. You will give your user-defined chain a name in the “jump target” field.
-  - After that, you can start creating filter rules using the new chain by inputting it in the “Chain” field of the new firewall filter.
+* Определенные пользователем цепочки создаются путем выбора желаемых "сопоставлений" и выбора действия "прыжок". Вы дадите определяемой пользователем цепочке имя в поле "jump target" (цель прыжка).
+  - После этого вы можете начать создавать правила фильтрации, используя новую цепочку, введя ее в поле "Chain" нового фильтра брандмауэра.
+* Действие определяет, что будет делать фильтр, когда пакеты будут сопоставлены с ним.
+* Пакеты последовательно проверяются на соответствие существующим правилам в текущей цепочке брандмауэра до тех пор, пока не произойдет совпадение. Когда это происходит, это правило применяется.
+* Знайте, что определенные действия могут потребовать или не потребовать дальнейшей обработки пакета.
+* Другие действия могут потребовать дальнейшей обработки пакета в другой цепочке. Мы увидим это на последующих страницах.
 
-* An action dictates what the filter will do when packets are matched to it.
-* Packets are checked sequentially against existing rules in the current firewall chain until a match occurs. When it does, that rule is applied.
-* Know that certain actions may or may not require that the packet be further processed.
-* Other actions may demand that the packet be further processed in a different chain. We'll see this in later pages.
+### Фильтры брандмауэра в действии
 
-**Firewall filters in action**
+Основная философия безопасности
 
-Basic security philosophy
+* Вы можете подходить к безопасности по-разному.
+  - Мы доверяем внутреннему миру, правила влияют на то, что приходит извне.
+  - Мы блокируем все и разрешаем то, о чем договариваемся.
+  - Мы разрешаем все и блокируем то, что, как мы знаем, подозрительно.
 
-* You can approach security in various ways
-  - We trust the inside, the rules will affect what's coming from the outside
-  - We block everything and permit that which we agree upon
-  - We permit everything and block that which we know is problematic
+Основные советы и рекомендации
 
-Basic tips and tricks
+* Перед настройкой или изменением правил активируйте "safe mode".
+* После настройки или изменения правил протестируйте их с помощью такого инструмента, как ShieldsUP.(https://www.grc.com/x/ne.dll?bh0bkyd2)
+  - Это даст вам отчет о слабых сторонах.
+* Прежде чем вы начнете, установите политику.
+* Запишите простым текстом на своем языке основные правила, которые вам нужны.
+  - Как только вы поймете их и согласитесь с ними, введите их в маршрутизатор.
+* Постепенно добавляйте другие правила, как только вы будете удовлетворены основными из них.
+  - Если вы новичок в безопасности, это не поможет вам стрелять во всех направлениях. Делайте основы, но делайте их хорошо.
+  - Просто не ждите слишком долго, чтобы добавить следующие правила. Одно дело - хорошо работать, но совсем другое - оставлять дыры открытыми, потому что вы хотите проверить первые правила.
+* Это хорошая идея, чтобы закончить ваши цепочки правилом "поймать все" и посмотреть, что вы, возможно, пропустили.
+* Вам понадобятся два правила "поймать все", одно для "регистрации" и одно для "отбрасывания" несовпадающего трафика. Оба должны быть основаны на одних и тех же сопоставлениях, чтобы быть полезными для вас.
+* Как только вы увидите, что достигает правил "catch-all", вы можете добавить новые правила, основанные на желаемом поведении брандмауэра.
 
-* Before configuring or changing rules, activate "safe mode".
-* After configuring or changing rules, test your rules using a tool like ShieldsUP
+### Фильтр соответствий
 
-(https://www.grc.com/x/ne.dll?bh0bkyd2)
+* Перед выполнением "действия" над пакетом его необходимо идентифицировать.
+* Совпадений много!
 
-– It'll give you a weaknesses report
+![](/pics/m6_firewall_rule.png)
 
-Basic tips and tricks
+### Действия фильтра
 
-* Before you begin, establish a policy.
-* Write down, in plain text, in your language, the basic rules that you want.
+* Как только пакет сопоставлен с правилом, к нему будет применено действие.
+* Фильтры брандмауэра MikroTik имеют 10 действий.
 
-– Once you understand them and agree with them, input them in the router.
+|            |                      |
+| :--------- | :------------------- |
+| **Accept** | Принимает пакет. Пакет не передается следующему правилу брандмауэра. |
+| **Add-dst-to-address-list** | Добавляет адрес получателя в список адресов, указанный параметром address-list. Пакет передается следующему правилу брандмауэра. |
+| **Add-src-to-address-list** | Добавить адрес источника в список адресов, указанный параметром address-list. Пакет передается следующему правилу брандмауэра. |
+| **Drop** | Молча отбрасывает пакет. Пакет не передается следующему правилу брандмауэра. |
+| **Jump** | Jump to the user defined chain specified by the value of jump-target parameter. Packet is passed to next firewall rule (in the user-defined chain). |
+| **Log** | Add a message to the system log containing following data: _**in-interface, out-interface, src-mac,**_  _**protocol, src-ip:port-&gt;dst-ip:port**_ and _**length of the packet**_. Packet is passed to next firewall rule. |
+| **Passthrough** | Ignore this rule and go to next one \(useful for statistics\). |
+| **Reject** | Drop the packet and send an ICMP reject message. Packet is not passed to next firewall rule. |
+| **Return** | Pass control back to the chain from where the jump took place. Packet is passed to next firewall rule (in originating chain, if there was no previous match to stop packet analysis). |
+| **Tarpit** | Capture and hold TCP connections \(replies with SYN/ACK to the inbound TCP SYN packet\). Packet is not passed to next firewall rule. |
 
-* Add other rules progressively, once you're satisfied with the basic ones.
-
-– If you're new to security, it won't help you to shoot in all directions. Do the basics, but do them well.
-
-– Just don't wait too long to add the following rules. It's one thing to work well, but it's another to leave holes open because you want to test the first rules out.
-
-Basic tips and tricks
-
-* It's a good idea to end your chains with the "catch-all" rules and see what you may have missed.
-* You'll need two "catch-all" rules, one to "log" and one to "drop" unmatched traffic. Both must be based on the same matchers to be helpful to you.
-* Once you see what reaches the "catch-all" rules, you can add new rules based on the firewall’s desired behavior.
-
-Filter Matchers
-
-* Before taking "action" on a packet, it must be identified.
-* Matchers are many!
-
-![](.gitbook/assets/3.png)
-
-2013-01-01 23
-
-Filter actions
-
-* Once a packet has been matched to a rule, an action will be applied to it.
-* MikroTik's firewall filters have 10 actions.
-
-| **Accept** | Accept the packet. Packet is not passed to next firewall rule. |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-| **Add-dst-to-address-list** | Add destination address to address list specified by address-list parameter. Packet is passed to next |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-|  | firewall rule. |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-| **Add-src-to-address-list** | Add source address to address list specified by address-list parameter. Packet is passed to next |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-|  | firewall rule. |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-| **Drop** | Silently drop the packet. Packet is not passed to next firewall rule. |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-| **Jump** | Jump to the user defined chain specified by the value of jump-target parameter. Packet is passed to |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-|  | next firewall rule \(in the user-defined chain\). |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-| **Log** | Add a message to the system log containing following data: _**in-interface, out-interface, src-mac,**_ |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-|  | _**protocol, src-ip:port-&gt;dst-ip:port**_ and _**length of the packet**_. Packet is passed to next firewall |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-|  | rule. |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-| **Passthrough** | Ignore this rule and go to next one \(useful for statistics\). |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-| **Reject** | Drop the packet and send an ICMP reject message. Packet is not passed to next firewall rule. |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-| **Return** | Pass control back to the chain from where the jump took place. Packet is passed to next firewall rule |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-|  | \(in originating chain, if there was no previous match to stop packet analysis\). |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-| **Tarpit** | Capture and hold TCP connections \(replies with SYN/ACK to the inbound TCP SYN packet\). Packet |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-|  | is not passed to next firewall rule. |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-
-Protecting your router \(input\)
+Protecting your router (input)
 
 * The input chain looks at traffic aimed at the router.
 * The rules you add in the input chain must prevent hackers from reaching the router without stopping it from doing it's job.
@@ -241,18 +214,6 @@ Protecting your router \(example\)
 * The following are suggestions!
 
 – Assume that _ether01_ is connected to the WAN \(untrusted network\) and we're using the "trust the inside" policy.
-
-●
-
-●
-
-●
-
-●
-
-●
-
-●
 
 Accept icmp echo replies \(_You may want to ping a server on the_ _Internet. It would be useful for you to get the replies!_\)
 
@@ -278,12 +239,6 @@ Protecting your customers \(example\)
 – Again, assume that _ether01_ is connected to the WAN \(untrusted network\) and we're using the "trust the inside" policy.
 
 * * * Accept all "established" and "related" forward traffic \(_You'll_ _want the replies to whatever you asked for, like HTTP and E-mail requests_\)
-
-●
-
-●
-
-●
 
 Drop all "invalid" forward traffic \(_Whatever you get that you_ _didn't ask for_\)
 
