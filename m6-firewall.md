@@ -197,124 +197,86 @@ add action=log chain=dstnat log-prefix=dstnat protocol=icmp
 | **Add-dst-to-address-list** | Добавляет адрес получателя в список адресов, указанный параметром address-list. Пакет передается следующему правилу брандмауэра. |
 | **Add-src-to-address-list** | Добавить адрес источника в список адресов, указанный параметром address-list. Пакет передается следующему правилу брандмауэра. |
 | **Drop** | Молча отбрасывает пакет. Пакет не передается следующему правилу брандмауэра. |
-| **Jump** | Jump to the user defined chain specified by the value of jump-target parameter. Packet is passed to next firewall rule (in the user-defined chain). |
-| **Log** | Add a message to the system log containing following data: _**in-interface, out-interface, src-mac,**_  _**protocol, src-ip:port-&gt;dst-ip:port**_ and _**length of the packet**_. Packet is passed to next firewall rule. |
-| **Passthrough** | Ignore this rule and go to next one \(useful for statistics\). |
-| **Reject** | Drop the packet and send an ICMP reject message. Packet is not passed to next firewall rule. |
-| **Return** | Pass control back to the chain from where the jump took place. Packet is passed to next firewall rule (in originating chain, if there was no previous match to stop packet analysis). |
-| **Tarpit** | Capture and hold TCP connections \(replies with SYN/ACK to the inbound TCP SYN packet\). Packet is not passed to next firewall rule. |
+| **Jump** | Перейти к пользовательской цепочке, заданной значением параметра jump-target. Пакет передается следующему правилу брандмауэра (в пользовательской цепочке). |
+| **Log** | Добавьте сообщение в системный журнал, содержащее следующие данные: _**in-interface**_, _**out-interface**_, _**src-mac**_, _**protocol**_, _**src-ip:port->dst-ip:port**_ and _**length of the packet**_ (длина пакета). Пакет передается в следующее правило брандмауэра. |
+| **Passthrough** | Проигнорируйте это правило и перейдите к следующему (полезно для статистики). |
+| **Reject** | Отбросить пакет и отправить сообщение ICMP reject. Пакет не передается следующему правилу брандмауэра. |
+| **Return** | Передать управление обратно в цепочку, откуда произошел прыжок. Пакет передается следующему правилу брандмауэра (в исходной цепочке, если не было предыдущего совпадения для остановки анализа пакетов). |
+| **Tarpit** | Захват и удержание TCP-соединений (ответы с помощью SYN/ACK на входящий пакет TCP SYN). Пакет не передается следующему правилу брандмауэра. |
 
-Protecting your router (input)
+**Защита вашего маршрутизатора (вход)**
 
-* The input chain looks at traffic aimed at the router.
-* The rules you add in the input chain must prevent hackers from reaching the router without stopping it from doing it's job.
+* Входная цепочка смотрит на трафик, направленный на маршрутизатор.
+* Правила, которые вы добавляете во входную цепочку, должны предотвращать доступ хакеров к маршрутизатору, не мешая ему выполнять свою работу.
 
-Protecting your router \(example\)
+**Защита вашего маршрутизатора (пример)**
 
-* The following are suggestions!
+* Ниже приведены предложения!
+  - Предположим, что _ether01_ подключен к WAN (ненадежной сети), и мы используем политику "доверяй внутреннему".
+    - Принимайте ICMP эхо-ответы (_Возможно, вы захотите проверить связь с сервером в Интернете. Это было бы полезно для вас, чтобы получать ответы!_)
+    - Отбрасывайте эхо-запросы icmp (_Вы не хотите чтобы другие пинговали вас. Оставайтесь под радаром!_)
+    - Принимайте весь "established" и "related" входящий трафик (_Вам понадобятся ответы на все запросы маршрутизатора, такие как запросы NTP и DNS_)
+    - Отбрасывайте весь "invalid" входящий трафик (_Когда маршрутизатор получает то, что он не запрашивал_)
+    - Протоколируйте остальной входящий трафик (_Я пропустил что-нибудь важное?_)
+    - Отбрасывайте остальной входящий трафик (_Я хочу быть в безопасности!_)
 
-– Assume that _ether01_ is connected to the WAN \(untrusted network\) and we're using the "trust the inside" policy.
+**Защита ваших клиентов (forward)**
 
-Accept icmp echo replies \(_You may want to ping a server on the_ _Internet. It would be useful for you to get the replies!_\)
+* Как указывалось ранее, цепочка forward смотрит на трафик, проходящий через маршрутизатор.
+* Правила, которые вы добавляете в цепочку forward, должны препятствовать проникновению хакеров в вашу "безопасную" сеть, не мешая вам выполнять свою работу.
 
-Drop icmp echo requests \(_You don't want others pinging you._ _Stay under the radar!_\)
+**Защита ваших клиентов (пример)**
 
-Accept all "established" and "related" input traffic \(_You'll want_ _the replies to whatever the router asked for, like NTP and DNS requests_\)
+* Ниже приведены предложения!
+  - Опять же, предположим, что _ether01_ подключен к WAN (ненадежной сети), и мы используем политику "доверяй внутреннему".
+    - Принимаем все "established" и "related" проходящий трафик (_вам понадобятся ответы на все, что вы запросили, например HTTP и запросы электронной почты_)
+    - Отбрасываем весь "invalid" проходящий трафик (_Все, что вы получаете, вы не запрашивали_)
+    - Протоколируем остаток прямого трафика (_Я пропустил что-нибудь важное?_)
+    - Отбросим остальную часть проходящего трафика (_Я хочу быть в безопасности!_)
 
-Drop all "invalid" input traffic \(_Whatever the router gets that it_ _didn't ask for_\)
+**Как это выглядит в конце концов**
 
-Log the rest of input traffic \(_Have I missed anything_ _important?_\)
+![](/pics/m6_firewall.jpeg)
 
-Drop the rest of input traffic \(_I want to be safe!_\)
-
-Protecting your customers \(forward\)
-
-* As stated before, the forward chain looks at traffic going through the router.
-* The rules you add in the forward chain must prevent hackers from reaching your "safe" network without stopping you from doing your job.
-
-Protecting your customers \(example\)
-
-* The following are suggestions!
-
-– Again, assume that _ether01_ is connected to the WAN \(untrusted network\) and we're using the "trust the inside" policy.
-
-* * * Accept all "established" and "related" forward traffic \(_You'll_ _want the replies to whatever you asked for, like HTTP and E-mail requests_\)
-
-Drop all "invalid" forward traffic \(_Whatever you get that you_ _didn't ask for_\)
-
-Log the rest of forward traffic \(_Have I missed anything_ _important?_\)
-
-Drop the rest of forward traffic \(_I want to be safe!_\)
-
-What it looks like in the end
-
-![](.gitbook/assets/4%20%283%29.jpeg)
-
-Firewall filter syntax
+**Firewall filter syntax**
 
 * View existing filter rules
+  - /ip firewall filter print _(produces a clearer, readable output)_
+  - /ip firewall filter export _(shows complete syntax)_
 
-– /ip firewall filter print _\(produces a clearer, readable output\)_
+* Create various rules _(from /ip firewall filter)_
+  - add chain=input comment="Established-Related (in)" connection-state=established in-interface=ether01
+  - add chain=forward comment="Established-Related (fwd)" connection-state=established in-interface=ether01
+  - add action=log chain=input comment="===CATCH-ALL==" in-interface=ether01 log-prefix="CATCH-ALL(in)"
+  - add action=drop chain=input in-interface=ether01
+  - add action=add-dst-to-address-list address-list=temp-list address-list-timeout=3d1h1m1s chain=input protocol=tcp src-address=172.16.2.0/24
 
-– /ip firewall filter export _\(shows complete syntax\)_
-
-* Create various rules _\(from /ip firewall filter\)_
-
-– add chain=input comment="Established-Related \(in\)" connection-state=established in-interface=ether01
-
-– add chain=forward comment="Established-Related \(fwd\)" connection-state=established in-interface=ether01
-
-– add action=log chain=input comment="===CATCH-ALL==" in-interface=ether01 log-prefix="CATCH-ALL\(in\)"
-
-– add action=drop chain=input in-interface=ether01
-
-– add action=add-dst-to-address-list address-list=temp-list address-list-timeout=3d1h1m1s chain=input protocol=tcp src-address=172.16.2.0/24
-
-**Basic address-list**
-
-Basic address-list
+## Basic address-list
 
 * Address lists are groups of IP addresses
 * They can be used to simplify filter rules
-
-– For example, you could create 100 rules to block 100 addresses, or!!
-
-– You could create one group with those 100 addresses and create only one filter rule.
-
+  - For example, you could create 100 rules to block 100 addresses, or!!
+  - You could create one group with those 100 addresses and create only one filter rule.
 * The groups \(address lists\) can represent
-
-– IT Admins with special rights
-
-– Hackers
-
-– Anything else you can think of…
-
-Basic address-list
+  - IT Admins with special rights
+  - Hackers
+  - Anything else you can think of…
 
 * They can be used in firewall filters, mangle and NAT facilities.
 * Creation of address lists can be automated by using **add-src-to-address-list** or **add-dst-to-address-list** actions in the firewall filter, mangle or NAT facilities.
-
-– This is a great way of automatically blocking IP addresses without having to enter them one by one
-
-– Example : add action=add-src-to-address-list address-list=BLACKLIST chain=input comment=psd in-interface=ether1-Internet psd=21,3s,3,1
+  - This is a great way of automatically blocking IP addresses without having to enter them one by one
+  - Example : add action=add-src-to-address-list address-list=BLACKLIST chain=input comment=psd in-interface=ether1-Internet psd=21,3s,3,1
 
 Address list syntax
 
 * View existing address lists
-
-– /ip firewall address-list print
-
+  - /ip firewall address-list print
 * Create a permanent address list
-
-– /ip firewall address-list add address=1.2.3.4 list=hackers
-
+  - /ip firewall address-list add address=1.2.3.4 list=hackers
 * Create an address list through a firewall filter rule
-
-– /ip firewall filter add action=add-dst-to-address-list address-list=temp-list address-list-timeout=3d1h1m1s chain=input protocol=tcp src-address=172.16.2.0/24
-
-– /ip firewall nat add action=add-src-to-address-list address-list=NAT-AL chain=srcnat
-
-– /ip firewall mangle add action=add-dst-to-address-list address-list=DST-AL address-list-timeout=10m chain=prerouting protocol=tcp
+  - /ip firewall filter add action=add-dst-to-address-list address-list=temp-list address-list-timeout=3d1h1m1s chain=input protocol=tcp src-address=172.16.2.0/24
+  - /ip firewall nat add action=add-src-to-address-list address-list=NAT-AL chain=srcnat
+  - /ip firewall mangle add action=add-dst-to-address-list address-list=DST-AL address-list-timeout=10m chain=prerouting protocol=tcp
 
 **Source NAT**
 
