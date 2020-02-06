@@ -335,93 +335,69 @@ Time for a practical exercise
 
 **End of module 6**
 
-Laboratory
+## Лабораторка
 
 * Goals of the lab
+  - Setup basic firewall rules
+  - Configure a basic address-list
+  - Apply basic source NAT rules and test them out
+  - Apply basic destination NAT rules and test them out
 
-– Setup basic firewall rules
+Лабораторка: Установка
 
-– Configure a basic address-list
+![](/pics/m6_lab_setup.jpeg)
 
-– Apply basic source NAT rules and test them out
-
-– Apply basic destination NAT rules and test them out
-
-Laboratory : Setup
-
-![](.gitbook/assets/5%20%282%29.jpeg)
-
-Laboratory : step 1
+Лабораторка: шаг 1
 
 * Before going ahead with firewall rules, we'll test a NAT rule : Masquerading
+  - Look into your settings to see if you have a "masquerading" NAT rule. Create one if you don't BUT leave it disabled. If you have one make sure that it's disabled
+  - Launch Winbox and connect to a neighbour pod.
+  - In the IP FIREWALL CONNECTION section, look at active connections. What do you see? Why?
+  - Set the configuration option that will let you track connections. Check the results.
+  - Enable the masquerade NAT rule and check connection tracking again.
 
-– Look into your settings to see if you have a "masquerading" NAT rule. Create one if you don't BUT leave it disabled. If you have one make sure that it's disabled
-
-– Launch Winbox and connect to a neighbour pod.
-
-– In the IP FIREWALL CONNECTION section, look at active connections. What do you see? Why?
-
-– Set the configuration option that will let you track connections. Check the results.
-
-– Enable the masquerade NAT rule and check connection tracking again.
-
-Laboratory : step 2
+Лабораторка: шаг 2
 
 * Let's make things more interesting by adding filter rules. Apply the following rules to incoming traffic on your WAN interface.
+  - Accept icmp echo replies
+  - Drop icmp echo requests
+  - Accept all "established" and "related" input and forward traffic
+  - Drop all "invalid" input and forward traffic
+  - Log the rest of input and forward traffic
+  - Drop the rest of input and forward traffic
+  - Add meaningful comments to all rules.
+  - Do the same for the "log" rules' prefixes.
 
-– Accept icmp echo replies
-
-– Drop icmp echo requests
-
-– Accept all "established" and "related" input and forward traffic
-
-– Drop all "invalid" input and forward traffic
-
-– Log the rest of input and forward traffic
-
-– Drop the rest of input and forward traffic
-
-– Add meaningful comments to all rules.
-
-– Do the same for the "log" rules' prefixes.
-
-Laboratory : step 3
+Лабораторка: шаг 3
 
 * Now that you have rules, check your logs. Look at the messages and their format
 * Seeing what you see now, do you think troubleshooting connection problems would be easier? Why?
 
-Laboratory : step 4
+Лабораторка: шаг 4
 
 * Create Address Lists representing all pods
 * Use the following format:
-
-– Name : Pod1
-
-– Address : &lt;_network/mask_&gt; of the LAN
-
-– Name : Pod1
-
-– Address : &lt;_IP_&gt; of the WAN interface
+  - Name : Pod1
+  - Address : &lt;_network/mask_&gt; of the LAN
+  - Name : Pod1
+  - Address : &lt;_IP_&gt; of the WAN interface
 
 * Do so for all pods, even your own
 
-Laboratory : step 5
+Лабораторка: шаг 5
 
 * Pods should be matched in pairs for the following tests
 * Close your WinBox window and reopen it, connecting to your peer pod. What's happening?
-* With one filter rule ONLY, allow all IP addresses from you peer pod to connect to your router with WinBox \(TCP, 8291\)
+* With one filter rule ONLY, allow all IP addresses from you peer pod to connect to your router with WinBox (TCP, 8291)
+  - Make sure that it's in the right spot so that it works
+  - And DON'T forget comments!
 
-– Make sure that it's in the right spot so that it works
-
-– And DON'T forget comments!
-
-Laboratory : step 6
+Лабораторка: шаг 6
 
 * To test port redirection, we'll need to make a small change to the IP SERVICES of your pod.
+  - In the IP Services section, change the WinBox port to 8111.
 
-– In the IP Services section, change the WinBox port to 8111.
-
-Laboratory : step 7
+Лабораторка: шаг 7
 
 * Close and reopen the WinBox interface without adding any special parameters. What result do you get?
 * Log into the WinBox using port 8111.
@@ -429,19 +405,19 @@ Laboratory : step 7
 * Close and reopen WinBox without the port after the IP address. Does it work now?
 * Log into you peer pod's router. What's happening?
 
-Laboratory : step 8
+Лабораторка: шаг 8
 
 * Return the WinBox port to it's normal value of 8291.
-* Disable \(don't delete\) the dstnat rule of "redirect".
+* Disable (don't delete) the dstnat rule of "redirect".
 * Close WinBox and validate that you can log into your router and your peer's router normally.
 
-Laboratory : step 9
+Лабораторка: шаг 9
 
 * Create a dst-nat rule with a redirect action to port 8291 on all TCP port 1313 traffic coming into the WAN port.
 * Open WinBox and log into your router using port 1313.
 * Open WinBox and log into your peer's router using port 1313.
 * Explain the different results.
 
-Laboratory : step 10
+Лабораторка: шаг 10
 
 * Do an export AND a binary backup under the file name module6-pod_x_.
