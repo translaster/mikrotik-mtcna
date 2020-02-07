@@ -1,97 +1,70 @@
 # M7 QoS
 
-## **Simple queue**
+## Простая очередь
 
-Introduction
+**Введение**
 
-* QoS \(quality of service\) is the art of managing bandwidth resources rather just "blindly" limiting bandwidth to certain nodes
-* QoS can prioritize traffic based on metrics. Useful for
+* QoS (quality of service) - это искусство управления ресурсами полосы пропускания, а не просто "слепое" ограничение полосы пропускания определенными узлами.
+* QoS может определять приоритетность трафика на основе метрик. Полезно для
+  - Критически важных приложений
+  - Чувствительному трафику, такой как голосовые и видеопотоки
+* Простые очереди-это... простой ... способ ограничить пропускную способность до
+  - Загрузки клиента (исходящей)
+  - Закачки клиента (входящей)
+  - Совокупно для клиента (загрузка и закачка)
 
-– Critical applications
+**Цель**
 
-– Sensitive traffic such as voice and video streams
+* Цель, к которой применяется простая очередь
+* Цель должна быть определена. Это может быть
+  - IP-адрес
+  - Подсеть
+  - Взаимодействие
 
-Introduction
+* Порядок очередей очень важен. Каждый пакет должен пройти через каждую простую очередь, пока не произойдет совпадение
 
-* Simple queues are a… simple… way to limit bandwidth to
+**Назначения**
 
-– Client upload
+* IP-адрес, на который направлен целевой трафик, или
+* Интерфейс, через который будет проходить целевой трафик;
+* Не обязательно, как поле "цель"
+* Может использоваться для ограничения очереди
 
-– Client download
+**Max-limit и limit-at**
 
-– Client aggregate \(download and upload\)
+* Параметр "max-limit" - это максимальная скорость передачи данных, которую может достичь цель
+  - Рассматривается как MIR _(maximum information rate - максимальная скорость передачи)_
+  - лучший вариант развития событий
+* Параметр "limit-at" является гарантированной минимальной скоростью передачи данных для цели
+  - Рассматривается как CIR _(committed information rate - совершенная скорость передачи информации)_
+  - Худший вариант развития событий
 
-Target
+Ворвавшись
 
-* Target to which the simple queue is applied
-* A target **MUST** be specified. It can be
-
-– An IP address
-
-– A subnet
-
-– An interface
-
-* Queue order IS important. Each packet must go through every simple queue until a match occurs
-
-Destinations
-
-* IP address where the target's traffic is aimed, or
-* Interface through which target's traffic will flow through
-* Not compulsory like the "target" field
-* Can be used to limit the queue's restriction
-
+* Пакетная передача позволяет пользователям на короткое время получить большую пропускную способность, чем позволяет параметр «max-limit».
+* Полезно для увеличения трафика, который не использует пропускную способность слишком часто. Например, HTTP. Получите быструю загрузку страницы, затем прочитайте ее за несколько секунд.
 Max-limit and limit-at
 
-* The "max-limit" parameter is the maximum data rate that a target can reach
-
-– Viewed as MIR \(_maximum information rate_\)
-
-– Best case scenario
-
-* The "limit-at" parameter is a guaranteed minimum data rate for the target
-
-– Viewed as CIR \(_committed information rate_\)
-
-– Worst case scenario
-
 Bursting
 
-* Bursting permits users to get, for a short time, more bandwidth than allowed by "max-limit" parameter.
-* Useful to boost traffic that doesn't use bandwidth too often. For example, HTTP. Get a quick page download, than read it for a few seconds.
+* Bursting позволяет пользователям на короткое время получить большую пропускную способность, чем позволяет параметр "max-limit".
+* Полезно для увеличения трафика, который не использует пропускную способность слишком часто. Например, HTTP. Получите быструю загрузку страницы, затем прочитайте ее за несколько секунд.
 
-Bursting
-
-* Definitions.
-
-– **Burst-limit** : Maximum data rate while burst is allowed.
-
-– **Burst-time** : Time, in seconds, over which the sampling is made. It is NOT the period during which traffic will burst.
-
-– **Burst-threshold** : The value that will determine if a user will be permitted to burst
-
-– **Average-rate** : An average of data transmission calculated in 1/16th parts of "burst-time".
-
-– **Actual-rate** : Current \(real\) rate of data transfer.
-
-Bursting
+* Определения
+  - **Burst-limit** : максимальная скорость передачи данных, в то время как burst разрешен.
+  - **Burst-time** : время в секундах, в течение которого производится выборка. Это НЕ период, в течение которого трафик будет burst.
+  - **Burst-threshold** : значение, которое определит, будет ли пользователю разрешен burst
+  - **Average-rate** : среднее значение передачи данных, рассчитанное в 1/16 части "burst-time".
+  - **Actual-rate** : Текущая (реальная) скорость передачи данных.
 
 * How it works.
-
-– Bursting is allowed while **average-rate** stays below **burst-threshold**.
-
-– Bursting will be limited at the rate specified by **burst-limit**.
-
-– **Average-rate** is calculated by averaging 16 samples \(**actual-rate**\) over **burst-time** seconds.
-
-* * * If **burst-time** is 16 seconds, then a sample is taken every second.
-    * If **burst-time** is 8 seconds, then a sample is taken every ½ second. And so on…
-
-– When bursting starts, it will be allowed for **longest-burst-time** seconds, which is
-
-* * * \(burst-threshold x burst-time\) / burst-limit.
-
-Bursting
+  - Bursting is allowed while **average-rate** stays below **burst-threshold**.
+  - Bursting will be limited at the rate specified by **burst-limit**.
+  - **Average-rate** is calculated by averaging 16 samples (**actual-rate**) over **burst-time** seconds.
+    - If **burst-time** is 16 seconds, then a sample is taken every second.
+    - If **burst-time** is 8 seconds, then a sample is taken every ½ second. And so on…
+  - When bursting starts, it will be allowed for **longest-burst-time** seconds, which is
+    - (burst-threshold x burst-time) / burst-limit.
 
 ![](.gitbook/assets/0.png)
 
@@ -99,33 +72,24 @@ Bursting
 
 With a burst-time of 16 seconds
 
-Bursting
-
 ![](.gitbook/assets/1%20%281%29.jpeg)
 
 With a burst-time of 8 seconds
 
-Syntax
+Синтаксис
 
-• A simple queue
+* Простая очередь
+  - add max-limit=2M/2M name=queue1 target=192.168.3.0/24
+* The same queue with bursting
+  - add burst-limit=4M/4M burst-threshold=1500k/1500k burst-time=8s/8s limit-at=\
+  1M/1M max-limit=2M/2M name=queue1 target=192.168.3.0/24
 
-– add max-limit=2M/2M name=queue1 target=192.168.3.0/24
-
-• The same queue with bursting
-
-– add burst-limit=4M/4M burst-threshold=1500k/1500k burst-time=8s/8s limit-at=\
-
-1M/1M max-limit=2M/2M name=queue1 target=192.168.3.0/24
-
-Tip
+Подсказка
 
 * You may have noticed that queue icons change color according to usage. Color has a meaning.
-
-– Green : 0 – 50% of available bandwidth used
-
-– Yellow : 51 – 75% of available bandwidth used
-
-– Red : 76 – 100% of available bandwidth used
+  - Green : 0 – 50% of available bandwidth used
+  - Yellow : 51 – 75% of available bandwidth used
+  - Red : 76 – 100% of available bandwidth used
 
 **One Simple queue for the whole Network \(PCQ\)**
 
@@ -442,4 +406,3 @@ Laboratory : step 8
 Laboratory : step 9
 
 * As usual, save the current configuration in binary and text format using the same name format that has been used in previous labs.
-
