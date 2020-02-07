@@ -238,110 +238,97 @@ add action=log chain=dstnat log-prefix=dstnat protocol=icmp
 
 ![](/pics/m6_firewall.jpeg)
 
-**Firewall filter syntax**
+**Синтаксис фильтра брандмауэра**
 
-* View existing filter rules
-  - /ip firewall filter print _(produces a clearer, readable output)_
-  - /ip firewall filter export _(shows complete syntax)_
+* Просмотр существующих правил фильтрации
+  -/ip firewall filter print _(производит более четкий, читаемый вывод)_
+  - /ip firewall filter export _(показывает полный синтаксис)_
 
-* Create various rules _(from /ip firewall filter)_
+* Создание различных правил _(от /ip firewall filter)_
   - add chain=input comment="Established-Related (in)" connection-state=established in-interface=ether01
   - add chain=forward comment="Established-Related (fwd)" connection-state=established in-interface=ether01
   - add action=log chain=input comment="===CATCH-ALL==" in-interface=ether01 log-prefix="CATCH-ALL(in)"
   - add action=drop chain=input in-interface=ether01
   - add action=add-dst-to-address-list address-list=temp-list address-list-timeout=3d1h1m1s chain=input protocol=tcp src-address=172.16.2.0/24
 
-## Basic address-list
+## Основы адрес-листа
 
-* Address lists are groups of IP addresses
-* They can be used to simplify filter rules
-  - For example, you could create 100 rules to block 100 addresses, or!!
-  - You could create one group with those 100 addresses and create only one filter rule.
-* The groups \(address lists\) can represent
-  - IT Admins with special rights
-  - Hackers
-  - Anything else you can think of…
+* Списки адресов - это группы IP-адресов.
+* Их можно использовать для упрощения правил фильтрации.
+  - Например, вы можете создать 100 правил для блокировки 100 адресов, или!!
+  - Вы можете создать одну группу с этими 100 адресами и создать только одно правило фильтра.
+* Группы (списки адресов) могут представлять
+  - IT-администраторы с особыми правами
+  - Хакеры
+  - Что-нибудь еще ты можешь придумать…
 
-* They can be used in firewall filters, mangle and NAT facilities.
-* Creation of address lists can be automated by using **add-src-to-address-list** or **add-dst-to-address-list** actions in the firewall filter, mangle or NAT facilities.
-  - This is a great way of automatically blocking IP addresses without having to enter them one by one
-  - Example : add action=add-src-to-address-list address-list=BLACKLIST chain=input comment=psd in-interface=ether1-Internet psd=21,3s,3,1
+* Их можно использовать в фильтрах брандмауэра, средствах mangle и NAT.
+* Создание адрес-листов может быть автоматизировано с помощью действия **add-src-to-address-list** или **add-dst-to-address-list** в фильтре брандмауэра, mangle или NAT объектов.
+  - Это отличный способ автоматической блокировки IP-адресов без необходимости вводить их по одному
+  - Пример: `add action=add-src-to-address-list address-list=BLACKLIST chain=input comment=psd in-interface=ether1-Internet psd=21,3s,3,1`
 
-Address list syntax
+### Синтаксис адрес-листов
 
-* View existing address lists
+* Просмотр существующих списков адресов
   - /ip firewall address-list print
-* Create a permanent address list
+* Создание списка постоянных адресов
   - /ip firewall address-list add address=1.2.3.4 list=hackers
-* Create an address list through a firewall filter rule
+* Создание списка адресов с помощью правила фильтра брандмауэра
   - /ip firewall filter add action=add-dst-to-address-list address-list=temp-list address-list-timeout=3d1h1m1s chain=input protocol=tcp src-address=172.16.2.0/24
   - /ip firewall nat add action=add-src-to-address-list address-list=NAT-AL chain=srcnat
   - /ip firewall mangle add action=add-dst-to-address-list address-list=DST-AL address-list-timeout=10m chain=prerouting protocol=tcp
 
-**Source NAT**
+## NAT
 
-NAT
+### Source NAT
 
-* Network Address Translation \(NAT\) allows hosts to use one set of IP addresses on the LAN side and an other set of IP addresses when accessing external networks.
-* Source NAT translates private IP addresses \(on the LAN\) to public IP addresses when accessing the Internet. The reverse is done for return traffic. It's sometimes referred to as "hiding" your address space \(your network\) behind the ISP supplied address.
+* Преобразование сетевых адресов (NAT) позволяет хостам использовать один набор IP-адресов на стороне локальной сети и другой набор IP-адресов при доступе к внешним сетям.
+* Source NAT преобразует частные IP-адреса (в локальной сети) в публичные IP-адреса при доступе к интернету. Обратное делается для возвращаемого трафика. Это иногда называют "скрытием" вашего адресного пространства (вашей сети) за адресом, предоставленным провайдером.
 
-Masquerade and src-nat action
+#### Маскарадинг и действие src-nat
 
-* The first chain for NATing is "srcnat". It's used by traffic leaving the router.
-* Much like firewall filters, NAT rules have many properties and actions \(_13 actions!_\).
-* The first, and most basic of NAT rules, only uses the "masquerade" action.
-* Masquerade replaces the source IP address in packets by one determined by the routing facility.
+* Первая цепочка для NATинга - "srcnat". Она используется трафиком, выходящим из маршрутизатора.
+* Как и фильтры брандмауэра, правила NAT имеют множество свойств и действий (_13 действий!_).
+* Первое, и самое основное из правил NAT, использует только действие "masquerade".
+* Masquerade заменяет исходный IP-адрес в пакетах на другой, определенный средством маршрутизации.
 
-– Typically, the source IP address of packets going to the Internet will be replaced by the address of the outside \(WAN\) interface. This is required for return traffic to "_find it's way home_".
+- Как правило, IP-адрес источника пакетов, идущих в Интернет, будет заменен адресом внешнего (WAN) интерфейса. Это необходимо для возврата трафика на "_найти дорогу домой_".
 
-Masquerade and src-nat action
+* Действие "src-nat" заменяет исходный IP-адрес и порт пакетов на указанные администратором сети.
+  - **Пример использования**: две компании (Альфа и Бета) объединились, и обе используют одно и то же адресное пространство (напр. 172.16.0.0/16). Они настраивают сегмент, используя в качестве буфера совершенно другое адресное пространство, и обе сети будут требовать правила src-nat и dst-nat.
 
-* The "src-nat" action changes the source IP address and port of packets to those specified by the network administrator
+### Destination NAT
 
-– **Usage example** : Two companies \(Alpha and Beta\) have merged and they both use the same address space \(ex. 172.16.0.0/16\). They will set up a segment using a totally different address space as a buffer and both networks will require src-nat and dst-nat rules.
+Действие Dst-nat и перенаправления
 
-**Destination NAT**
-
+* "Dst-nat" - это действие, используемое с цепочкой "dstnat" для перенаправления входящего трафика на другой IP-адрес или порт.
+  - **Пример использования**: в нашем предыдущем примере Альфа и Бета мы видим, что правила dst-nat потребуются для повторного преобразования "буферного IP-адреса" в адрес сервера Бета.
+* "Redirect" меняет порт назначения, указанный "до порта" маршрутизатора.
+  - **Пример использования**: весь http-трафик (TCP, порт 80) должен быть направлен в службу веб-прокси на TCP-порт 8080.
 Dst-nat and redirection action
 
-* "Dst-nat" is an action used with the "dstnat" chain to redirect incoming traffic to a different IP address or port
+### Синтаксис NAT
 
-– **Usage example** : In our previous Alpha and Beta example, we see that dst -nat rules will be required to reconvert the "buffer IP address" to Beta's server's address.
-
-Dst-nat and redirection action
-
-* "Redirect" changes the destination port to the specified "to-ports" port of the router.
-
-– **Usage example** : All http \(TCP, port 80\) traffic is to be sent to the web proxy service at TCP port 8080.
-
-NAT Syntax
-
-* Source NAT \(from /ip firewall nat\)
-
-– Add the masquerade rule
-
-* * * add action=masquerade chain=srcnat
-
-– Change the source IP address
-
-* * * add chain=srcnat src-address=192.168.0.109 action=src-nat to-addresses=10.5.8.200
+* Source NAT (от /ip firewall nat)
+  - Добавьте правило маскарадинга
+    - add action=masquerade chain=srcnat
+  - Изменение исходного IP-адреса
+    - add chain=srcnat src-address=192.168.0.109 action=src-nat to-addresses=10.5.8.200
 * Destination NAT
+  - Перенаправить весь веб-трафик (TCP, порт 80) на веб-прокси маршрутизатора на порту 8080
+    - add action=redirect chain=dstnat dst-port=80 protocol=tcp to-ports=8080
 
-– Redirect all web traffic \(TCP, port 80\) to the router's web proxy on port 8080
+Время для практических упражнений
 
-* * * add action=redirect chain=dstnat dst-port=80 protocol=tcp to-ports=8080
-
-Time for a practical exercise
-
-**End of module 6**
+**Конец 6 модуля**
 
 ## Лабораторка
 
-* Goals of the lab
-  - Setup basic firewall rules
-  - Configure a basic address-list
-  - Apply basic source NAT rules and test them out
-  - Apply basic destination NAT rules and test them out
+* Цели лабораторки
+  - Настройка основных правил брандмауэра
+  - Настройка базового адрес-листа
+  - Применение основных правил Source NAT и их проверка
+  - Применение основных правил destination NAT и их проверка
 
 Лабораторка: Установка
 
@@ -349,12 +336,12 @@ Time for a practical exercise
 
 Лабораторка: шаг 1
 
-* Before going ahead with firewall rules, we'll test a NAT rule : Masquerading
-  - Look into your settings to see if you have a "masquerading" NAT rule. Create one if you don't BUT leave it disabled. If you have one make sure that it's disabled
-  - Launch Winbox and connect to a neighbour pod.
-  - In the IP FIREWALL CONNECTION section, look at active connections. What do you see? Why?
-  - Set the configuration option that will let you track connections. Check the results.
-  - Enable the masquerade NAT rule and check connection tracking again.
+* Прежде чем перейти к правилам брандмауэра, мы протестируем правило NAT: Masquerading
+  - Посмотрите в свои настройки, чтобы увидеть, есть ли у вас правило NAT "masquerading". Создайте его, если это ещё не сделано, НО оставьте его отключенным. Если оно у вас уже есть убедитесь что оно отключено
+  - Запустите Winbox и подключитесь к соседнему модулю
+  - В разделе IP FIREWALL CONNECTION просмотрите активные соединения. Что Вы видите? Почему?
+  - Установите параметр конфигурации, который позволит вам отслеживать соединения. Проверьте результаты.
+  - Включите правило masquerade NAT и снова проверьте отслеживание соединений.
 
 Лабораторка: шаг 2
 
