@@ -51,144 +51,131 @@
   - **Average-rate** : среднее значение передачи данных, рассчитанное в 1/16 части "burst-time".
   - **Actual-rate** : Текущая (реальная) скорость передачи данных.
 
-* How it works.
-  - Bursting is allowed while **average-rate** stays below **burst-threshold**.
-  - Bursting will be limited at the rate specified by **burst-limit**.
-  - **Average-rate** is calculated by averaging 16 samples (**actual-rate**) over **burst-time** seconds.
-    - If **burst-time** is 16 seconds, then a sample is taken every second.
-    - If **burst-time** is 8 seconds, then a sample is taken every ½ second. And so on…
-  - When bursting starts, it will be allowed for **longest-burst-time** seconds, which is
-    - (burst-threshold x burst-time) / burst-limit.
+* Как это работает.
+  - Bursting разрешен, пока **average-rate** остается ниже **burst-threshold**.
+  - Bursting будет ограничен по скорости, указанной **burst-limit**.
+  - **Average-rate** вычисляется путем усреднения 16 выборок (**actual-rate**) в течение **burst-time** секунд.
+    - Если **burst-time** составляет 16 секунд, то образец берется каждую секунду.
+    - Если **burst-time** составляет 8 секунд, то образец берется каждые ½ секунды. И так далее…
+    - Когда начнется bursting, он будет разрешен на **longest-burst-time** секунд, что составляет
+      - (burst-threshold x burst-time) / burst-limit.
 
-![](.gitbook/assets/0.png)
+![С burst-time 16 секунд](/pics/m7_bursting_16.png)
 
-2013-01-01
+_С burst-time 16 секунд_
 
-With a burst-time of 16 seconds
+![С burst-time 8 секунд](/pics/m7_bursting_16.jpeg)
 
-![](.gitbook/assets/1%20%281%29.jpeg)
-
-With a burst-time of 8 seconds
+_С burst-time 8 секунд_
 
 #### Синтаксис
 
 * Простая очередь
-  - add max-limit=2M/2M name=queue1 target=192.168.3.0/24
+  - `add max-limit=2M/2M name=queue1 target=192.168.3.0/24`
 * The same queue with bursting
-  - add burst-limit=4M/4M burst-threshold=1500k/1500k burst-time=8s/8s limit-at=\
-  1M/1M max-limit=2M/2M name=queue1 target=192.168.3.0/24
+  - `add burst-limit=4M/4M burst-threshold=1500k/1500k burst-time=8s/8s limit-at=\`
+  `1M/1M max-limit=2M/2M name=queue1 target=192.168.3.0/24`
 
 **Подсказка**
 
-* You may have noticed that queue icons change color according to usage. Color has a meaning.
-  - Green : 0 – 50% of available bandwidth used
-  - Yellow : 51 – 75% of available bandwidth used
-  - Red : 76 – 100% of available bandwidth used
+* Возможно, вы заметили, что значки очереди меняют цвет в зависимости от использования. Цвет имеет значение.
+  - Зеленый: 0-50% от используемой полосы пропускания
+  - Желтый: 51-75% используется от доступной полосы пропускания используется
+  - Красный: 76-100% от доступной полосы пропускания
 
-**One Simple queue for the whole Network \(PCQ\)**
+## Одна простая очередь для всей сети (PCQ)
 
-Why have a queue for all?
+**Зачем иметь очередь на всех?**
 
-* Per Connection Queue \(PCQ\) is a dynamic way of shaping traffic for multiple users using a simpler configuration.
-* Define parameters, then each sub-stream \(specific IP addresses, for example\) will have the same limitations.
+* Per Connection Queue (PCQ) - это динамический способ формирования трафика для нескольких пользователей с использованием более простой конфигурации.
+* Определите параметры, тогда каждый подпоток (например, определенные IP-адреса) будет иметь те же ограничения.
 
-Pcq-rate configuration
+**Конфигурация Pcq-rate**
 
-* The parameter **pcq-rate** limits the queue type's allowed data rate.
-* Classifier is what the router checks to see how it will apply this limitation. It can be on source or destination address, or source or destination port. You could thus limit user traffic or application traffic \(HTTP for example\).
+* Параметр **pcq-rate** ограничивает допустимую скорость передачи данных типа очереди.
+* Классификатор - это то, что маршрутизатор проверяет, чтобы увидеть, как он будет применять это ограничение. Это может быть адрес источника или назначения, или порт источника или назначения. Таким образом, можно ограничить трафик пользователей или приложений (например, HTTP).
 
-Pcq-limit configuration
+**Конфигурации Pcq-limit**
 
-* This parameter is measured in packets.
-* A large pcq-limit value
+* Этот параметр измеряется в пакетах.
 
-– Will create a larger buffer, thus reducing dropped packets
+* Большое значение pcq-limit
+  - Создаст больший буфер, таким образом уменьшая отброшенные пакеты
+  - Увеличится задержка
 
-– Will increase latency
+* Малое значение pcq-limit
+  - Увеличит количество отбрасываемых пакетов (так как буфер меньше) и заставит источник повторно отправить пакет, тем самым сократив задержку
+  - Приведет к корректировке размера окна TCP, сообщая источнику уменьшить скорость передачи
 
-* A smaller pcq-limit value
+* Какое значение я должен использовать? Здесь нет простого ответа.
+  - Если часто начинается на основе "проб и ошибок" для каждого приложения
+  - Если пользователи жалуются на задержку, уменьшите значение pcq-limit (длина очереди)
+  - Если пакеты должны проходить через сложный брандмауэр, то вам, возможно, придется увеличить длину очереди, так как это может привести к задержкам
+  - Быстрые интерфейсы (как Gig) требуют меньших очередей, поскольку они уменьшают задержки
 
-– Will increase packets drops \(since buffer is smaller\) and will force the source to resend the packet, thus reducing latency
+### PCQ, пример
 
-– Will bring about a TCP window size adjustment, telling the source to reduce the transmission rate
-
-Pcq-limit configuration
-
-* What value should I use? There's no easy answer.
-
-– If often starts on a "Trial & Error" basis per application
-
-– If users complain about latency, reduce the pcq-limit \(queue length\)value
-
-– If packets have to go through a complex firewall, then you may have to increase the queue length as it may introduce delays
-
-– Fast interfaces \(like Gig\) require smaller queues as they reduce delays
-
-PCQ, an example
-
-* Lets suppose that we have users sharing a limited WAN link. We'll give them the following data rates:
-
-– Download : 2Mbps
-
-– Upload : 1Mbps
-
-* WAN is on ether1
-* LAN subnet is 192.168.3.0/24
-
-PCQ, an example
+* Предположим, что у нас есть пользователи, совместно использующие ограниченное WAN-соединение. Мы дадим им следующие скорости передачи данных:
+  - Скачивание: 2 Мбит/с
+  - Отдача : 1 Мбит/с
+  - WAN находится на ether1
+  - Подсеть локальной сети 192.168.3.0/24
 
 **/ip firewall mangle**
+```
+add action=mark-packet chain=forward new-packet-mark=client_upload \
+  out-interface=ether1 src-address=192.168.3.0/24
 
-add action=mark-packet chain=forward new-packet-mark=client\_upload \ out-interface=ether1 src-address=192.168.3.0/24
-
-add action=mark-packet chain=forward dst-address=192.168.3.0/24 \ in-interface=ether1 new-packet-mark=client\_download
-
+add action=mark-packet chain=forward dst-address=192.168.3.0/24 \
+  in-interface=ether1 new-packet-mark=client_download
+```
 **/queue type**
+```
+add kind=pcq name=PCQ_download pcq-classifier=dst-address pcq-rate=2M \
+add kind=pcq name=PCQ\_upload pcq-classifier=src-address pcq-rate=1M
+```
+**queue tree**
+```
+add name=queue_upload packet-mark=client_upload parent=global queue=\
+  PCQ_upload
 
-add kind=pcq name=PCQ\_download pcq-classifier=dst-address pcq-rate=2M add kind=pcq name=PCQ\_upload pcq-classifier=src-address pcq-rate=1M
+add name=queue_download packet-mark=client_download parent=global queue=\
+  PCQ_download
+```
 
-/**queue tree**
+Наш пример объяснил
 
-add name=queue\_upload packet-mark=client\_upload parent=global queue=\ PCQ\_upload
+* **Mangle**: мы говорим маршрутизатору помечать пакеты с помощью "_**client_upload**_" или "_**client_download**_", в зависимости от того, если
+  - Пакеты поступают из локальной сети и уходят из ether1 (upload - отдача) или,
+  - Пакеты поступают из ether1 и отправляются в локальную сеть (загрузка).
 
-add name=queue\_download packet-mark=client\_download parent=global queue=\ PCQ\_download
+* **Queue types**: мы определяем скорости передачи данных и классификаторы, используемые для дифференциации подпотоков (источник или назначение)
+* **Queue tree**: комбинации, которые проверяются, чтобы увидеть, подходят ли пакеты для формирования трафика и что применять.
+  - Например, в случае загруженного трафика мы проверяем входные и выходные интерфейсы (**global**) для пакетов с "**client_upload**" и применяем тип очереди "**PCQ_upload**".
 
-Our example explained
+## Мониторинг
 
-* **Mangle** : We are telling the router to mark packets with the
+Мониторинг траффика интерфейса
 
-"_**client\_upload**_" or "_**client\_download**_" mark, depending on if
+![](/pics/m7_monitor.jpeg)
 
-– Packets are coming from the LAN and are leaving from ether1 \(upload\) or,
+Средство мониторинга трафика используется для запуска сценариев, когда трафик интерфейса достигает определенного порогового значения.
 
-– Packets are entering from ether1 and going to the LAN \(download\).
-
-* **Queue types** : We're defining the data rates and classifiers to use to differentiate sub-streams \(source or destination\)
-* **Queue tree** : The combinations that are checked to see if packets qualify for traffic shaping and what to apply.
-
-– For example, in the case of uploaded traffic, we check input and output interfaces \(**global**\) for packets with the "**client\_upload**" mark and apply the "**PCQ\_upload**" queue type.
-
-**Monitoring**
-
-Interface traffic monitor
-
-![](.gitbook/assets/2%20%283%29.jpeg)
-
-The traffic monitor tool is used to run scripts when an interface traffic reaches a certain threshold.
-
-**Example**
+**Пример**
 
 **/tool traffic-monitor**
-
-add interface=ether1 name=TrafficMon1 on-event=script1 threshold=1500000 \ traffic=received
-
+```
+add interface=ether1 name=TrafficMon1 on-event=script1 threshold=1500000 \
+  traffic=received
+```
 **/system script**
+```
+add name=script1 policy=ftp,read,test,winbox,api source="/tool e-mail send to=\"\
+  YOU@DOMAIN.CA\" subject=([/system identity get name] . \"Log \
+  \" . [/system clock get date\]\) body=\"Hello World. You're going too fast!\""
+```
 
-add name=script1 policy=ftp,read,test,winbox,api source="/tool e-mail send to=\"\ YOU@DOMAIN.CA\" subject=\(\[/system identity get name\] . \" Log \
-
-\" . \[/system clock get date\]\) body=\"Hello World. You're going too fast!\""
-
-Torch
+### Torch
 
 * Torch is a real-time traffic monitoring tool that can be used to monitor the traffic going through an interface.
 * Although CLI is VERY flexible, the Torch interface in Winbox is very intuitive.
