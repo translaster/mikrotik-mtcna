@@ -64,7 +64,7 @@
 
 _С burst-time 16 секунд_
 
-![С burst-time 8 секунд](/pics/m7_bursting_16.jpeg)
+![С burst-time 8 секунд](/pics/m7_bursting_8.jpeg)
 
 _С burst-time 8 секунд_
 
